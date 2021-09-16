@@ -1,7 +1,11 @@
 {
 	"folders": {},
 	"connections": {
+<<<<<<< HEAD
 		"mysql8-17bed4ec551-12b5d93d19c2c08e": {
+=======
+		"mysql8-17bed4b3cff-26f7b784a860665d": {
+>>>>>>> branch 'master' of https://github.com/kyeee2/ProjectSpringRPG
 			"provider": "mysql",
 			"driver": "mysql8",
 			"name": "moviemania",
