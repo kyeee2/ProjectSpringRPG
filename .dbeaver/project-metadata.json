@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-{"resources":{"ERD/SpringRPG.sql":{"sql-editor-data-source-id":"mysql8-17bed4ec551-12b5d93d19c2c08e","default-datasource":"mysql8-17bed4ec551-12b5d93d19c2c08e","default-catalog":"moviemania"},"ERD/test.sql":{"sql-editor-data-source-id":"mysql8-17bed4ec551-12b5d93d19c2c08e","default-datasource":"mysql8-17bed4ec551-12b5d93d19c2c08e","default-catalog":"moviemania"}}}
-=======
-{"resources":{"ERD/test.sql":{"sql-editor-data-source-id":"mysql8-17bed4b3cff-26f7b784a860665d","default-datasource":"mysql8-17bed4b3cff-26f7b784a860665d","default-catalog":"moviemania"}}}
->>>>>>> branch 'master' of https://github.com/kyeee2/ProjectSpringRPG
