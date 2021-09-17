@@ -32,9 +32,9 @@ CREATE TABLE apply
 
 CREATE TABLE authority
 (
-	cus_id varchar(45),
 	cus_auth varchar(45) NOT NULL,
-	cus_uid int NOT NULL
+	cus_id varchar(45) NOT NULL,
+	UNIQUE (cus_id)
 );
 
 
@@ -42,14 +42,14 @@ CREATE TABLE customer
 (
 	cus_uid int NOT NULL AUTO_INCREMENT,
 	cus_id varchar(45) NOT NULL,
-	cus_pw varchar(45) NOT NULL,
-	cus_phonenum int NOT NULL,
+	cus_pw varchar(256) NOT NULL,
+	cus_phonenum varchar(12) NOT NULL,
 	cus_nickname varchar(45) NOT NULL,
 	cus_name varchar(45) NOT NULL,
 	cus_birthday int NOT NULL,
 	cus_profile text,
 	-- 회원가입시 1로 디폴트, 탈퇴하면 0
-	cus_enable int DEFAULT 1 COMMENT '회원가입시 1로 디폴트, 탈퇴하면 0',
+	cus_enable int DEFAULT '1' COMMENT '회원가입시 1로 디폴트, 탈퇴하면 0',
 	PRIMARY KEY (cus_uid),
 	UNIQUE (cus_id),
 	UNIQUE (cus_nickname)
@@ -79,11 +79,11 @@ CREATE TABLE freeboard
 	fb_uid int NOT NULL AUTO_INCREMENT,
 	fb_title varchar(150) NOT NULL,
 	fb_content text NOT NULL,
-	fb_viewcnt int DEFAULT 0,
+	fb_viewcnt int DEFAULT '0',
 	fb_datetime datetime DEFAULT now(),
 	fb_boardtype varchar(45),
 	cus_uid int NOT NULL,
-	fb_reportcnt int DEFAULT 0,
+	fb_reportcnt int DEFAULT '0',
 	PRIMARY KEY (fb_uid)
 );
 
@@ -123,8 +123,8 @@ CREATE TABLE movieboard
 	mb_title varchar(150) NOT NULL,
 	mb_content text NOT NULL,
 	mb_subject varchar(45),
-	mb_viewcnt int DEFAULT 0,
-	mb_reportcnt int DEFAULT 0,
+	mb_viewcnt int DEFAULT '0',
+	mb_reportcnt int DEFAULT '0',
 	mb_datetime datetime DEFAULT now(),
 	mb_boardtype varchar(45),
 	cus_uid int NOT NULL,
@@ -137,8 +137,8 @@ CREATE TABLE noticeboard
 	nb_uid int NOT NULL AUTO_INCREMENT,
 	nb_title varchar(150) NOT NULL,
 	nb_content text NOT NULL,
-	nb_viewcnt int,
-	nb_datetime datetime,
+	nb_viewcnt int DEFAULT '0',
+	nb_datetime datetime DEFAULT now(),
 	nb_boardtype varchar(45),
 	cus_uid int NOT NULL,
 	PRIMARY KEY (nb_uid)
@@ -160,7 +160,7 @@ CREATE TABLE primiereWinBoard
 	pwb_uid int NOT NULL AUTO_INCREMENT,
 	pwb_title varchar(150) NOT NULL,
 	pwb_content text NOT NULL,
-	pwb_viewcnt int DEFAULT 0,
+	pwb_viewcnt int DEFAULT '0',
 	pwb_datetime datetime DEFAULT now(),
 	pwb_boardtype varchar(45),
 	pr_uid int NOT NULL,
@@ -180,8 +180,8 @@ ALTER TABLE apply
 
 
 ALTER TABLE authority
-	ADD FOREIGN KEY (cus_uid)
-	REFERENCES customer (cus_uid)
+	ADD FOREIGN KEY (cus_id)
+	REFERENCES customer (cus_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -228,7 +228,7 @@ ALTER TABLE mb_good
 
 
 ALTER TABLE message
-	ADD FOREIGN KEY (cus_RecUid)
+	ADD FOREIGN KEY (cus_sendUid)
 	REFERENCES customer (cus_uid)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
@@ -236,7 +236,7 @@ ALTER TABLE message
 
 
 ALTER TABLE message
-	ADD FOREIGN KEY (cus_sendUid)
+	ADD FOREIGN KEY (cus_RecUid)
 	REFERENCES customer (cus_uid)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
