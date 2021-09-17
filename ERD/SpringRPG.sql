@@ -12,8 +12,8 @@ DROP TABLE IF EXISTS mb_good;
 DROP TABLE IF EXISTS message;
 DROP TABLE IF EXISTS movieboard;
 DROP TABLE IF EXISTS noticeboard;
-DROP TABLE IF EXISTS premiereWin;
 DROP TABLE IF EXISTS customer;
+DROP TABLE IF EXISTS primiereWinBoard;
 DROP TABLE IF EXISTS premiere;
 
 
@@ -25,7 +25,8 @@ CREATE TABLE apply
 (
 	pr_uid int NOT NULL,
 	cus_uid int NOT NULL,
-	cus_email varchar(100) NOT NULL
+	cus_email varchar(100) NOT NULL,
+	pr_win boolean DEFAULT false
 );
 
 
@@ -45,7 +46,7 @@ CREATE TABLE customer
 	cus_phonenum int NOT NULL,
 	cus_nickname varchar(45) NOT NULL,
 	cus_name varchar(45) NOT NULL,
-	cus_birthdaty int NOT NULL,
+	cus_birthday int NOT NULL,
 	cus_profile text,
 	-- 회원가입시 1로 디폴트, 탈퇴하면 0
 	cus_enable int DEFAULT 1 COMMENT '회원가입시 1로 디폴트, 탈퇴하면 0',
@@ -61,6 +62,7 @@ CREATE TABLE fb_comment
 	fb_co_content text,
 	fb_uid int NOT NULL,
 	cus_uid int NOT NULL,
+	fb_co_datetime datetime DEFAULT now(),
 	PRIMARY KEY (fb_co_uid)
 );
 
@@ -92,6 +94,7 @@ CREATE TABLE mb_comment
 	mb_co_content text,
 	mb_uid int NOT NULL,
 	cus_uid int NOT NULL,
+	mb_co_datetime datetime DEFAULT now(),
 	PRIMARY KEY (mb_co_uid)
 );
 
@@ -145,18 +148,23 @@ CREATE TABLE noticeboard
 CREATE TABLE premiere
 (
 	pr_uid int NOT NULL AUTO_INCREMENT,
-	pr_name varchar(50) NOT NULL,
+	pr_title varchar(50) NOT NULL,
 	pr_photo text,
+	pr_content text,
 	PRIMARY KEY (pr_uid)
 );
 
 
-CREATE TABLE premiereWin
+CREATE TABLE primiereWinBoard
 (
-	pw_uid int NOT NULL AUTO_INCREMENT,
+	pwb_uid int NOT NULL AUTO_INCREMENT,
+	pwb_title varchar(150) NOT NULL,
+	pwb_content text NOT NULL,
+	pwb_viewcnt int DEFAULT 0,
+	pwb_datetime datetime DEFAULT now(),
+	pwb_boardtype varchar(45),
 	pr_uid int NOT NULL,
-	cus_uid int NOT NULL,
-	PRIMARY KEY (pw_uid)
+	PRIMARY KEY (pwb_uid)
 );
 
 
@@ -220,7 +228,7 @@ ALTER TABLE mb_good
 
 
 ALTER TABLE message
-	ADD FOREIGN KEY (cus_sendUid)
+	ADD FOREIGN KEY (cus_RecUid)
 	REFERENCES customer (cus_uid)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
@@ -228,7 +236,7 @@ ALTER TABLE message
 
 
 ALTER TABLE message
-	ADD FOREIGN KEY (cus_RecUid)
+	ADD FOREIGN KEY (cus_sendUid)
 	REFERENCES customer (cus_uid)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
@@ -244,14 +252,6 @@ ALTER TABLE movieboard
 
 
 ALTER TABLE noticeboard
-	ADD FOREIGN KEY (cus_uid)
-	REFERENCES customer (cus_uid)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE premiereWin
 	ADD FOREIGN KEY (cus_uid)
 	REFERENCES customer (cus_uid)
 	ON UPDATE RESTRICT
@@ -299,7 +299,7 @@ ALTER TABLE apply
 ;
 
 
-ALTER TABLE premiereWin
+ALTER TABLE primiereWinBoard
 	ADD FOREIGN KEY (pr_uid)
 	REFERENCES premiere (pr_uid)
 	ON UPDATE RESTRICT
