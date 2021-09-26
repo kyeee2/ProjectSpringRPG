@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 class BoardDummyData {
 	// JDBC 관련 기본 객체 변수들 선언

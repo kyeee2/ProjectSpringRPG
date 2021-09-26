@@ -4,12 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.junit.jupiter.api.Test;
 
-class CommentDummyData {
-
+class GoodCntDummyData {
 	// JDBC 관련 기본 객체 변수들 선언
 	Connection conn = null;
 	Statement stmt = null;
@@ -23,28 +23,29 @@ class CommentDummyData {
 	public static final String USERID = "springRPG";   // DB 사용자 계정 정보
 	public static final String USERPW = "1q2w3e4r";
 
-	public static final String SQL_FBCOMMENT_INSERT = 
-			"INSERT INTO fb_comment (fb_co_content, fb_uid, cus_uid) "
-			+ "VALUES (?, ?, ?)";
+	public static final String SQL_FBGOOD_INSERT = 
+			"INSERT INTO fb_good "
+			+ "VALUES (?, ?)";
 
-	public static final String SQL_MBCOMMENT_INSERT = 
-			"INSERT INTO mb_comment (mb_co_content, mb_uid, cus_uid) "
-			+ "VALUES (?, ?, ?)";
+	public static final String SQL_MBGOOD_INSERT = 
+			"INSERT INTO mb_good "
+			+ "VALUES (?, ?)";
 	
 	@Test
-	void genData() {
+	void genData() throws SQLException {
 		
 		try {
 			Class.forName(DRIVER);
 			conn = DriverManager.getConnection(URL, USERID, USERPW);
 			
+			conn.setAutoCommit(false);
+			
 			// 테스트용 dummy 데이터 만들기
-			pstmt = conn.prepareStatement(SQL_FBCOMMENT_INSERT);
+			pstmt = conn.prepareStatement(SQL_FBGOOD_INSERT);
 			
 			for(int i = 0; i < 10; i++) {				
-				pstmt.setString(1, String.format("content%02d", i));
-				pstmt.setInt(2, i + 1);
-				pstmt.setInt(3, i % 5 + 1);
+				pstmt.setInt(1, i % 2 + 1);	// 1~2
+				pstmt.setInt(2, (int)(Math.floor((Math.random()) * 10)) + 1);	// 1~10
 				cnt += pstmt.executeUpdate();
 			}
 			
@@ -52,20 +53,21 @@ class CommentDummyData {
 			
 			pstmt.close();
 			
-			pstmt = conn.prepareStatement(SQL_MBCOMMENT_INSERT);
+			pstmt = conn.prepareStatement(SQL_MBGOOD_INSERT);
 			
 			for(int i = 0; i < 10; i++) {				
-				pstmt.setString(1, String.format("content%02d", i));
-				pstmt.setInt(2, i + 1);
-				pstmt.setInt(3, i % 5 + 1);
+				pstmt.setInt(1, i % 2 + 1);	// 1~2
+				pstmt.setInt(2, (int)(Math.floor((Math.random()) * 10)) + 1);	// 1~10
 				cnt += pstmt.executeUpdate();
 			}
 			
 			System.out.println(cnt + "개 의 회원 데이터가 INSERT 되었습니다");
 			
+			conn.commit();
 
 		} catch(Exception e) {
 			e.printStackTrace();
+			conn.rollback();
 		} finally {
 			try {
 				if(pstmt != null) pstmt.close();

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.domain.MovieBoardDAO">
+<!-- 공통적으로 사용하는 게시판 write, view, update, delete 쿼리문 -->
+	
+	<!-- 게시글 총 개수 -->
+	<select id="count" resultType="int">
+		SELECT 
+			count(*)
+		FROM
+			movieboard
+	</select>
+	
+	<!-- 게시글 목록 -->
+	<select id="selectAll" resultType="com.spring.domain.BoardDTO">
+		SELECT 
+			mb_uid uid,
+			(
+				SELECT 
+					ifnull(good.cus_uid, 0)
+				FROM 
+					movieboard mb LEFT JOIN mb_good good
+				ON 
+					mb.mb_uid = good.mb_uid 
+				WHERE 
+					mb.mb_uid = uid		<!-- uid : 위의 게시판 uid 컬럼 값 -->
+				GROUP BY 
+					mb.mb_uid
+			) goodCnt,
+			mb_subject subject,
+			mb_title title,
+			(
+				SELECT 
+					cus.cus_nickname 
+				FROM 
+					movieboard mb, customer cus
+				WHERE mb.cus_uid = cus.cus_uid 
+					  AND 
+					  mb.mb_uid = uid		<!-- uid : 위의 게시판 uid 컬럼 값 -->
+			) nickName,
+			mb_datetime date,		<!-- BoardDTO 의 이름과 동일하게!!!! -->
+			mb_viewcnt viewCnt,
+			mb_boardtype boardType
+		FROM 
+			movieboard
+		ORDER BY 
+			mb_uid DESC
+		LIMIT 
+			#{from}, #{pageRows}
+	</select>
+	
+	<!-- 게시글 조회수 증가 -->
+	<update id="incViewCnt" flushCache="true">
+		UPDATE 
+			movieboard 
+		SET 
+			mb_viewCnt = mb_viewcnt + 1 
+		WHERE 
+			mb_uid = #{uid}		<!--  uid : 게시글의 uid -->
+	</update>
+	
+	<!-- 특정 uid 게시글 조회 -->
+	<select id="selectByUid" resultType="com.spring.domain.BoardDTO">
+		SELECT 
+			mb_uid uid,
+			(
+				SELECT 
+					cus.cus_nickname 
+				FROM 
+					movieboard mb, customer cus
+				WHERE 
+					mb.cus_uid = cus.cus_uid 
+					AND 
+					mb.mb_uid = uid
+			) nickName,
+			mb_datetime date,		<!-- BoardDTO 의 이름과 동일하게!!!! -->
+			mb_viewcnt viewCnt,
+			(
+				SELECT 
+					ifnull(good.cus_uid, 0)
+				FROM 
+					movieboard mb LEFT JOIN mb_good good
+				ON 
+					mb.mb_uid = good.mb_uid 
+				WHERE 
+					mb.mb_uid = uid			<!-- uid : 위의 게시판 uid 컬럼 값 -->
+				GROUP BY 
+				mb.mb_uid
+			) goodCnt,
+			(
+				SELECT 
+					count(com.mb_co_uid)
+				FROM 
+					movieboard mb LEFT JOIN mb_comment com
+				ON 
+					mb.mb_uid = com.mb_uid
+				WHERE 
+					mb.mb_uid = uid			<!-- uid : 위의 게시판 uid 컬럼 값 -->
+				GROUP BY 
+					mb.mb_uid
+			) commentCnt,
+			mb_subject subject,
+			mb_title title,
+			mb_content content,
+			mb_boardtype boardType
+		FROM 
+			movieboard 
+		WHERE 
+			mb_uid = #{uid}		<!--  uid : 게시글의 uid -->
+	</select>
+	
+	<!-- 닉네임으로 회원 uid 찾기 -->
+	<select id="findCusUid" resultType="int">
+		SELECT 
+			cus_uid 
+		FROM 
+			customer 
+		WHERE 
+			cus_nickname = #{nickName}
+	</select>
+	
+	<!-- 게시글 작성 -->
+	<insert id="insert" flushCache="true" 
+		parameterType="com.spring.domain.BoardDTO"
+		keyProperty="uid" useGeneratedKeys="true" keyColumn="mb_uid">
+		INSERT INTO movieboard 
+			(mb_title, mb_content, cus_uid, mb_boardtype)	<!-- cus_uid는 로그인 정보에서 가져와서 자동으로 넣어줄 것!!! --> 
+		VALUES 
+			(#{title}, #{content}, #{cusUid}, #{boardType})	<!-- uid : 게시글 작성자 uid -->
+	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="update" flushCache="true">
+		UPDATE 
+			movieboard 
+		SET 
+			mb_title = #{title}, 
+			mb_content = #{content}
+		WHERE 
+			mb_uid = #{uid}	<!-- uid : 게시글의 uid -->
+	</update>
+	
+	<!-- 특정 uid 게시글의 좋아요 삭제 -->
+	<delete id="deleteGood" flushCache="true" parameterType="java.util.ArrayList">
+		DELETE FROM 
+			mb_good 
+		WHERE 
+			mb_uid IN (
+			<foreach collection="array" item="item" separator=", ">
+				${item}
+			</foreach>
+			)
+	</delete>
+	
+	<!-- 특정 uid 게시글의 댓글 삭제 -->
+	<delete id="deleteComment" flushCache="true" parameterType="java.util.ArrayList">
+		DELETE FROM 
+			mb_comment
+		WHERE 
+			mb_uid IN (
+			<foreach collection="array" item="item" separator=", ">
+				${item}
+			</foreach>
+			)
+	</delete>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delete" flushCache="true" parameterType="java.util.ArrayList">
+		DELETE FROM 
+			movieboard 
+		WHERE 
+			mb_uid IN (
+			<foreach collection="array" item="item" separator=", ">
+				${item}
+			</foreach>
+			)
+	</delete>
+</mapper>
