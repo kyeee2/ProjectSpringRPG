@@ -4,7 +4,7 @@ SELECT * FROM authority ;
 DELETE FROM customer ;
 DELETE FROM authority ;
 
-INSERT INTO customer (cus_id, cus_pw, cus_phonenum, cus_nickname ,cus_name, cus_birthdaty)
+INSERT INTO customer (cus_id, cus_pw, cus_phonenum, cus_nickname ,cus_name, cus_birthday)
 VALUES (?, ?, ? ,? ,?, ?);
 
 INSERT INTO authority (cus_uid, cus_auth)

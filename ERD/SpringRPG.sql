@@ -228,7 +228,7 @@ ALTER TABLE mb_good
 
 
 ALTER TABLE message
-	ADD FOREIGN KEY (cus_sendUid)
+	ADD FOREIGN KEY (cus_RecUid)
 	REFERENCES customer (cus_uid)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
@@ -236,7 +236,7 @@ ALTER TABLE message
 
 
 ALTER TABLE message
-	ADD FOREIGN KEY (cus_RecUid)
+	ADD FOREIGN KEY (cus_sendUid)
 	REFERENCES customer (cus_uid)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
