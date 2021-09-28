@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration   // 일단 컨테이너에 생성되어야 한다.
 @EnableWebSecurity // Web Security 를 활성화 해준다.
@@ -61,4 +62,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		webSecurity.ignoring().antMatchers("/css/**", "/fonts/**", "/images/**", "/js/**", "/plugins/**");
 
 	}
+	
+	@Bean
+    public RestTemplate restTemplate(){
+        return  new RestTemplate();
+    }
 }
