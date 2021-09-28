@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS noticeboard;
 DROP TABLE IF EXISTS customer;
 DROP TABLE IF EXISTS primiereWinBoard;
 DROP TABLE IF EXISTS premiere;
-
+drop table if exists premierewin;
 
 
 
