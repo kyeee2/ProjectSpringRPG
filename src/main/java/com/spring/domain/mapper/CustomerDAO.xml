@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.domain.CustomerDAO">
+
+<!-- 글작성 -->
+	<insert id="addUser" flushCache="true"
+	parameterType="com.spring.domain.CustomerDTO">
+		INSERT INTO customer
+			(cus_id, cus_pw, cus_name, cus_nickname, cus_birthdaty, cus_profile, cus_phonenum )
+		VALUES
+			(#{id}, #{pw}, #{name}, #{nickname}, #{birthday}, #{profile}, #{phonenum})	
+	</insert>
+
+<insert id="addAuth">
+		INSERT INTO authority
+		VALUES(#{param1}, #{param2})
+	</insert>
+
+	<delete id="deleteUser" parameterType="com.spring.domain.CustomerDTO">
+		DELETE FROM customer
+		WHERE cus_id = #{id}
+	</delete>	
+	
+	<delete id="deleteAuth">
+		DELETE FROM authority
+		WHERE cus_id = #{param1} AND cus_auth = #{param2}
+	</delete>
+
+	<delete id="deleteAuths">
+		DELETE FROM authority
+		WHERE cus_id = #{param1}
+	</delete>
+
+	<select id="findById" resultType="com.spring.domain.CustomerDTO">
+		SELECT
+			cus_uid uid,
+			cus_id id,
+			cus_pw pw,
+			cus_name name, 
+			cus_nickname nickname, 
+			cus_birthdaty birthday, 
+			cus_profile profile, 
+			cus_phonenum phonenum, 
+			cus_enabled enabled,
+			
+		FROM customer
+		WHERE cus_id = #{id}	
+	</select>
+
+	<select id="selectAuthoritiesById" resultType="String">
+		SELECT cus_auth
+		FROM authority
+		WHERE cus_id = #{id}
+	</select>
+
+
+
+
+</mapper>
