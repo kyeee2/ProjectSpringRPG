@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.domain.FreeBoardDAO">
+	<!-- 공통적으로 사용하는 게시판 write, view, update, delete 쿼리문 -->
+	
+	<!-- 게시글 총 개수 -->
+	<select id="count" resultType="int">
+		SELECT 
+			count(*)
+		FROM
+			freeboard
+	</select>
+	
+	<!-- 게시글 목록 -->
+	<select id="selectAll" resultType="com.spring.domain.BoardDTO">
+		SELECT 
+			fb_uid uid,
+			(
+				SELECT 
+					ifnull(good.cus_uid, 0)
+				FROM 
+					freeboard fb LEFT JOIN fb_good good
+				ON 
+					fb.fb_uid = good.fb_uid 
+				WHERE 
+					fb.fb_uid = uid		<!-- uid : 위의 게시판 uid 컬럼 값 -->
+				GROUP BY 
+					fb.fb_uid
+			) goodCnt,
+			fb_title title,
+			(
+				SELECT 
+					cus.cus_nickname 
+				FROM 
+					freeboard fb, customer cus
+				WHERE fb.cus_uid = cus.cus_uid 
+					  AND 
+					  fb.fb_uid = uid		<!-- uid : 위의 게시판 uid 컬럼 값 -->
+			) nickName,
+			fb_datetime date,		<!-- BoardDTO 의 이름과 동일하게!!!! -->
+			fb_viewcnt viewCnt,
+			fb_boardtype boardType
+		FROM 
+			freeboard
+		ORDER BY 
+			fb_uid DESC
+		LIMIT 
+			#{from}, #{pageRows}
+	</select>
+	
+	<!-- 게시글 조회수 증가 -->
+	<update id="incViewCnt" flushCache="true">
+		UPDATE 
+			freeboard 
+		SET 
+			fb_viewCnt = fb_viewcnt + 1 
+		WHERE 
+			fb_uid = #{uid}		<!--  uid : 게시글의 uid -->
+	</update>
+	
+	<!-- 특정 uid 게시글 조회 -->
+	<select id="selectByUid" resultType="com.spring.domain.BoardDTO">
+		SELECT 
+			fb_uid uid,
+			(
+				SELECT 
+					cus.cus_nickname 
+				FROM 
+					freeboard fb, customer cus
+				WHERE 
+					fb.cus_uid = cus.cus_uid 
+					AND 
+					fb.fb_uid = uid
+			) nickName,
+			fb_datetime date,		<!-- BoardDTO 의 이름과 동일하게!!!! -->
+			fb_viewcnt viewCnt,
+			(
+				SELECT 
+					ifnull(good.cus_uid, 0)
+				FROM 
+					freeboard fb LEFT JOIN fb_good good
+				ON 
+					fb.fb_uid = good.fb_uid 
+				WHERE 
+					fb.fb_uid = uid			<!-- uid : 위의 게시판 uid 컬럼 값 -->
+				GROUP BY 
+				fb.fb_uid
+			) goodCnt,
+			(
+				SELECT 
+					count(com.fb_co_uid)
+				FROM 
+					freeboard fb LEFT JOIN fb_comment com
+				ON 
+					fb.fb_uid = com.fb_uid
+				WHERE 
+					fb.fb_uid = uid			<!-- uid : 위의 게시판 uid 컬럼 값 -->
+				GROUP BY 
+					fb.fb_uid
+			) commentCnt,
+			fb_title title,
+			fb_content content,
+			fb_boardtype boardType
+		FROM 
+			freeboard 
+		WHERE 
+			fb_uid = #{uid}		<!--  uid : 게시글의 uid -->
+	</select>
+	
+	<!-- 닉네임으로 회원 uid 찾기 -->
+	<select id="findCusUid" resultType="int">
+		SELECT 
+			cus_uid 
+		FROM 
+			customer 
+		WHERE 
+			cus_nickname = #{nickName}
+	</select>
+	
+	<!-- 게시글 작성 -->
+	<insert id="insert" flushCache="true" 
+		parameterType="com.spring.domain.BoardDTO"
+		keyProperty="uid" useGeneratedKeys="true" keyColumn="fb_uid">
+		INSERT INTO freeboard 
+			(fb_title, fb_content, cus_uid, fb_boardtype)	<!-- cus_uid는 로그인 정보에서 가져와서 자동으로 넣어줄 것!!! --> 
+		VALUES 
+			(#{title}, #{content}, #{cusUid}, #{boardType})	<!-- uid : 게시글 작성자 uid -->
+	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="update" flushCache="true">
+		UPDATE 
+			freeboard 
+		SET 
+			fb_title = #{title}, 
+			fb_content = #{content}
+		WHERE 
+			fb_uid = #{uid}	<!-- uid : 게시글의 uid -->
+	</update>
+	
+	<!-- 특정 uid 게시글의 좋아요 삭제 -->
+	<delete id="deleteGood" flushCache="true" parameterType="java.util.ArrayList">
+		DELETE FROM 
+			fb_good 
+		WHERE 
+			fb_uid IN (
+			<foreach collection="array" item="item" separator=", ">
+				${item}
+			</foreach>
+			)
+	</delete>
+	
+	<!-- 특정 uid 게시글의 댓글 삭제 -->
+	<delete id="deleteComment" flushCache="true" parameterType="java.util.ArrayList">
+		DELETE FROM 
+			fb_comment
+		WHERE 
+			fb_uid IN (
+			<foreach collection="array" item="item" separator=", ">
+				${item}
+			</foreach>
+			)
+	</delete>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delete" flushCache="true" parameterType="java.util.ArrayList">
+		DELETE FROM 
+			freeboard 
+		WHERE 
+			fb_uid IN (
+			<foreach collection="array" item="item" separator=", ">
+				${item}
+			</foreach>
+			)
+	</delete>
+</mapper>	

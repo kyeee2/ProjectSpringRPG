@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.domain.NoticeBoardDAO">
+	<!-- 공통적으로 사용하는 게시판 write, view, update, delete 쿼리문 -->
+	
+	<!-- 게시글 총 개수 -->
+	<select id="count" resultType="int">
+		SELECT 
+			count(*)
+		FROM
+			noticeboard
+	</select>
+	
+	<!-- 게시글 목록 -->
+	<select id="selectAll" resultType="com.spring.domain.BoardDTO">
+		SELECT 
+			nb_uid uid,
+			nb_title title,
+			(
+				SELECT 
+					cus.cus_nickname 
+				FROM 
+					noticeboard nb, customer cus
+				WHERE nb.cus_uid = cus.cus_uid 
+					  AND 
+					  nb.nb_uid = uid		<!-- uid : 위의 게시판 uid 컬럼 값 -->
+			) nickName,
+			nb_datetime date,		<!-- BoardDTO 의 이름과 동일하게!!!! -->
+			nb_viewcnt viewCnt,
+			nb_boardtype boardType
+		FROM 
+			noticeboard
+		ORDER BY 
+			nb_uid DESC
+		LIMIT 
+			#{from}, #{pageRows}
+	</select>
+	
+	<!-- 게시글 조회수 증가 -->
+	<update id="incViewCnt" flushCache="true">
+		UPDATE 
+			noticeboard
+		SET 
+			nb_viewCnt = nb_viewcnt + 1 
+		WHERE 
+			nb_uid = #{uid}		<!--  uid : 게시글의 uid -->
+	</update>
+	
+	<!-- 특정 uid 게시글 조회 -->
+	<select id="selectByUid" resultType="com.spring.domain.BoardDTO">
+		SELECT 
+			nb_uid uid,
+			(
+				SELECT 
+					cus.cus_nickname 
+				FROM 
+					noticeboard nb, customer cus
+				WHERE 
+					nb.cus_uid = cus.cus_uid 
+					AND 
+					nb.nb_uid = uid
+			) nickName,
+			nb_datetime date,		<!-- BoardDTO 의 이름과 동일하게!!!! -->
+			nb_viewcnt viewCnt,
+			nb_title title,
+			nb_content content,
+			nb_boardtype boardType
+		FROM 
+			noticeboard 
+		WHERE 
+			nb_uid = #{uid}		<!--  uid : 게시글의 uid -->
+	</select>
+	
+	<!-- 닉네임으로 회원 uid 찾기 -->
+	<select id="findCusUid" resultType="int">
+		SELECT 
+			cus_uid 
+		FROM 
+			customer 
+		WHERE 
+			cus_nickname = #{nickName}
+	</select>
+	
+	<!-- 게시글 작성 -->
+	<insert id="insert" flushCache="true" 
+		parameterType="com.spring.domain.BoardDTO"
+		keyProperty="uid" useGeneratedKeys="true" keyColumn="nb_uid">
+		INSERT INTO noticeboard 
+			(nb_title, nb_content, cus_uid, nb_boardtype)	<!-- cus_uid는 로그인 정보에서 가져와서 자동으로 넣어줄 것!!! --> 
+		VALUES 
+			(#{title}, #{content}, #{cusUid}, #{boardType})	<!-- uid : 게시글 작성자 uid -->
+	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="update" flushCache="true">
+		UPDATE 
+			noticeboard 
+		SET 
+			nb_title = #{title}, 
+			nb_content = #{content}
+		WHERE 
+			nb_uid = #{uid}	<!-- uid : 게시글의 uid -->
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delete" flushCache="true" parameterType="java.util.ArrayList">
+		DELETE FROM 
+			noticeboard 
+		WHERE 
+			nb_uid IN (
+			<foreach collection="array" item="item" separator=", ">
+				${item}
+			</foreach>
+			)
+	</delete>
+</mapper>	
