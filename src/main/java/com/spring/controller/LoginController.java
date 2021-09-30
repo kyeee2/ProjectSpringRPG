@@ -2,6 +2,7 @@ package com.spring.controller;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -34,11 +35,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.spring.domain.CustomerDTO;
+import com.spring.domain.FileDTO;
 import com.spring.service.LoginService;
 
 @Controller
@@ -312,10 +315,7 @@ public class LoginController {
         return userInfo;
     }
  
-	@RequestMapping("/loginOk")
-	public String loginOk() {
-		return "/basic/loginOk";
-	}
+	
 	@RequestMapping("/joinAgree")
 	public String joinAgree() {
 		return "/basic/joinAgree";
@@ -334,15 +334,20 @@ public class LoginController {
 		
 		int cnt = loginService.addMember(user);
 		
-		return "redirect:/login";
+		return "redirect:/basic/login";
 	}
 	@RequestMapping("/logout")
 	public String logout() {
 		return "/basic/logout";
 	}
-	@PostMapping("/filecheck")
-	public String fileUpload() {
-		return "/basic/FileCheck";
+	@RequestMapping("/main")
+	public String mainpage() {
+		return "/basic/main";
 	}
+	 @PostMapping("/upload")
+	    public String upload() {
+	       return "/basic/FileUpload";
 	
+	
+}
 }
