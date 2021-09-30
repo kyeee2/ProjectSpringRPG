@@ -1,6 +1,5 @@
 var boardType = "";	// boardType 세팅
-var uid = "";
-var buid = "";
+var uid = "";	//게시글 고유번호
 
 $(document).ready(function() {
 	
@@ -12,7 +11,6 @@ $(document).ready(function() {
 	// URLSearchParams.get('parameter') : 파라미터명이 'parameter'인 것 중 첫번째 value 값 리턴
 	boardType = urlParams.get('boardType'); // 파라미터명이 boardType인 value 값 받기 
 	uid = urlParams.get('uid'); // 파라미터명이 uid인 value 값 받기 	
-	
 	// URLSearchParams.getAll('parameter')	: 파라미터명이 'parameter'인 모든 value값을 배열로 리턴
 	//document.write(urlParams.getAll('q') + '<br>'); // ['coffee']
 	
@@ -90,3 +88,26 @@ function chkDelete() {
 		}
 	});
 }
+	
+
+	
+	$('[name=commentInsertBtn]').click(function() {	//댓글등록 버튼 클릭 시
+		var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm 내용 가져오기
+		// TODO insert 함수호출
+	});
+	
+	//댓글 목록 
+	function commentList(boardType, buid){
+		$.ajax({
+			url : "/view/" + boardType + "/" + buid, // url : /ajax/{boardType}/{buid}
+			type : 'GET',
+			cahce : false,
+			success : function(codata, status) {
+				if(status=="success") {
+					
+				}
+			}
+			
+		});
+	}//end commentList()
+	
