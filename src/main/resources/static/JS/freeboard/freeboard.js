@@ -10,7 +10,7 @@ $(document).ready(function() {
 function loadPage(page) {
 	
 	$.ajax({
-		url: "/list/freeboard/" + page + "/" + pageRows,	// url : /ajax/freeboard/{page}/{pageRows}
+		url: "/board/list/freeboard/" + page + "/" + pageRows,	// url : /ajax/freeboard/{page}/{pageRows}
 		type: "GET",
 		cache: false,
 		success: function(data, status) {
@@ -145,7 +145,7 @@ function deleteData() {
 		
 		// DELETE 방식
 		$.ajax({
-			url : "/",	// localhost:8090
+			url : "/board",	// localhost:8090
 			type : "DELETE",
 			data : "boardType=freeboard&" + data,
 			cache : false,

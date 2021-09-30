@@ -16,7 +16,7 @@ $(document).ready(function() {
 	loadData(boardType, uid);
 	
 	// 수정완료 클릭하면
-	$("#frm").submit(function(event) {
+	$("#btn-submit").click(function(event) {	// event로 두번 submit 되지 않게 막기
 		if(chkSubmit()){
 			updateData();
 		} else {
@@ -29,7 +29,7 @@ $(document).ready(function() {
 function loadData(boardType, uid) {
 	
 	$.ajax({
-		url : "/read/" + boardType + "/" + uid,
+		url : "/board/read/" + boardType + "/" + uid,
 		type : "GET",
 		cache : false,
 		success : function(data, status) {
@@ -50,6 +50,10 @@ function writeValue(data) {
 	$("input[name=boardType]").val(boardType);
 	$("input[name=uid]").val(uid);
 	$("span[name=nickName]").text(data.nickname);
+	if(boardType == "movieboard") {
+		// 영화 리뷰라면 주제에 원래 내용 넣어주기
+		$("input[name=subject]").val(data.subject);	
+	}
 	$("input[name=title]").val(data.title);
 	$("textarea[name=content]").val(data.content);
 }
@@ -81,7 +85,7 @@ function updateData() {
 	var formData = $("#frm").serialize();	// form 안의 name 값들을 모두 가져옴
 	
 	$.ajax({
-		url : "/",
+		url : "/board",
 		type : "PUT",
 		cache : false,
 		data : formData,

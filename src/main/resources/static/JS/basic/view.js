@@ -28,7 +28,7 @@ function viewData(boardType, uid) {
 
 	// 읽어오기
 	$.ajax({
-		url : "/view/" + boardType + "/" + uid,	// url : /ajax/{boardType}/{uid}
+		url : "/board/view/" + boardType + "/" + uid,	// url : /ajax/{boardType}/{uid}
 		type : "GET",
 		cache : false,
 		success : function(data, status) {
@@ -57,8 +57,15 @@ function writeData(jsonObj) {
 	result += "작성자 : " + jsonObj.nickname + "<br>\n";
 	result += "등록일 : " + jsonObj.datetime + "<br>\n";
 	result += "조회수 : " + jsonObj.viewcnt + "<br>\n";
-	result += "좋아요수 : " + jsonObj.goodcnt + "<br>\n";
-	result += "댓글수 : " + jsonObj.commentcnt + "<br>\n";
+	if(jsonObj.boardtype != "noticeboard") {
+		// 좋아요수와 댓글수는 공지사항에서는 보이지 않는다
+		result += "좋아요수 : " + jsonObj.goodcnt + "<br>\n";
+		result += "댓글수 : " + jsonObj.commentcnt + "<br>\n";
+	}
+	if(jsonObj.boardtype == "movieboard"){	
+		// 주제는 영화 리뷰에서만 보임
+		result += "주제 : " + jsonObj.subject + "<br>\n";
+	}
 	result += "제목 : " + jsonObj.title + "<br>\n";
 	result += "내용 : " + jsonObj.content + "<br>\n";
 	
@@ -73,7 +80,7 @@ function chkDelete() {
 	
 	// DELETE 방식
 	$.ajax({
-		url : "/",
+		url : "/board",
 		type : "DELETE",
 		data : data,
 		cache : false,

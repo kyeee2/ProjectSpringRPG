@@ -34,11 +34,6 @@ public class BoardController {
 		return "/basic/write";
 	}
 	
-	@RequestMapping("/writeOk")
-	public String boardWriteOk(BoardDTO dto, Model model) {
-		return "/basic/writeOk";
-	}
-	
 	@RequestMapping("/view")
 	public String boardView(String boardType, int uid, Model model) {
 		return "/basic/view";
@@ -49,13 +44,4 @@ public class BoardController {
 		return "/basic/update";
 	}
 	
-	@RequestMapping("/updateOk")
-	public String boardUpdateOk(BoardDTO dto, Model model) {
-		return "/basic/updateOk";
-	}
-	
-	@RequestMapping("/deleteOk")
-	public String boardDeleteOk(String boardType, int [] uid, Model model) {
-		return "/basic/deleteOk";
-	}
 }
