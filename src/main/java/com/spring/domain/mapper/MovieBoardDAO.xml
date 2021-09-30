@@ -124,9 +124,9 @@
 		parameterType="com.spring.domain.BoardDTO"
 		keyProperty="uid" useGeneratedKeys="true" keyColumn="mb_uid">
 		INSERT INTO movieboard 
-			(mb_title, mb_content, cus_uid, mb_boardtype)	<!-- cus_uid는 로그인 정보에서 가져와서 자동으로 넣어줄 것!!! --> 
+			(mb_subject, mb_title, mb_content, cus_uid, mb_boardtype)	<!-- cus_uid는 로그인 정보에서 가져와서 자동으로 넣어줄 것!!! --> 
 		VALUES 
-			(#{title}, #{content}, #{cusUid}, #{boardType})	<!-- uid : 게시글 작성자 uid -->
+			(#{subject}, #{title}, #{content}, #{cusUid}, #{boardType})	<!-- uid : 게시글 작성자 uid -->
 	</insert>
 	
 	<!-- 게시글 수정 -->
@@ -134,6 +134,7 @@
 		UPDATE 
 			movieboard 
 		SET 
+			mb_subject = #{subject},
 			mb_title = #{title}, 
 			mb_content = #{content}
 		WHERE 

@@ -2,11 +2,25 @@ var boardType = "";	// boardType 세팅
 
 $(document).ready(function() {
 	
-	$("#frm").submit(function(event) {
+	$("#btn-submit").click(function(event) {	// event로 두번 submit 되지 않게 막기
 		if(chkSubmit()){
 			writeData();
 		} else {
 			event.preventDefault();	// 유효성검사 실패했을 때 다시 request하는걸 막아주기
+		}
+	});
+	
+	// 라디오 버튼을 클릭할 때
+	$("input[name=boardType]").click(function(event) {
+		var radio = event.target;
+		if($(radio).val() == "movieboard") {
+			// 클릭한 라디오 버튼의 값이 movieboard라면
+			// 주제 작성 칸 생성
+			$("#subject").html("주제: <input type='text' name='subject' value=''/><br>");
+		} else {
+			// movieboard가 아니라면
+			// 주제 작성 칸 삭제
+			$("#subject").html("");
 		}
 	});
 	
@@ -45,7 +59,7 @@ function writeData() {
 	boardType = $('input[name=boardType]:checked').val();
 	
 	$.ajax({
-		url : "/",
+		url : "/board",
 		type : "POST",
 		cache : false,
 		data : formData,

@@ -26,5 +26,14 @@
 		<button id="doDelete">삭제하기</button>
 		<button onclick="location.href='write?boardType=${ param.boardType }'">신규등록</button>
 	</div>
+	<br><br>
+	<div id="cresult"></div>
+	<br>
+	<input type="text" name="content"/>
+	<br>
+	<div id="btn_comment">
+	<button onclick="location.href='update?boardType=${ param.boardType }&buid=${ param.buid }'">댓글수정</button>
+	<button id="doCoDelete">댓글삭제</button>  
+	</div>
 </body>
 </html>

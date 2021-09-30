@@ -2,10 +2,17 @@ package com.spring.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 
+import com.spring.BoardValidator;
 import com.spring.domain.BoardDTO;
 import com.spring.domain.FreeBoardDAO;
 import com.spring.domain.MovieBoardDAO;
@@ -105,6 +112,8 @@ public class AjaxBoardService {
 	}
 
 	public int update(BoardDTO dto) {
+
+		// 유효성 검사가 끝나면 update 실행하기
 		
 		// dto에서 boardType 가져오기
 		String boardType = dto.getBoardType();
@@ -136,4 +145,5 @@ public class AjaxBoardService {
 			return 0;
 		}
 	}
+	
 }

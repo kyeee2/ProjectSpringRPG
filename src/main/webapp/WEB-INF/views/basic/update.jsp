@@ -17,15 +17,23 @@
 <body>
 <h2>글수정</h2>
 <form id="frm" name="frm" method="post">
-<input type="hidden" name="boardType" value="">
-<input type="hidden" name="uid" value="">
-작성자 : <span name=nickName></span><br> <%-- 작성자 이름은 변경 불가 --%>
-제목 :
-<input type="text" name="title" value="${ dto.title }"/><br>
-내용 : <br>
-<textarea name="content">${ dto.content }</textarea>
-<br><br>
-<button type="submit">수정완료</button>
+	<input type="hidden" name="boardType" value="">
+	<input type="hidden" name="uid" value="">
+	작성자 : <span name=nickName></span><br> <%-- 작성자 이름은 변경 불가 --%>
+	<c:choose>
+		<c:when test="${ param.boardType == 'movieboard' }">
+			주제: 
+			<input type="text" name="subject" value=""/><br>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
+	제목 :
+	<input type="text" name="title" value=""/><br>
+	내용 : <br>
+	<textarea name="content"></textarea>
+	<br><br>
+	<button id="btn-submit" type="button">수정완료</button>	<%-- type을 submit 에서 button으로 바꿈 --%>
 </form>
 <button onclick="history.back()">이전으로</button>
 <button onclick="location.href='${ param.boardType }'">목록보기</button>
