@@ -1,5 +1,6 @@
 var boardType = "";	// boardType 세팅
 var uid = "";
+var buid = "";
 
 $(document).ready(function() {
 	
