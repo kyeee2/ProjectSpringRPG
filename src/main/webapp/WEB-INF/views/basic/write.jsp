@@ -22,12 +22,13 @@
 	<input type="radio" name="boardType" value="noticeboard" ${ param.boardType=='noticeboard'?'checked':'' }/>공지사항<br>
 	작성자:
 	<input type="text" name="nickName"/><br>
+	<div id="subject"></div>
 	제목:
 	<input type="text" name="title"/><br>
 	내용:<br>
 	<textarea name="content"></textarea>
 	<br><br>
-	<button type="submit">작성완료</button>
+	<button id="btn-submit" type="button">작성완료</button>	<%-- type을 submit 에서 button으로 바꿈 --%>
 </form>
 <br>
 <button type="button" onclick="location.href = '${ param.boardType }'">목록으로</button>

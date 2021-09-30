@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.domain.MbCommentDAO">
+<!-- 자유게시판용 -->
+<select id="view" resultType="com.spring.domain.CommentDTO">
+		SELECT 
+			mb_co_uid uid, 
+			mb_co_content content, 
+			mb_uid buid, 
+			cus_uid nickName, 
+			mb_co_datetime dateTime, 
+			(select 
+				mb.mb_boardtype 
+			from 
+				movieboard mb, mb_comment com 
+			where 
+				mb.mb_uid = com.mb_uid 
+				and 
+				mb.mb_uid  = buid 
+				and 
+				com.mb_co_uid = uid 
+			) boardType 
+		FROM 
+			mb_comment 
+		WHERE 
+			mb_uid = #{buid}
+		ORDER BY 
+			mb_co_uid DESC		
+	</select>
+	<!-- 댓글작성 -->
+	<insert id="insert" flushCache="true"
+		parameterType="com.spring.domain.CommentDTO"
+		keyProperty="uid" useGeneratedKeys="true" keyColumn="mb_uid">	
+		INSERT INTO fb_comment 
+			(cus_uid, mb_co_datetime, mb_co_content)
+		VALUES
+			(#{nickName}, #{dateTime}, #{content})
+	</insert>
+	<!--특정 회원 uid 댓글 조회.마이페이지용  -->
+	<select id="selectByUid" resultType="com.spring.domain.CommentDTO">
+		SELECT 
+			mb_co_uid uid, mb_co_content content, cus_uid nickName, mb_co_datetime dateTime 
+		FROM mb_comment 
+		WHERE mb_co_uid=#{uid}
+	</select>
+	
+	<!--  댓글 수정 -->
+	<update id="update" flushCache="true"
+		parameterType="com.spring.domain.CommentDTO">
+		
+		UPDATE mb_comment
+		SET mb_co_content = #{content}
+		WHERE mb_co_uid = #{uid}
+				
+	</update>
+	
+	<!--  댓글 삭제 -->
+	<delete id="deleteByUid" flushCache="true"
+ 	 	parameterType="java.util.ArrayList">
+		DELETE FROM mb_comment WHERE mb_uid in (
+		 <foreach collection="array" item="item" index="index" separator=",">
+ 	 			${item}
+ 	 		</foreach>
+	</delete>
+	
+
+
+</mapper>
+
