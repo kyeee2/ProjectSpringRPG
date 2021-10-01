@@ -2,15 +2,22 @@ package com.spring.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.BoardValidator;
 import com.spring.domain.AjaxBoardList;
 import com.spring.domain.AjaxBoardResult;
 import com.spring.domain.BoardDTO;
@@ -163,7 +170,17 @@ public class AjaxBoardController {
 	} // end view(boardType, uid)
 	
 	@PostMapping("")
-	public AjaxBoardResult writeOk(BoardDTO dto) {	// dto에는 boardType, nickName, title, content 가 저장되어있다.
+	public AjaxBoardResult writeOk(@Valid BoardDTO dto	// title, subject(영화리뷰만), content, nickName, boardType
+			, BindingResult bresult
+			, Model model) {	// dto에는 boardType, nickName, title, content 가 저장되어있다.
+
+		// 유효성 검사 결과 먼저 확인
+		if(bresult.hasErrors()) {
+			// 에러가 존재한다면
+			
+		}
+		
+		// 유효성 검사가 끝나면 insert 실행하기
 		
 		int count = 0;
 		
@@ -196,7 +213,15 @@ public class AjaxBoardController {
 	} // end writeOk()
 	
 	@PutMapping("")
-	public AjaxBoardResult updateOk(BoardDTO dto) {
+	public AjaxBoardResult updateOk(@Valid BoardDTO dto	// title, subject(영화리뷰만), content, nickName, boardType
+			, BindingResult bresult
+			, Model model) {
+
+		// 유효성 검사 결과 먼저 확인
+		if(bresult.hasErrors()) {
+			// 에러가 존재한다면
+			
+		}
 
 		int count = 0;
 		
@@ -260,5 +285,12 @@ public class AjaxBoardController {
 		return result;
 		
 	} // end deleteOk(boardType, uid[])
+	
+
+	// 이 서비스 클래스가 handler에서 폼 데이터를 바인딩할 때 검증하는 Validator 객체 지정
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.setValidator(new BoardValidator());
+	}
 	
 }

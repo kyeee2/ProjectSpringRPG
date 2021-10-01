@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AjaxPremiereList {
+public class AjaxPremiereList extends AjaxBoardResult {
 
 	@JsonProperty("data")	// 기획서 이름과 동일하게 맞춰주기
  	List<PremiereDTO> list;  // 데이터 목록

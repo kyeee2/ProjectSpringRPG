@@ -44,11 +44,14 @@ public class CommentService {
 	
 	//댓글작성
 	@Transactional
-	public int insert(String boardType, int buid) {
+	public int insert(CommentDTO dto) {
+		String boardType =dto.getBoardType();
 		if(boardType != null && boardType.equals("freeboard")) {
-			return fbComDAO.insert(boardType, buid);
-		} else if (boardType != null && boardType.equals("movieboard")) {
-			return mbComDAO.insert(boardType, buid);
+			return fbComDAO.insert(dto);
+		} 
+	
+		else if (boardType != null && boardType.equals("movieboard")) {
+			return mbComDAO.insert(dto);
 		} else {
 			return 0;
 		}
@@ -56,11 +59,12 @@ public class CommentService {
 	
 	//댓글수정
 
-	public int update(String boardType, int buid) {
+	public int update(CommentDTO dto) { // 댓글을 수정하려면 고유번호가 필요
+		String boardType =dto.getBoardType();
 		if(boardType != null && boardType.equals("freeboard")) {
-			return fbComDAO.update(boardType, buid);
+			return fbComDAO.update(dto);
 		} else if (boardType != null && boardType.equals("movieboard")) {
-			return mbComDAO.update(boardType, buid);
+			return mbComDAO.update(dto);
 		} else {
 			return 0;
 		}
@@ -68,11 +72,12 @@ public class CommentService {
 	
 	//댓글삭제
 
-	public int delete(String boardType, int buid) {
+	public int delete(String boardType, int uids[]) { // 댓글을 삭제하려면 댓글의 고유번호도 필요!
+		
 		if(boardType != null && boardType.equals("freeboard")) {
-			return fbComDAO.deleteByUid(buid);
+			return fbComDAO.deleteByUid(boardType, uids);
 		} else if (boardType != null && boardType.equals("movieboard")) {
-			return mbComDAO.deleteByUid(buid);
+			return mbComDAO.deleteByUid(boardType, uids);
 		} else {
 			return 0;
 		}

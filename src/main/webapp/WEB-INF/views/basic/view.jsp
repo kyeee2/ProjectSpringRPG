@@ -28,19 +28,20 @@
 	</div>
 	<br><br>
 	<h5>댓글목록</h5>
-	<div id="cresult"></div>
 	<br>
-	<div class="comment class">
-	<input type="hidden" name="buid" value="${comment.buid }"/>
+	<form id="commentFrm" name="commentFrm" method="get">
+	<input type="hidden" name="uid" value="${param.uid }"/>
 	<input type="text" id = "content" name="content" placeholder="내용을 입력하세요"/>
 	<span>
 		<button type="button" name="commentInsertBtn">댓글등록</button>
 	</span>
-	</div>
+	</form>
 	<br>
-	<div id="btn_comment">
-	<button type="hidden" id="doCoUpdate">댓글수정</button>
-	<button type="hidden" id="doCoDelete">댓글삭제</button>  
+	<div id="comment">
+	</div>
+	<div id="exam">
+	<button type ="button" name="CoUpdateBtn">댓글수정</button>
+	<button type ="button" name="CoDeleteBtn">댓글삭제</button>  
 	</div>
 </body>
 </html>
