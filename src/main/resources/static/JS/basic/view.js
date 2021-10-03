@@ -1,6 +1,5 @@
 var boardType = "";	// boardType 세팅
-var uid = "";
-var buid = "";
+var uid = "";	//게시글 고유번호
 
 $(document).ready(function() {
 	
@@ -22,6 +21,32 @@ $(document).ready(function() {
 	// uid로 삭제하기
 	$("#doDelete").click(function() {
 		chkDelete();
+	});
+	
+	//댓글 읽어오기
+	commentList(boardType, uid);
+	
+	//댓글등록 버튼 클릭 시
+	$('[name=commentInsertBtn]').click(function() {	//댓글등록 버튼 클릭 시
+		if(checkCuid==true) {
+			
+		var insertData = $('[name=commentFrm]').serialize(); //commentInsertForm 내용 가져오기
+			commentinsert(insertData);//TODO
+		}
+	});
+	//댓글을 쓴 사람 외에는 수정버튼과 삭제버튼이 보이지 않음
+	$("#exam").hide(); //기본적으로 hide
+	if(matchNickName==true) { // 댓글의 nickName과 회원 nickName이 같을 경우
+		$("#exam").show(); // 수정과 삭제버튼이 보임
+	};
+	
+	// 수정버튼 클릭 시
+	$('[name=CoUpdateBtn]').click(function() {
+		updateComment(uid, content); //TODO
+	});
+	// 삭제버튼 클릭 시
+	$('[name=CoDeleteBtn]').click(function() {
+		deleteComment(); //TODO
 	});
 });
 
@@ -97,3 +122,72 @@ function chkDelete() {
 		}
 	});
 }
+
+
+	//댓글 등록
+	function commentinsert(insertData) {
+		$.ajax({
+			url : "/comment/writeOk",
+			type : "POST",
+			data : insertData,
+			cache : false,
+			success : function(data){
+				if(data == 1) {
+					commentList();
+					$('[name=content]').val('');
+				}
+			}
+		})
+	}//end commentinsert
+		
+	//댓글 목록 
+	function commentList(boardType, uid){
+		$.ajax({
+			url : "comment/view/" + boardType + "/" + uid, // url : /ajax/{boardType}/{uid}/{cuid}
+			type : 'GET',
+			datatype : 'json',
+			data : {'uid':uid},
+			cahce : false,
+			success : function(data, status) {
+				if(status=="success") {
+						for(var i=0; i<data.data.length; i++) {
+							writeComment(data.data[i]);	//
+						
+					}
+				}
+			}
+			
+		});
+	}//end commentList()
+	
+	function writeComment(jsonObj) {
+		
+		var comment ="";
+		
+		comment += "닉네임 : " + jsonObj.nickName + "<br>\n"; 
+		comment += "댓글내용 : " + jsonObj.content + "<br>\n"; 
+		comment += "작성시간 : " + jsonObj.dateTime + "<br>\n"; 
+		
+		$("#comment").html(comment);	// 정보 업데이트
+		
+		
+	}//end wrtieComment
+	
+	//댓글 특정 조건(작성한 customer의 nickName과 같을 경우)
+	function matchNickName() {
+		
+	}//end matchNickName
+	
+	
+	//댓글 수정
+	function updateComment(uid, content) {
+		var updateC ='';	//수정키 누르면 댓글창에 content 나타나야 함
+		updateC += "<div>";
+		
+		updateC += "</div>";
+	}//end updateComment
+	//댓글 삭제
+	function deleteComment() {
+		
+	}//end deleteComment
+
