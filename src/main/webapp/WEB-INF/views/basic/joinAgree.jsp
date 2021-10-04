@@ -16,7 +16,7 @@
 
 </head>
 <body>
-<form action="/join" method="get" id="form1">
+<form action="join" method="get" id="form1">
 <div id="d1">
 
  <h2 align="center">회원가입을 환영합니다.</h2><br/><br/>
