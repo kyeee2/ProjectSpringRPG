@@ -40,5 +40,6 @@
 	<br>
 	<div id="comment">
 	</div>
+	<span id="update"></span>
 </body>
 </html>

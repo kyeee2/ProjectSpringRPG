@@ -144,6 +144,7 @@ function chkDelete() {
 			success : function(data, status) {
 				if(status=="success") {
 					writeComment(data.data);
+				
 				}
 			}
 			
@@ -154,32 +155,50 @@ function chkDelete() {
 		
 		var comment ="";
 		
+		
 		for(i=0; i<jsonObj.length; i++) {
 		
 		comment += "<form name='frm" + i +"'>\n";
 		comment += "닉네임 : " + jsonObj[i].nickName + "<br>\n"; 
-		comment += "댓글내용 : <textarea>" + jsonObj[i].content + "</textarea><br>\n"; 
+		comment += "댓글내용 : <span>" + jsonObj[i].content + "</span><br>\n"; 
 		comment += "작성시간 : " + jsonObj[i].datetime + "<br>\n"; 
+		comment += "</form>\n";
+		comment += "<form name='update" + i +"'>\n";
 		comment += "<div class='exam'>\n";
 		comment += "<button type='button' class='CoUpdateBtn' name='CoUpdateBtn' onclick='clickUpdate(event)'>댓글수정</button>";
 		comment += "<button type='button' name='CoDeleteBtn' onclick='clickDelete(event)'>댓글삭제</button>";
-		comment += "</div><br><br><br>\n";
+		comment += "</div>\n";
 		comment += "</form>\n";
 		}
 		
+		
 		$("#comment").html(comment);	// 정보 업데이트
+	
+		
 		
 	}//end wrtieComment
+	
 	
 	//->clickUpdate(event) 클릭 시 content가 textarea로 바뀌고, 댓글삭제버튼 없어지고 수정완료버튼 생기고 댓글수정버튼 생김
 	//수정완료버튼 누를 시, 입력한 content로 댓글이 바뀌고 writeComment(jsonObj)형식으로 다시 바뀜
 	//->어떻게 적용해야할까?
 	
 	function clickUpdate(event){
-		var $form = $(event.target).parent().parent();	// form 가져오기
+		var $form = $(event.target).parent().parent().parent();	// form 가져오기
+	
+		//console.log(form.html());
+		//console.log($form.html());
+		console.log($form.parentElement());
 		
-		alert($form.html());
+		
+		
+			
+
 	}
+
+
+
+
 	
 	function chkCosubmit() {
 		frm = document.forms['commentFrm'];
