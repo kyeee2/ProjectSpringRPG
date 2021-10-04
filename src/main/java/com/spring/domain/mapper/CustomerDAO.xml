@@ -7,14 +7,14 @@
 	<insert id="addUser" flushCache="true"
 	parameterType="com.spring.domain.CustomerDTO">
 		INSERT INTO customer
-			(cus_id, cus_pw, cus_name, cus_nickname, cus_birthdaty, cus_profile, cus_phonenum )
+			(cus_id, cus_pw, cus_name, cus_nickname, cus_birthday, cus_profile, cus_phonenum )
 		VALUES
 			(#{id}, #{pw}, #{name}, #{nickname}, #{birthday}, #{profile}, #{phonenum})	
 	</insert>
 
 <insert id="addAuth">
 		INSERT INTO authority
-		VALUES(#{param1}, #{param2})
+		VALUES(#{param2}, #{param1})
 	</insert>
 
 	<delete id="deleteUser" parameterType="com.spring.domain.CustomerDTO">
@@ -39,7 +39,7 @@
 			cus_pw pw,
 			cus_name name, 
 			cus_nickname nickname, 
-			cus_birthdaty birthday, 
+			cus_birthday birthday, 
 			cus_profile profile, 
 			cus_phonenum phonenum, 
 			cus_enabled enabled,
@@ -53,7 +53,16 @@
 		FROM authority
 		WHERE cus_id = #{id}
 	</select>
-
+	<select id="idChk" resultType="int">
+		SELECT COUNT(*) FROM customer
+		WHERE cus_id = #{id}
+	
+	</select>
+	<select id="nickChk" resultType="int">
+		SELECT COUNT(*) FROM customer
+		WHERE cus_nickname = #{nickname}
+	
+	</select>
 
 
 

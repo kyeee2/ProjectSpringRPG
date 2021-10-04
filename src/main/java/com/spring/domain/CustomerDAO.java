@@ -2,6 +2,8 @@ package com.spring.domain;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.mybatis.spring.annotation.MapperScan;
 
 @MapperScan
@@ -11,7 +13,7 @@ public interface CustomerDAO {
 		int addUser(CustomerDTO user);
 		
 		// 사용자 권한 추가
-		int addAuth(String id, String auth);
+		int addAuth(String auth, String id);
 		
 		// 사용자 삭제
 		int deleteUser(CustomerDTO user);
@@ -27,5 +29,14 @@ public interface CustomerDAO {
 		
 		// 특정 id (username) 의 권한(들) 뽑기
 		List<String> selectAuthoritiesById(String id);
+		
+		public int idChk(CustomerDTO user) throws Exception;
+		
+		public int nickChk(CustomerDTO user) throws Exception;
+//		int insert(int uid, List<String> originalFileNames, List<String> fileSystemNames);
+//		
+//		int deleteFileByUid(int uid,HttpServletRequest request);
+//		
+//		List<FileDTO> selectFileByUid(int uid);
 		
 }
