@@ -76,9 +76,14 @@ public class AjaxCommentController {
 
 	@PostMapping("/writeOk")
 	public AjaxCommentResult writeOk(@Valid CommentDTO dto 
-			, @PathVariable("buid") int buid
 			, BindingResult bresult
 			, Model model) {	
+		
+		// 유효성 검사 결과 먼저 확인
+				if(bresult.hasErrors()) {
+					// 에러가 존재한다면
+					
+				}
 		
 		int count = 0;
 		
@@ -87,7 +92,6 @@ public class AjaxCommentController {
 		String status = "FAIL";
 		
 		try {
-			dto.setBuid(buid);
 			count = commentservice.insert(dto);
 			
 			if(count == 0) {
@@ -112,8 +116,7 @@ public class AjaxCommentController {
 
 	@PutMapping("/updateOk/{boardType}/{buid}")
 	public AjaxCommentResult updateOk(@Valid CommentDTO dto, BindingResult bresult,
-			@PathVariable("buid") int buid
-			, Model model) {
+			 Model model) {
 
 		int count = 0;
 		
