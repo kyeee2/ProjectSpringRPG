@@ -20,7 +20,7 @@ public class CommentDTO {
 	private String content;			// 댓글 내용
 	@JsonProperty("nickName")
 	private String nickName;		// 댓글 작성자
-	@JsonProperty("dateTime")
+	@JsonProperty("datetime")
 	private LocalDateTime dateTime; // 댓글 작성일
 	
 	private int cusuid; 			// 작성자 고유번호

@@ -46,6 +46,10 @@ public class CommentService {
 	@Transactional
 	public int insert(CommentDTO dto) {
 		String boardType =dto.getBoardType();
+		int cusUid = (int)(Math.ceil(Math.random() * 5));	//	1-5
+		dto.setCusuid(cusUid);
+		System.out.println(dto.toString());
+		
 		if(boardType != null && boardType.equals("freeboard")) {
 			return fbComDAO.insert(dto);
 		} 
@@ -61,6 +65,7 @@ public class CommentService {
 
 	public int update(CommentDTO dto) { // 댓글을 수정하려면 고유번호가 필요
 		String boardType =dto.getBoardType();
+		System.out.println(dto.toString());
 		if(boardType != null && boardType.equals("freeboard")) {
 			return fbComDAO.update(dto);
 		} else if (boardType != null && boardType.equals("movieboard")) {

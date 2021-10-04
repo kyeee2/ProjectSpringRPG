@@ -18,7 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			WHERE 
 				fbc.cus_uid = cus.cus_uid
 			AND
-				fbc.fb_uid = uid
+				fbc.fb_uid = buid
+			AND 
+				fbc.fb_co_uid = uid
 			) nickName, 
 			fb_co_datetime dateTime, 
 			(select 
