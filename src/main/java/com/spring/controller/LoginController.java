@@ -41,7 +41,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.spring.domain.CustomerDTO;
-import com.spring.domain.FileDTO;
 import com.spring.service.LoginService;
 
 @Controller

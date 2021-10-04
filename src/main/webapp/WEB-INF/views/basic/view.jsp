@@ -27,13 +27,21 @@
 		<button onclick="location.href='write?boardType=${ param.boardType }'">신규등록</button>
 	</div>
 	<br><br>
-	<div id="cresult"></div>
+	<h5>댓글목록</h5>
 	<br>
-	<input type="text" name="content"/>
+	<form id="commentFrm" name="commentFrm" method="get">
+	<input type="hidden" name="uid" value="${param.uid }"/>
+	<input type="text" id = "content" name="content" placeholder="내용을 입력하세요"/>
+	<span>
+		<button type="button" name="commentInsertBtn">댓글등록</button>
+	</span>
+	</form>
 	<br>
-	<div id="btn_comment">
-	<button onclick="location.href='update?boardType=${ param.boardType }&buid=${ param.buid }'">댓글수정</button>
-	<button id="doCoDelete">댓글삭제</button>  
+	<div id="comment">
+	</div>
+	<div id="exam">
+	<button type ="button" name="CoUpdateBtn">댓글수정</button>
+	<button type ="button" name="CoDeleteBtn">댓글삭제</button>  
 	</div>
 </body>
 </html>

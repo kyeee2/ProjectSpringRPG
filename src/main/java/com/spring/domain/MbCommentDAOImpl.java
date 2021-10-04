@@ -19,19 +19,19 @@ private MbCommentDAO mapper;
 	
 
 	@Override
-	public int insert(String boardType, int buid) {
-		return mapper.insert(boardType, buid);
+	public int insert(CommentDTO dto) {
+		return mapper.insert(dto);
 	}
 
 
 	@Override
-	public int update(String boardType, int buid) {
-		return mapper.update(boardType, buid);
+	public int update(CommentDTO dto) {
+		return mapper.update(dto);
 	}
 
 	@Override
-	public int deleteByUid(int buid) {
-		return mapper.deleteByUid(buid);
+	public int deleteByUid(String boardType, int uids[]) {
+		return mapper.deleteByUid(boardType, uids);
 	}
 	
 
@@ -44,6 +44,12 @@ private MbCommentDAO mapper;
 	@Override
 	public List<CommentDTO> selectByUid(int uid) {
 		return mapper.selectByUid(uid);
+	}
+
+
+	@Override
+	public int findCusUid(String nickName) {
+		return mapper.findCusUid(nickName);
 	}
 
 }

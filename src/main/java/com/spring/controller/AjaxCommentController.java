@@ -2,7 +2,12 @@ package com.spring.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,7 +47,6 @@ public class AjaxCommentController {
 		
 		try {
 			list = commentservice.view(boardType, buid);
-			System.out.println(list.size());
 			
 			if(list == null) {
 				message.append("[리스트할 데이터가 없습니다.]");
@@ -69,9 +73,12 @@ public class AjaxCommentController {
 		
 	} // end view(boardType, uid)
 	
-	
-	@PostMapping("/writeOK/{boardType}/{uid}")
-	public AjaxCommentResult writeOk(@PathVariable String boardType, @PathVariable(value="uid") int buid) {	
+
+	@PostMapping("/writeOk")
+	public AjaxCommentResult writeOk(@Valid CommentDTO dto 
+			, @PathVariable("buid") int buid
+			, BindingResult bresult
+			, Model model) {	
 		
 		int count = 0;
 		
@@ -80,8 +87,8 @@ public class AjaxCommentController {
 		String status = "FAIL";
 		
 		try {
-			
-			count = commentservice.insert(boardType, buid);
+			dto.setBuid(buid);
+			count = commentservice.insert(dto);
 			
 			if(count == 0) {
 				message.append("[트랜잭션 실패 : 0 INSERT]");
@@ -102,9 +109,11 @@ public class AjaxCommentController {
 		return cresult;
 		
 	} // end writeOk()
-	
-	@PutMapping("/updateOK/{boardType}/{uid}")
-	public AjaxCommentResult updateOk(String boardType, int uid) {
+
+	@PutMapping("/updateOk/{boardType}/{buid}")
+	public AjaxCommentResult updateOk(@Valid CommentDTO dto, BindingResult bresult,
+			@PathVariable("buid") int buid
+			, Model model) {
 
 		int count = 0;
 		
@@ -114,7 +123,7 @@ public class AjaxCommentController {
 		
 		try {
 			
-			count = commentservice.update(boardType, uid);
+			count = commentservice.update(dto);
 			
 			if(count == 0) {
 				message.append("[트랜잭션 실패 : 0 UPDATE]");
@@ -136,8 +145,9 @@ public class AjaxCommentController {
 		
 	} // end updateOk()
 	
-	@DeleteMapping("/deleteOK/{boardType}/{uid}")
-	public AjaxCommentResult deleteOk(String boardType, int buid) {
+	
+	@DeleteMapping("/deleteOk")
+	public AjaxCommentResult deleteOk(String boardType, int [] uid) {
 		
 		int count = 0;
 		
@@ -147,7 +157,7 @@ public class AjaxCommentController {
 		
 		try {
 
-			count = commentservice.delete(boardType, buid);
+			count = commentservice.delete(boardType, uid);
 			
 			if(count == 0) {
 				message.append("[트랜잭션 실패 : 0 DELETE]");
@@ -167,6 +177,6 @@ public class AjaxCommentController {
 		
 		return cresult;
 		
-	} // end deleteOk(CommentDTO, uid)
+	} // end deleteOk(CommentDTO, buid, uid)
 	
 }
