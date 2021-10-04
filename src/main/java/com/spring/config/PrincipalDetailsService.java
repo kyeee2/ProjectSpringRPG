@@ -16,10 +16,10 @@ public class PrincipalDetailsService implements UserDetailsService{
 	// UserDetails 를 리턴한다 --> 누구한테 리턴하나?
 	// 시큐리티 sesssion (<= Authentication(<= 리턴된 UserDetails))
 	@Override
-	public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-		System.out.println("loadUserByUsername(" + name + ")");
+	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+		System.out.println("loadUserByUsername(" + id + ")");
 		
-		CustomerDTO user = loginService.findById(name);
+		CustomerDTO user = loginService.findById(id);
 		
 		// 해당 id 의 user 가 있다면
 		if(user != null) {

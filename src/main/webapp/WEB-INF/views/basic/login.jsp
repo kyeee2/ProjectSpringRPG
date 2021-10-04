@@ -32,7 +32,7 @@
 			<input type="password" name="password" placeholder="비밀번호"><br>
 			<input type="submit" value="로그인"><br>
 		</form>
-		<a href="join">회원가입</a>
+		<a href="joinAgree">회원가입</a>
 		<a href="find">ID/PW 찾기</a>
 		 <%
 	   String clientId = "MdDnprhEU_V4J7WsPkRu";//애플리케이션 클라이언트 아이디값";
