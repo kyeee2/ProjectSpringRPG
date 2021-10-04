@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.domain.FileDAO">
+
+	<insert id="insert" flushCache="true"
+	parameterType="com.spring.domain.FileDTO">
+		INSERT INTO profile
+			(pro_source, pro_file)
+		VALUES
+			(#{source}, #{file})
+	
+	</insert>
+	
+	<select id="selectFileByUid" resultType="com.spring.domain.FileDTO">
+		SELECT
+			pro_uid prouid, pro_source source, pro_file file 
+			
+		FROM profile
+		WHERE cus_uid= #{uid}
+	
+	
+	</select>
+	
+	<delete id="deleteFileByUid" parameterType="com.spring.domain.FileDTO">
+		DELETE FROM profile
+		WHERE cus_uid =#{uid}
+	
+	
+	
+	</delete>
+	
+	
+	</mapper>

@@ -18,7 +18,7 @@ public class PrincipalDetails implements UserDetails{
 
 	private CustomerDTO user;
 	
-	public PrincipalDetails(CustomerDTO dto) {
+	public PrincipalDetails(CustomerDTO user) {
 		System.out.println("PrincipalDetails(user) 생성: " + user);
 		this.user = user;
 	}
