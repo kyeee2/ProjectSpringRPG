@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE 
 			mb_uid = #{buid}
 		ORDER BY 
-			mb_co_uid DESC		
+			mb_co_uid ASC		
 	</select>
 	<!-- 댓글작성 -->
 	<insert id="insert" flushCache="true"

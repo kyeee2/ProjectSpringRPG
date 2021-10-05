@@ -27,28 +27,31 @@ $(document).ready(function() {
 	commentList(boardType, uid);
 	
 	//댓글등록 버튼 클릭 시
-	$('[name=commentInsertBtn]').click(function() {	//댓글등록 버튼 클릭 시
-		if(checkCuid==true) {
+	$('[name=commentInsertBtn]').click(function(event) {	//댓글등록 버튼 클릭 시
+		if(chkCosubmit() == true) {
 			
-		var insertData = $('[name=commentFrm]').serialize(); //commentInsertForm 내용 가져오기
+			var insertData = $('[name=commentFrm]').serialize(); //commentInsertForm 내용 가져오기
+			alert(insertData);
 			commentinsert(insertData);//TODO
+		} else {
+			event.preventDefault();
 		}
 	});
-	//댓글을 쓴 사람 외에는 수정버튼과 삭제버튼이 보이지 않음
-	$("#exam").hide(); //기본적으로 hide
-	if(matchNickName==true) { // 댓글의 nickName과 회원 nickName이 같을 경우
-		$("#exam").show(); // 수정과 삭제버튼이 보임
-	};
-	
-	// 수정버튼 클릭 시
-	$('[name=CoUpdateBtn]').click(function() {
-		updateComment(uid, content); //TODO
-	});
-	// 삭제버튼 클릭 시
-	$('[name=CoDeleteBtn]').click(function() {
-		deleteComment(); //TODO
-	});
+
 });
+
+	function chkCosubmit() {
+		frm = document.forms['commentFrm'];
+		
+		var content = frm['content'].value.trim();
+		
+		if(content="") {
+			alert("댓글내용은 반드시 한 글자 이상 작성해야 합니다")
+			frm['content'].focus();
+			return false;
+		}
+		return true;
+	}
 
 function viewData(boardType, uid) {
 
@@ -132,8 +135,9 @@ function chkDelete() {
 			data : insertData,
 			cache : false,
 			success : function(data){
-				if(data == 1) {
-					commentList();
+				if(data.count == 1) {
+					alert("댓글 작성 완료");
+					commentList(boardType, uid);
 					$('[name=content]').val('');
 				}
 			}
@@ -143,7 +147,7 @@ function chkDelete() {
 	//댓글 목록 
 	function commentList(boardType, uid){
 		$.ajax({
-			url : "comment/view/" + boardType + "/" + uid, // url : /ajax/{boardType}/{uid}/{cuid}
+			url : "/comment/view/" + boardType + "/" + uid, // url : /ajax/{boardType}/{uid}/{cuid}
 			type : 'GET',
 			datatype : 'json',
 			data : {'uid':uid},
@@ -151,7 +155,7 @@ function chkDelete() {
 			success : function(data, status) {
 				if(status=="success") {
 						for(var i=0; i<data.data.length; i++) {
-							writeComment(data.data[i]);	//
+							writeComment(data.data);	//
 						
 					}
 				}
@@ -160,34 +164,74 @@ function chkDelete() {
 		});
 	}//end commentList()
 	
+	// 댓글 목록 작성
 	function writeComment(jsonObj) {
 		
 		var comment ="";
 		
-		comment += "닉네임 : " + jsonObj.nickName + "<br>\n"; 
-		comment += "댓글내용 : " + jsonObj.content + "<br>\n"; 
-		comment += "작성시간 : " + jsonObj.dateTime + "<br>\n"; 
+		for(i=0; i<jsonObj.length; i++) {
+			
+		comment += "<form name='frm'>\n"
+		comment += "<input type='hidden' name='uid' value='" + jsonObj[i].uid + "'>";
+		comment += "닉네임 : " + jsonObj[i].nickName + "<br>\n"; 
+		comment += "댓글내용 : <span>" + jsonObj[i].content + "</span><br>\n"; 
+		comment += "작성시간 : " + jsonObj[i].dateTime + "<br>\n"; 
+		comment += "<div class= 'exam'>\n";
+		comment += "<button type='button' name='btn_update' onclick='clickUpdate(event)'>댓글수정</button>";
+		comment += "<button type='button' name='btn_delete' onclick='clickDelete(event)'>댓글삭제</button>";
+		comment += "<button type='button' name='btn_updateOk' style='display : none;' onclick='clickUpdateOk(event)'>수정완료</button>";
+		comment += "</div>\n"
+		comment += "</form>\n"
 		
 		$("#comment").html(comment);	// 정보 업데이트
+		}
 		
 		
 	}//end wrtieComment
 	
-	//댓글 특정 조건(작성한 customer의 nickName과 같을 경우)
-	function matchNickName() {
+	// 댓글 수정
+	function clickUpdate(event) {
+		var $form =$(event.target).parent().parent();
+		var $span = $form.children('span');
 		
-	}//end matchNickName
+		var text = $span.text();
+		
+		$('#abc').replaceWith("<select><option>M</option></select>");
+		$span.replaceWith("<input name='content' class='comContent' />");
+		$('input[class="comContent"]').val(text);
+		
+		// 버튼 토글
+		$form.children('div').children(1).toggle();
+		$form.children('div').children(2).toggle();
+		$form.children('div').children(3).toggle();
+	}
+	
+	// 댓글 수정 완료
+	function clickUpdateOk(event) {
+		var $form =$(event.target).parent().parent();
+		
+		var comUid = $form.children('input[type=hidden]').val();
+		var content = $form.children('input[name=content]').val();
+		
+		var data = "content=" + content + "&uid=" + comUid + "&buid" + uid + "&boardType=" + boardType;
+		
+		$.ajax({
+			url : "/comment/updateOk",
+			type : "POST",
+			data : data,
+			cache : false,
+			success : function(data, status) {
+				if(status == "success"){
+					if(data.count == 1) {
+						alert("댓글 수정 완료");
+						commentList(boardType, uid);
+					} else {
+						alert("댓글 수정 실패");
+					}
+				}
+			}
+		});
+	}
 	
 	
-	//댓글 수정
-	function updateComment(uid, content) {
-		var updateC ='';	//수정키 누르면 댓글창에 content 나타나야 함
-		updateC += "<div>";
-		
-		updateC += "</div>";
-	}//end updateComment
-	//댓글 삭제
-	function deleteComment() {
-		
-	}//end deleteComment
-
+	

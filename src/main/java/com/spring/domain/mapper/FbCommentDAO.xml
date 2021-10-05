@@ -18,7 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			WHERE 
 				fbc.cus_uid = cus.cus_uid
 			AND
-				fbc.fb_uid = uid
+				fbc.fb_uid = buid
+			AND 
+				fbc.fb_co_uid = uid
 			) nickName, 
 			fb_co_datetime dateTime, 
 			(select 
@@ -29,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				fb.fb_uid = com.fb_uid 
 				and 
 				fb.fb_uid  = buid
-				and 
+			AND 
 				com.fb_co_uid = uid
 			) boardType
 		FROM 
@@ -37,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE 
 			fb_uid = #{buid}
 		ORDER BY 
-			fb_co_uid DESC		
+			fb_co_uid ASC		
 	</select>
 	<!--사용자 -->
 	<select id="findCusUid" resultType="int">

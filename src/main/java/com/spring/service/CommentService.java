@@ -45,7 +45,10 @@ public class CommentService {
 	//댓글작성
 	@Transactional
 	public int insert(CommentDTO dto) {
+		System.out.println(dto.toString());
 		String boardType =dto.getBoardType();
+		int cusUid = (int)(Math.ceil(Math.random() * 5));
+		dto.setCusuid(cusUid);
 		if(boardType != null && boardType.equals("freeboard")) {
 			return fbComDAO.insert(dto);
 		} 
@@ -59,8 +62,9 @@ public class CommentService {
 	
 	//댓글수정
 
-	public int update(CommentDTO dto) { // 댓글을 수정하려면 고유번호가 필요
+	public int update(CommentDTO dto) { 
 		String boardType =dto.getBoardType();
+		System.out.println(dto.toString());
 		if(boardType != null && boardType.equals("freeboard")) {
 			return fbComDAO.update(dto);
 		} else if (boardType != null && boardType.equals("movieboard")) {
@@ -72,7 +76,7 @@ public class CommentService {
 	
 	//댓글삭제
 
-	public int delete(String boardType, int uids[]) { // 댓글을 삭제하려면 댓글의 고유번호도 필요!
+	public int delete(String boardType, int uids[]) { 
 		
 		if(boardType != null && boardType.equals("freeboard")) {
 			return fbComDAO.deleteByUid(boardType, uids);

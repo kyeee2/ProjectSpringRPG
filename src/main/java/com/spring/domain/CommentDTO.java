@@ -21,7 +21,7 @@ public class CommentDTO {
 	@JsonProperty("nickName")
 	private String nickName;		// 댓글 작성자
 	@JsonProperty("dateTime")
-	private LocalDateTime dateTime; // 댓글 작성일
+	private LocalDateTime datetime; // 댓글 작성일
 	
 	private int cusuid; 			// 작성자 고유번호
 	private String boardType;		// 게시판별 댓글(자유,리뷰)
@@ -30,10 +30,10 @@ public class CommentDTO {
 	private int buid; 				// 게시물 고유번호
 	
 	public String getDatetime() {	// 이름 소문자로 통일하기 위해서
-		if(this.dateTime == null) {
+		if(this.datetime == null) {
 			return "";
 		}
-		return this.dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		return this.datetime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	}
 	
 }
