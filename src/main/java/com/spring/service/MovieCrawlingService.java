@@ -10,8 +10,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
-import com.spring.movieAPI.DirectorAndActorList;
-import com.spring.movieAPI.MovieInfoDTO;
+import com.spring.domain.DirectorAndActorList;
+import com.spring.domain.MovieInfoDTO;
 
 @Service
 public class MovieCrawlingService {

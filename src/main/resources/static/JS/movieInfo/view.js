@@ -14,6 +14,7 @@ $(document).ready(function() {
 	// code 값을 가진 영화 상세 정보 출력
 	movieData(code);
 	
+	
 });	// end document.ready()
 
 // ajax로 상세 정보 가져오기
@@ -47,7 +48,9 @@ function writeData(jsonObj) {
 	$("#info #nation").text(jsonObj.nation);
 	$("#info #running-time").text(jsonObj.runningtime);
 	$("#info #open-date").text(jsonObj.opendate);
-	$("#info #viewing-page").text(jsonObj.viewingPage);
+	if(jsonObj.viewingPage != undefined){
+		$("#info #viewing-page").text("시청연령 : " + jsonObj.viewingPage);
+	}
 	$("#info #summary").html(jsonObj.summary);
 	
 	var directorActor = "";
@@ -61,4 +64,23 @@ function writeData(jsonObj) {
 	}
 	$("#directorActor").html(directorActor);
 	
+	getVideoId(jsonObj.moviename);
+	
 } // end writeData(jsonObj)
+
+var videoId = "";
+function getVideoId(moviename) {
+	// 유투브 API 사용
+	$.ajax({
+		url: "https://www.googleapis.com/youtube/v3/search?part=id, snippet&type=video&key=AIzaSyANvPgRrnXnBWKp1yV8Cinh5mAfdVPRETQ&maxResult=1&order=viewCount&q=" + moviename + " 예고편",
+		type: "GET",
+		cache: false,
+		success : function(data, status) {
+            if(status == "success") {
+				videoId = data.items[0].id.videoId;
+				$("#video").attr("src", "https://www.youtube.com/embed/" + videoId);
+			}
+		}	
+    });
+
+ }	// end getVideoId()

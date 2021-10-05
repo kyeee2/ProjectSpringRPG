@@ -17,7 +17,7 @@
 			mb_uid uid,
 			(
 				SELECT 
-					ifnull(good.cus_uid, 0)
+					ifnull(count(good.cus_uid), 0)
 				FROM 
 					movieboard mb LEFT JOIN mb_good good
 				ON 
@@ -29,6 +29,18 @@
 			) goodCnt,
 			mb_subject subject,
 			mb_title title,
+			(
+				SELECT 
+					count(com.mb_co_uid)
+				FROM 
+					movieboard mb LEFT JOIN mb_comment com
+				ON 
+					mb.mb_uid = com.mb_uid
+				WHERE 
+					mb.mb_uid = uid			<!-- uid : 위의 게시판 uid 컬럼 값 -->
+				GROUP BY 
+					mb.mb_uid
+			) commentCnt,
 			(
 				SELECT 
 					cus.cus_nickname 
@@ -77,7 +89,7 @@
 			mb_viewcnt viewCnt,
 			(
 				SELECT 
-					ifnull(good.cus_uid, 0)
+					ifnull(count(good.cus_uid), 0)
 				FROM 
 					movieboard mb LEFT JOIN mb_good good
 				ON 
@@ -176,4 +188,35 @@
 			</foreach>
 			)
 	</delete>
+	
+	<!-- 좋아요를 이미 눌렀는지 확인 -->
+	<select id="chkCusUid" resultType="String">
+		SELECT 
+			cus_uid uid 
+		FROM 
+			mb_good 
+		WHERE 
+			mb_uid = #{boardUid}
+			AND 
+			cus_uid = #{cusUid}
+	</select>
+	
+	<!-- 좋아요 추가 -->
+	<insert id="incGoodCnt">
+		INSERT INTO 
+			mb_good
+		VALUES 
+			(#{cusUid}, #{boardUid})
+	</insert>
+	
+	<!-- 좋아요 삭제 -->
+	<delete id="decGoodCnt">
+		DELETE FROM 
+			mb_good 
+		WHERE 
+			cus_uid = #{cusUid}
+			AND 
+			mb_uid = #{boardUid}
+	</delete>
+	
 </mapper>

@@ -12,7 +12,7 @@ import com.spring.service.LoginService;
 
 public class PrincipalDetails implements UserDetails{
 	private LoginService loginService;
-	public void setUserService(LoginService userService) {
+	public void setUserService(LoginService loginService) {
 		this.loginService = loginService;
 	}
 
