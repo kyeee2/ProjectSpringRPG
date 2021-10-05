@@ -27,10 +27,10 @@
 		// 로그인 상태가 아니라면 ... 
 	%>
 		<h2>로그인 </h2>
-		<form action="/basic/loginOk" method="POST">
-			<input type="text" name="username" placeholder="아이디"><br>
-			<input type="password" name="password" placeholder="비밀번호"><br>
-			<input type="submit" value="로그인"><br>
+		<form action="loginOk" method="POST">
+			<input type="text" id="id" name="id" placeholder="아이디"><br>
+			<input type="password" id="pw" name="pw" placeholder="비밀번호"><br>
+			<input type="submit" id="loginbtn" value="로그인"><br>
 		</form>
 		<a href="joinAgree">회원가입</a>
 		<a href="find">ID/PW 찾기</a>
@@ -63,5 +63,6 @@
 		<img height="38px" src="../img/kakao_login_medium_narrow.png" />
  </a>
 <%}%>
+
 </body>
 </html>

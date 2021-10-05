@@ -11,6 +11,8 @@ import com.spring.domain.CustomerDTO;
 import com.spring.service.LoginService;
 
 public class PrincipalDetails implements UserDetails{
+	
+	private static final long serialVersionUID = 1L;
 	private LoginService loginService;
 	public void setUserService(LoginService loginService) {
 		this.loginService = loginService;
@@ -35,7 +37,9 @@ public class PrincipalDetails implements UserDetails{
 		
 		for(String auth : list) {
 			collect.add(new GrantedAuthority() {
-				
+			
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public String getAuthority() {
 					return auth;
@@ -50,10 +54,14 @@ public class PrincipalDetails implements UserDetails{
 	public String getPassword() {
 		return user.getPw();
 	}
-
+	
 	@Override
 	public String getUsername() {
 		return user.getId();
+	}
+	
+	public void setPassword(String pw) {
+		user.setPw(pw);
 	}
 
 	// 계정이 만료된건 아닌지?

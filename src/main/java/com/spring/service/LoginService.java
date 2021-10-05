@@ -55,24 +55,33 @@ public class LoginService {
 	public List<String> selectAuthoritiesById(String id){
 		return dao.selectAuthoritiesById(id);
 	}
-	public int idChk(CustomerDTO user) throws Exception {
-		int checkid = dao.idChk(user);
-		return checkid;
+	public int idChk(String id) throws Exception {
+		List<String> checkid = dao.idChk(id);
+		
+		if(checkid == null || checkid.size() == 0)
+			return 0;
+		else
+			return 1;
 	}
-	public int nickChk(CustomerDTO user) throws Exception {
-		int checknick = dao.nickChk(user);
-		return checknick;
+	public int nickChk(String nickname) throws Exception {
+		List<String> checknick = dao.nickChk(nickname);
+		
+		if(checknick == null || checknick.size() == 0)
+			return 0;
+		else
+			return 1;
 	}
-	 public void certifiedPhoneNumber(String phonenumber, String cerNum) {
-
+	 public void certifiedPhoneNumber(String phonenum, String cerNum) {
+		 	
+		    
 	        String api_key = "NCSTYIGPT4F2IML6";
 	        String api_secret = "FS11C9ZNKR917RQ7I9MOC5LVXZRRVGGY";
 	        Message coolsms = new Message(api_key, api_secret);
-
+	        
 	        // 4 params(to, from, type, text) are mandatory. must be filled
 	        HashMap<String, String> params = new HashMap<String, String>();
-	        params.put("to", phonenumber);    // 수신전화번호
-	        params.put("from", "발송할 번호 입력");    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
+	        params.put("to", phonenum);    // 수신전화번호
+	        params.put("from", "01034239810");    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
 	        params.put("type", "SMS");
 	        params.put("text", "무비마니아 휴대폰인증 메시지 : 인증번호는" + "["+cerNum+"]" + "입니다.");
 	        params.put("app_version", "test app 1.2"); // application name and version
