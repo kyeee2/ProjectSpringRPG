@@ -70,7 +70,7 @@ public class LoginController {
 	}
 	
 	//아이디 로그인
-	@RequestMapping("/login")
+	@RequestMapping("/login")	
 	public void naverlogin() {	}
 	public String login() {
 		return "/basic/login";
@@ -335,18 +335,19 @@ public class LoginController {
 	return "/basic/join";
 	}
 	@PostMapping("/certified")
-	public @ResponseBody String sendSMS(String phonenumber) {
-
+	public @ResponseBody String sendSMS(CustomerDTO user) {
+		
+		String phonenum = user.getPhonenum();
         Random rand  = new Random();
         String numStr = "";
         for(int i=0; i<4; i++) {
             String ran = Integer.toString(rand.nextInt(10));
             numStr+=ran;
         }
-
-        System.out.println("수신자 번호 : " + phonenumber);
+        
+        System.out.println("수신자 번호 : " + phonenum);
         System.out.println("인증번호 : " + numStr);
-        loginService.certifiedPhoneNumber(phonenumber,numStr);
+        loginService.certifiedPhoneNumber(phonenum,numStr);
         return numStr;
   
 }	
@@ -363,15 +364,15 @@ public class LoginController {
 		String encPassword = passwordEncoder.encode(rawPassword);
 		user.setPw(encPassword);
 		
-		
-		
-		showErrors(result);
+
 		
 		if(result.hasErrors()) {   // 에러 있으면
 			return "/basic/join";  // 원래 폼으로 돌아가기
 		}
-		int checkid = loginService.idChk(user);
-		int checknick = loginService.nickChk(user);
+		String id = user.getId();
+		int checkid = loginService.idChk(id);
+		String nickname = user.getNickname();
+		int checknick = loginService.nickChk(nickname);
 		try {
 			if(checkid == 1 || checknick == 1) {
 				return "/basic/join";
@@ -401,14 +402,15 @@ public class LoginController {
 	 }
 	 @ResponseBody
 	 @RequestMapping(value="/idChk", method = RequestMethod.POST)
-	 public int idChk(CustomerDTO user) throws Exception {
-	 	int result = loginService.idChk(user);
+	 public int idChk(String id) throws Exception {
+	 	int result = loginService.idChk(id);
+	 	System.out.println(result);
 	 	return result;
 	 }
 	 @ResponseBody
 	 @RequestMapping(value="/nickChk", method = RequestMethod.POST)
-	 public int nickChk(CustomerDTO user) throws Exception {
-	 	int result = loginService.nickChk(user);
+	 public int nickChk(String nickname) throws Exception {
+		 int result = loginService.nickChk(nickname);
 	 	return result;
 	 }
 		//에러 출력 도우미 메소드

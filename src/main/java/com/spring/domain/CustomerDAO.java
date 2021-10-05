@@ -30,9 +30,9 @@ public interface CustomerDAO {
 		// 특정 id (username) 의 권한(들) 뽑기
 		List<String> selectAuthoritiesById(String id);
 		
-		public int idChk(CustomerDTO user) throws Exception;
+		public List<String> idChk(String id) throws Exception;
 		
-		public int nickChk(CustomerDTO user) throws Exception;
+		public List<String> nickChk(String nickname) throws Exception;
 //		int insert(int uid, List<String> originalFileNames, List<String> fileSystemNames);
 //		
 //		int deleteFileByUid(int uid,HttpServletRequest request);
