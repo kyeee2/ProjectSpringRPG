@@ -308,73 +308,73 @@ public class AjaxBoardController {
 	
 	// 마이페이지용
 	
-	// 마이페이지에서 특정 회원이 쓴 글 전체 목록 (자유게시판, 영화 리뷰 한번에)
-	@GetMapping("/list/myPage/{uid}/{page}/{pageRows}")	// URI :  /board/list/myPage/uid/page/pageRows
-	public AjaxBoardList myPageList(
-			@PathVariable int uid,	// 특적 회원 uid
-			@PathVariable int page, 
-			@PathVariable int pageRows) {
-		
-		List<BoardDTO> list = null;
-		
-		// message
-		StringBuffer message = new StringBuffer();
-		String status = "FAIL";
-		
-		// 페이징 관련 세팅 값들
-		//page : 현재 페이지
-		//pageRows : 한 '페이지'에 몇개의 글을 리스트 할것인가?
-		int writePages = 10;    // 한 [페이징] 에 몇개의 '페이지'를 표현할 것인가?
-		int totalPage = 0; // 총 몇 '페이지' 분량인가? 
-		int totalCnt = 0;  // 글은 총 몇개인가?
-		
-		try {
-			// 게시글 총 개수 구하기
-			totalCnt = ajaxBoardService.countMyPost(uid);
-			
-			// page 와 pageRows의 유효성 검사
-//			if(page < 0 || page > totalCnt / pageRows) {	// page 유효성 검사
-//				
+//	// 마이페이지에서 특정 회원이 쓴 글 전체 목록 (자유게시판, 영화 리뷰 한번에)
+//	@GetMapping("/list/myPage/{uid}/{page}/{pageRows}")	// URI :  /board/list/myPage/uid/page/pageRows
+//	public AjaxBoardList myPageList(
+//			@PathVariable int uid,	// 특적 회원 uid
+//			@PathVariable int page, 
+//			@PathVariable int pageRows) {
+//		
+//		List<BoardDTO> list = null;
+//		
+//		// message
+//		StringBuffer message = new StringBuffer();
+//		String status = "FAIL";
+//		
+//		// 페이징 관련 세팅 값들
+//		//page : 현재 페이지
+//		//pageRows : 한 '페이지'에 몇개의 글을 리스트 할것인가?
+//		int writePages = 10;    // 한 [페이징] 에 몇개의 '페이지'를 표현할 것인가?
+//		int totalPage = 0; // 총 몇 '페이지' 분량인가? 
+//		int totalCnt = 0;  // 글은 총 몇개인가?
+//		
+//		try {
+//			// 게시글 총 개수 구하기
+//			totalCnt = ajaxBoardService.countMyPost(uid);
+//			
+//			// page 와 pageRows의 유효성 검사
+////			if(page < 0 || page > totalCnt / pageRows) {	// page 유효성 검사
+////				
+////			}
+//			
+//			// 총 몇 페이지 분량?
+//			totalPage = (int)Math.ceil(totalCnt / (double)pageRows);
+//			
+//			// from : 몇 번째 row 부터?
+//			int from = (page - 1) * pageRows;	// MySQL 의 LIMIT 는 0-base
+//			
+//			list = ajaxBoardService.listMyPost(uid, from, pageRows);
+//			
+//			if(list == null) {
+//				message.append("[리스트할 데이터가 없습니다.]");
+//			} else {
+//				status = "OK";
 //			}
-			
-			// 총 몇 페이지 분량?
-			totalPage = (int)Math.ceil(totalCnt / (double)pageRows);
-			
-			// from : 몇 번째 row 부터?
-			int from = (page - 1) * pageRows;	// MySQL 의 LIMIT 는 0-base
-			
-			list = ajaxBoardService.listMyPost(uid, from, pageRows);
-			
-			if(list == null) {
-				message.append("[리스트할 데이터가 없습니다.]");
-			} else {
-				status = "OK";
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-			message.append("[트랜잭션 에러 : " + e.getMessage() + "]");
-		}
-
-		AjaxBoardList result = new AjaxBoardList();
-		
-		result.setStatus(status);
-		result.setMessage(message.toString());
-		
-		if(list != null) {
-			result.setCount(list.size());
-			result.setList(list);
-		}
-		
-		result.setPage(page);
-		result.setTotalPage(totalPage);
-		result.setWritePages(writePages);
-		result.setPageRows(pageRows);
-		result.setTotalCnt(totalCnt);
-		
-		return result;
-		
-	} // end myPageList(page, pageRows)
-	
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//			message.append("[트랜잭션 에러 : " + e.getMessage() + "]");
+//		}
+//
+//		AjaxBoardList result = new AjaxBoardList();
+//		
+//		result.setStatus(status);
+//		result.setMessage(message.toString());
+//		
+//		if(list != null) {
+//			result.setCount(list.size());
+//			result.setList(list);
+//		}
+//		
+//		result.setPage(page);
+//		result.setTotalPage(totalPage);
+//		result.setWritePages(writePages);
+//		result.setPageRows(pageRows);
+//		result.setTotalCnt(totalCnt);
+//		
+//		return result;
+//		
+//	} // end myPageList(page, pageRows)
+//	
 
 	// 이 컨트롤러 클래스가 handler에서 폼 데이터를 바인딩할 때 검증하는 Validator 객체 지정
 	@InitBinder

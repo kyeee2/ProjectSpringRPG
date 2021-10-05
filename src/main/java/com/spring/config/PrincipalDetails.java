@@ -14,7 +14,7 @@ public class PrincipalDetails implements UserDetails{
 	
 	private static final long serialVersionUID = 1L;
 	private LoginService loginService;
-	public void setUserService(LoginService loginService) {
+	public void setloginService(LoginService loginService) {
 		this.loginService = loginService;
 	}
 

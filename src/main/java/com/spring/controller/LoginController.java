@@ -26,6 +26,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,10 +50,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import com.spring.CustomerValidator;
+import com.spring.config.PrincipalDetails;
 import com.spring.domain.CustomerDAO;
 import com.spring.domain.CustomerDTO;
 import com.spring.domain.FileDTO;
 import com.spring.service.LoginService;
+
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 
 @Controller
 
@@ -72,7 +76,17 @@ public class LoginController {
 	public void naverlogin() {	}
 	//아이디 로그인
 	@GetMapping("/login")
-	public String login() {
+	public String login(Authentication authentication, Model model) {
+		if(authentication == null) {
+//			model.addAttribute("login","no");
+			System.out.println("로그인페이지 안됨");
+		} else {
+			PrincipalDetails userDetails = (PrincipalDetails)authentication.getPrincipal();
+			System.out.println(userDetails.toString());
+//			model.addAttribute("login","ok");
+//			model.addAttribute("user", userDetails);
+			System.out.println("로그인 됨");
+		}
 		return "/basic/login";
 	}
 	public String oauthKakao(
@@ -104,7 +118,7 @@ public class LoginController {
 		String clientSecret = "a1VUtxhLxH"; //애플리케이션 클라이언트 시크릿값;
 		String code = request.getParameter("code");
 		String state = request.getParameter("state");
-		String redirectURI = URLEncoder.encode("http://localhost:8090/basic/naver_callback.jsp", "UTF-8");
+		String redirectURI = URLEncoder.encode("http://localhost:8090/callback", "UTF-8");
 		
 		String apiURL;
 		apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
@@ -210,7 +224,7 @@ public class LoginController {
 		}
 		
 		
-		return "/naver_callback";
+		return "/basic/naver_callback";
 	}
 	
 	// 카카오 연동정보 조회
@@ -367,7 +381,7 @@ public class LoginController {
 
 		
 		if(result.hasErrors()) {   // 에러 있으면
-			return "/join";  // 원래 폼으로 돌아가기
+			return "/basic/join";  // 원래 폼으로 돌아가기
 		}
 		String id = user.getId();
 		int checkid = loginService.idChk(id);
@@ -375,7 +389,7 @@ public class LoginController {
 		int checknick = loginService.nickChk(nickname);
 		try {
 			if(checkid == 1 || checknick == 1) {
-				return "/join";
+				return "/basic/join";
 			}else if(checkid == 0 || checknick == 0) {
 				loginService.addMember(user);
 			}
@@ -385,20 +399,21 @@ public class LoginController {
 			throw new RuntimeException();
 		}
 
-		return "redirect:/login";
+		return "redirect:/basic/login";
 	}
 	
 	@RequestMapping("/logout")
 	public String logout() {
-		return "/logout";
+		return "/basic/logout";
 	}
 	@RequestMapping("/main")
 	public String mainpage() {
-		return "/main";
+		System.out.println("main입장");
+		return "basic/main";
 	}
 	 @PostMapping("/upload")
 	    public String upload() {
-	       return "/FileUpload";	
+	       return "/basic/FileUpload";	
 	 }
 	 @ResponseBody
 	 @RequestMapping(value="/idChk", method = RequestMethod.POST)
