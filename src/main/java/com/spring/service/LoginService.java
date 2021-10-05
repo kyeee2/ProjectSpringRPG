@@ -34,7 +34,7 @@ public class LoginService {
 	@Transactional
 	public int addMember(CustomerDTO user) {
 		int cnt = dao.addUser(user);
-		dao.addAuth(user.getId(), "ROLE_MEMBER");
+		dao.addAuth(user.getId(), "ROLE_USER");
 		return cnt;
 	}
 	
