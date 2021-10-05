@@ -40,7 +40,7 @@
 			cus_name name, 
 			cus_nickname nickname, 
 			cus_birthday birthday, 
-			cus_profile profile, 
+			cus_profile profile,
 			cus_phonenum phonenum, 
 			cus_enable enable
 			

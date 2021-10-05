@@ -55,7 +55,7 @@ import com.spring.domain.FileDTO;
 import com.spring.service.LoginService;
 
 @Controller
-@RequestMapping("/basic")
+
 public class LoginController {
 	
 	@Autowired
@@ -68,10 +68,10 @@ public class LoginController {
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
 	}
-	
-	//아이디 로그인
-	@RequestMapping("/login")	
+		
 	public void naverlogin() {	}
+	//아이디 로그인
+	@GetMapping("/login")
 	public String login() {
 		return "/basic/login";
 	}
@@ -210,7 +210,7 @@ public class LoginController {
 		}
 		
 		
-		return "/basic/naver_callback";
+		return "/naver_callback";
 	}
 	
 	// 카카오 연동정보 조회
@@ -236,7 +236,7 @@ public class LoginController {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=d11a12ee85c98662914e0bac1931a617");  //본인이 발급받은 key
-            sb.append("&redirect_uri=http://localhost:8090/basic/kakao");     // 본인이 설정해 놓은 경로
+            sb.append("&redirect_uri=http://localhost:8090/kakao");     // 본인이 설정해 놓은 경로
             sb.append("&code=" + authorize_code);
             bw.write(sb.toString());
             bw.flush();
@@ -367,7 +367,7 @@ public class LoginController {
 
 		
 		if(result.hasErrors()) {   // 에러 있으면
-			return "/basic/join";  // 원래 폼으로 돌아가기
+			return "/join";  // 원래 폼으로 돌아가기
 		}
 		String id = user.getId();
 		int checkid = loginService.idChk(id);
@@ -375,7 +375,7 @@ public class LoginController {
 		int checknick = loginService.nickChk(nickname);
 		try {
 			if(checkid == 1 || checknick == 1) {
-				return "/basic/join";
+				return "/join";
 			}else if(checkid == 0 || checknick == 0) {
 				loginService.addMember(user);
 			}
@@ -385,20 +385,20 @@ public class LoginController {
 			throw new RuntimeException();
 		}
 
-		return "redirect:/basic/login";
+		return "redirect:/login";
 	}
 	
 	@RequestMapping("/logout")
 	public String logout() {
-		return "/basic/logout";
+		return "/logout";
 	}
 	@RequestMapping("/main")
 	public String mainpage() {
-		return "/basic/main";
+		return "/main";
 	}
 	 @PostMapping("/upload")
 	    public String upload() {
-	       return "/basic/FileUpload";	
+	       return "/FileUpload";	
 	 }
 	 @ResponseBody
 	 @RequestMapping(value="/idChk", method = RequestMethod.POST)

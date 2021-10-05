@@ -36,7 +36,7 @@
 		<a href="find">ID/PW 찾기</a>
 		 <%
 	   String clientId = "MdDnprhEU_V4J7WsPkRu";//애플리케이션 클라이언트 아이디값";
-	   String redirectURI = URLEncoder.encode("http://localhost:8090/basic/callback", "UTF-8");
+	   String redirectURI = URLEncoder.encode("http://localhost:8090/callback", "UTF-8");
 	   SecureRandom random = new SecureRandom();
 	   String state = new BigInteger(130, random).toString();
 	   
@@ -50,7 +50,7 @@
 	<a href="<%=apiURL%>"><img height="38px" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>	
 	
 		<%
-		String redirectURI2 = URLEncoder.encode("http://localhost:8090/basic/kakao", "UTF-8");
+		String redirectURI2 = URLEncoder.encode("http://localhost:8090/kakao", "UTF-8");
 		String reqUrl = 
 					"https://kauth.kakao.com/oauth/authorize"
 					+ "?client_id=d11a12ee85c98662914e0bac1931a617"
