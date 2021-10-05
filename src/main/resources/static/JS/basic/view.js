@@ -81,8 +81,8 @@ function chkDelete() {
 	
 	// DELETE 방식
 	$.ajax({
-		url : "/board",
-		type : "DELETE",
+		url : "/board/delete",
+		type : "POST",
 		data : data,
 		cache : false,
 		success : function(data, status) {

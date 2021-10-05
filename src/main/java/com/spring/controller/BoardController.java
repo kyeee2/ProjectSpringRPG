@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.spring.domain.BoardDTO;
+import com.spring.ckeditor.common.Consts;
 import com.spring.service.AjaxBoardService;
 
 @Controller
@@ -15,21 +15,21 @@ public class BoardController {
 	AjaxBoardService service;
 	
 	@RequestMapping("/freeboard")
-	public String freeboardList(Model model) {
+	public String freeboardList() {
 		return "/freeboard/list";
 	}
 	
 	@RequestMapping("/movieboard")
-	public String movieboardList(Model model) {
+	public String movieboardList() {
 		return "/movieboard/list";
 	}
 	
 	@RequestMapping("/noticeboard")
-	public String noticeboardList(Model model) {
+	public String noticeboardList() {
 		return "/noticeboard/list";
 	}
  
-	@RequestMapping("/write")
+	@RequestMapping("/user/write")
 	public String boardWrite() {
 		return "/basic/write";
 	}
@@ -39,7 +39,7 @@ public class BoardController {
 		return "/basic/view";
 	}
 	
-	@RequestMapping("/update")
+	@RequestMapping("/user/update")
 	public String boardUpdate(String boardType, int uid, Model model) {
 		return "/basic/update";
 	}
