@@ -13,6 +13,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,10 +30,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,6 +47,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import com.spring.CustomerValidator;
+import com.spring.domain.CustomerDAO;
 import com.spring.domain.CustomerDTO;
 import com.spring.service.LoginService;
 
@@ -321,20 +331,61 @@ public class LoginController {
 	}
 	@GetMapping("/join")
 	public String join(Model model) {
-		return "/basic/join";
-	}	
+	return "/basic/join";
+	}
+	@PostMapping("/certified")
+	public @ResponseBody String sendSMS(String phonenumber) {
+
+        Random rand  = new Random();
+        String numStr = "";
+        for(int i=0; i<4; i++) {
+            String ran = Integer.toString(rand.nextInt(10));
+            numStr+=ran;
+        }
+
+        System.out.println("수신자 번호 : " + phonenumber);
+        System.out.println("인증번호 : " + numStr);
+        loginService.certifiedPhoneNumber(phonenumber,numStr);
+        return numStr;
+  
+}	
+		
 	@PostMapping("/joinOk")
-	public String joinOk(CustomerDTO user) {
-		System.out.println(user);
+	public String joinOk(@ModelAttribute @Valid CustomerDTO user,BindingResult result) throws Exception {
+//		String fileUrl = FileHelper.upload("/uploads", file, request);
+//		user.setProfile(fileUrl);
+//		joinOk(user);
+		
+		
 		
 		String rawPassword = user.getPw();
 		String encPassword = passwordEncoder.encode(rawPassword);
 		user.setPw(encPassword);
 		
-		int cnt = loginService.addMember(user);
 		
+		
+		showErrors(result);
+		
+		if(result.hasErrors()) {   // 에러 있으면
+			return "/basic/join";  // 원래 폼으로 돌아가기
+		}
+		int checkid = loginService.idChk(user);
+		int checknick = loginService.nickChk(user);
+		try {
+			if(checkid == 1 || checknick == 1) {
+				return "/basic/join";
+			}else if(checkid == 0 || checknick == 0) {
+				loginService.addMember(user);
+			}
+			// 요기에서~ 입력된 아이디가 존재한다면 -> 다시 회원가입 페이지로 돌아가기 
+			// 존재하지 않는다면 -> register
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+
 		return "redirect:/basic/login";
 	}
+	
 	@RequestMapping("/logout")
 	public String logout() {
 		return "/basic/logout";
@@ -345,8 +396,40 @@ public class LoginController {
 	}
 	 @PostMapping("/upload")
 	    public String upload() {
-	       return "/basic/FileUpload";
-	
-	
-}
+	       return "/basic/FileUpload";	
+	 }
+	 @ResponseBody
+	 @RequestMapping(value="/idChk", method = RequestMethod.POST)
+	 public int idChk(CustomerDTO user) throws Exception {
+	 	int result = loginService.idChk(user);
+	 	return result;
+	 }
+	 @ResponseBody
+	 @RequestMapping(value="/nickChk", method = RequestMethod.POST)
+	 public int nickChk(CustomerDTO user) throws Exception {
+	 	int result = loginService.nickChk(user);
+	 	return result;
+	 }
+		//에러 출력 도우미 메소드
+		public void showErrors(Errors errors) {
+			if(errors.hasErrors()) {
+				System.out.println("에러 개수: " + errors.getErrorCount());
+				System.out.println("\t[field]\t|[code] ");
+				List<FieldError> errList = errors.getFieldErrors();
+					for(FieldError err : errList) {
+						// binding 실패한 'field 이름' , binding 실패
+						System.out.println("\t" + err.getField() + "\t|" + err.getCode());
+					}
+			} else {
+				System.out.println("에러 없음");
+			}
+		}
+		// 이 컨트롤러 클래스가 handler 에서 폼 데이터를 바인딩할때 검증하는 Validator를 결정해준다.
+		@InitBinder
+		public void initBinder(WebDataBinder binder) {
+			binder.setValidator(new CustomerValidator());; 
+		}
+
+
+	 
 }

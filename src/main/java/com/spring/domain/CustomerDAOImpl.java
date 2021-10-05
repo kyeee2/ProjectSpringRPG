@@ -2,30 +2,38 @@ package com.spring.domain;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.SQL;
 import org.springframework.stereotype.Repository;
+import org.springframework.validation.BindingResult;
 
 @Repository
 public class CustomerDAOImpl implements CustomerDAO {
 
 	private CustomerDAO mapper;
 	
+	SqlSession sqlSession;
 	@Autowired
 	public CustomerDAOImpl(SqlSession sqlSession) {
 		System.out.println("CustomerDAOImpl() 생성");
+		
 		mapper = sqlSession.getMapper(CustomerDAO.class);
 	}
 	
 
 	@Override
 	public int addUser(CustomerDTO user) {
+		
 		return mapper.addUser(user);
 	}
 
 	@Override
-	public int addAuth(String id, String auth) {
-		return mapper.addAuth(id, auth);
+	public int addAuth(String auth, String id) {
+		return mapper.addAuth(auth, id);
 	}
 
 	@Override
@@ -34,8 +42,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public int deleteAuth(String id, String auth) {
-		return mapper.deleteAuth(id, auth);
+	public int deleteAuth(String auth, String id) {
+		return mapper.deleteAuth(auth, id);
 	}
 
 	@Override
@@ -52,6 +60,41 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public List<String> selectAuthoritiesById(String id) {
 		return mapper.selectAuthoritiesById(id);
 	}
+
+
+	@Override
+	public int idChk(CustomerDTO user) throws Exception {
+		int checkid = sqlSession.selectOne("mapper.idChk", user);
+		return checkid;
+	}
+
+
+	@Override
+	public int nickChk(CustomerDTO user) throws Exception {
+		int checknick = sqlSession.selectOne("mapper.nickChk", user);
+		return checknick;
+	}
 	
+	
+	
+
+
+//	@Override
+//	public int insert(int uid, List<String> originalFileNames, List<String> fileSystemNames) {
+//		// TODO Auto-generated method stub
+//		return mapper.insert(uid, originalFileNames, fileSystemNames);
+//	}
+//
+//	@Override
+//	public int deleteFileByUid(int uid, HttpServletRequest request) {
+//		// TODO Auto-generated method stub
+//		return mapper.deleteFileByUid(uid, request);
+//	}
+//
+//	@Override
+//	public List<FileDTO> selectFileByUid(int uid) {
+//		// TODO Auto-generated method stub
+//		return mapper.selectFileByUid(uid);
+//	}
 
 }
