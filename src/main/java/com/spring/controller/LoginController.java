@@ -26,6 +26,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,12 +50,15 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import com.spring.CustomerValidator;
+import com.spring.config.PrincipalDetails;
 import com.spring.domain.CustomerDAO;
 import com.spring.domain.CustomerDTO;
 import com.spring.service.LoginService;
 
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+
 @Controller
-@RequestMapping("/basic")
+
 public class LoginController {
 	
 	@Autowired
@@ -67,11 +71,21 @@ public class LoginController {
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
 	}
-	
-	//아이디 로그인
-	@RequestMapping("/login")
+		
 	public void naverlogin() {	}
-	public String login() {
+	//아이디 로그인
+	@GetMapping("/login")
+	public String login(Authentication authentication, Model model) {
+		if(authentication == null) {
+//			model.addAttribute("login","no");
+			System.out.println("로그인페이지 안됨");
+		} else {
+			PrincipalDetails userDetails = (PrincipalDetails)authentication.getPrincipal();
+			System.out.println(userDetails.toString());
+//			model.addAttribute("login","ok");
+//			model.addAttribute("user", userDetails);
+			System.out.println("로그인 됨");
+		}
 		return "/basic/login";
 	}
 	public String oauthKakao(
@@ -103,7 +117,7 @@ public class LoginController {
 		String clientSecret = "a1VUtxhLxH"; //애플리케이션 클라이언트 시크릿값;
 		String code = request.getParameter("code");
 		String state = request.getParameter("state");
-		String redirectURI = URLEncoder.encode("http://localhost:8090/basic/naver_callback.jsp", "UTF-8");
+		String redirectURI = URLEncoder.encode("http://localhost:8090/callback", "UTF-8");
 		
 		String apiURL;
 		apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
@@ -235,7 +249,7 @@ public class LoginController {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=d11a12ee85c98662914e0bac1931a617");  //본인이 발급받은 key
-            sb.append("&redirect_uri=http://localhost:8090/basic/kakao");     // 본인이 설정해 놓은 경로
+            sb.append("&redirect_uri=http://localhost:8090/kakao");     // 본인이 설정해 놓은 경로
             sb.append("&code=" + authorize_code);
             bw.write(sb.toString());
             bw.flush();
@@ -334,18 +348,19 @@ public class LoginController {
 	return "/basic/join";
 	}
 	@PostMapping("/certified")
-	public @ResponseBody String sendSMS(String phonenumber) {
-
+	public @ResponseBody String sendSMS(CustomerDTO user) {
+		
+		String phonenum = user.getPhonenum();
         Random rand  = new Random();
         String numStr = "";
         for(int i=0; i<4; i++) {
             String ran = Integer.toString(rand.nextInt(10));
             numStr+=ran;
         }
-
-        System.out.println("수신자 번호 : " + phonenumber);
+        
+        System.out.println("수신자 번호 : " + phonenum);
         System.out.println("인증번호 : " + numStr);
-        loginService.certifiedPhoneNumber(phonenumber,numStr);
+        loginService.certifiedPhoneNumber(phonenum,numStr);
         return numStr;
   
 }	
@@ -362,15 +377,15 @@ public class LoginController {
 		String encPassword = passwordEncoder.encode(rawPassword);
 		user.setPw(encPassword);
 		
-		
-		
-		showErrors(result);
+
 		
 		if(result.hasErrors()) {   // 에러 있으면
 			return "/basic/join";  // 원래 폼으로 돌아가기
 		}
-		int checkid = loginService.idChk(user);
-		int checknick = loginService.nickChk(user);
+		String id = user.getId();
+		int checkid = loginService.idChk(id);
+		String nickname = user.getNickname();
+		int checknick = loginService.nickChk(nickname);
 		try {
 			if(checkid == 1 || checknick == 1) {
 				return "/basic/join";
@@ -392,7 +407,8 @@ public class LoginController {
 	}
 	@RequestMapping("/main")
 	public String mainpage() {
-		return "/basic/main";
+		System.out.println("main입장");
+		return "basic/main";
 	}
 	 @PostMapping("/upload")
 	    public String upload() {
@@ -400,14 +416,15 @@ public class LoginController {
 	 }
 	 @ResponseBody
 	 @RequestMapping(value="/idChk", method = RequestMethod.POST)
-	 public int idChk(CustomerDTO user) throws Exception {
-	 	int result = loginService.idChk(user);
+	 public int idChk(String id) throws Exception {
+	 	int result = loginService.idChk(id);
+	 	System.out.println(result);
 	 	return result;
 	 }
 	 @ResponseBody
 	 @RequestMapping(value="/nickChk", method = RequestMethod.POST)
-	 public int nickChk(CustomerDTO user) throws Exception {
-	 	int result = loginService.nickChk(user);
+	 public int nickChk(String nickname) throws Exception {
+		 int result = loginService.nickChk(nickname);
 	 	return result;
 	 }
 		//에러 출력 도우미 메소드

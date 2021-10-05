@@ -8,6 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/movieInfo/view.js"></script>
+
 </head>
 <body>
 <h2 id="moviename"></h2>
@@ -18,9 +19,11 @@
 	<span id="nation"></span><span> | </span>
 	<span id="running-time"></span><span> | </span>
 	<span id="open-date"></span><br>
-	시청연령 : <div id="viewing-page"></div>
+	<div id="viewing-page"></div>
 	<div id="summary"></div>
 </div>
 <div id="directorActor"></div>
+<iframe id="video" width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+<script></script>
 </body>
 </html>

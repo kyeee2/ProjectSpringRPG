@@ -145,8 +145,8 @@ function deleteData() {
 		
 		// DELETE 방식
 		$.ajax({
-			url : "/board",	// localhost:8090
-			type : "DELETE",
+			url : "/board/delete",	// localhost:8090
+			type : "POST",
 			data : "boardType=freeboard&" + data,
 			cache : false,
 			success : function(data, status) {

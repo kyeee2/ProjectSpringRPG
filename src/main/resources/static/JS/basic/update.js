@@ -63,17 +63,25 @@ function chkSubmit(){
 	frm = document.forms['frm'];
 	
 	var title = frm['title'].value.trim();
-	var content = frm['content'].value.trim();
+	var content = CKEDITOR.instances.ckeditor.getData();	// ckeditor에 적은 데이터 뽑아내기
 
 	if(title == ""){
-		alert("제목은 반드시 작성해야 합니다");
+		$("#title-message").text("  제목은 필수입니다.");
+		$("#content-message").text("");
 		frm['title'].focus();
 		return false;
 	}
 	if(content == ""){
-		alert("내용은 반드시 작성해야 합니다");
+		$("#title-message").text("");
+		$("#content-message").text("  내용은 필수입니다.");
 		frm['content'].focus();
 		return false;
+	} else {
+		$("textarea").text(content);	// 비어잇지 않으면 textarea에 갱신하기
+	}
+	if(title != "" && content != ""){
+		$("#title-message").text("");
+		$("#content-message").text("");
 	}
 	
 	return true;
@@ -85,8 +93,8 @@ function updateData() {
 	var formData = $("#frm").serialize();	// form 안의 name 값들을 모두 가져옴
 	
 	$.ajax({
-		url : "/board",
-		type : "PUT",
+		url : "/board/update",
+		type : "POST",
 		cache : false,
 		data : formData,
 		success : function(data, status) {
@@ -94,6 +102,16 @@ function updateData() {
 				if(data.status == "OK"){
 					alert("UPDATE 성공" + data.status + " : " + data.message);
 					location.href = "/view?boardType=" + boardType + "&uid=" + uid;
+				} else if(data.status == "HOLD"){
+					if(data.message.substring(0, 2) == "제목") {
+						$("input[name=title]").focus();
+						$("#title-message").text("  " + data.message);
+						$("#content-message").text("");
+					} else {
+						$("#title-message").text("");
+						$("textarea[name=content]").focus();
+						$("#content-message").text("  " + data.message);
+					}
 				} else {
 					alert("UPDATE 실패" + data.status + " : " + data.message);
 				}

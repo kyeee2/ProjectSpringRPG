@@ -21,10 +21,10 @@
 	<hr>
 	<br>
 	<div id="btn_group">
-		<button onclick="location.href='update?boardType=${ param.boardType }&uid=${ param.uid }'">수정하기</button>
+		<button onclick="location.href='/user/update?boardType=${ param.boardType }&uid=${ param.uid }'">수정하기</button>
 		<button onclick="location.href='${ param.boardType }'">목록보기</button>
 		<button id="doDelete">삭제하기</button>
-		<button onclick="location.href='write?boardType=${ param.boardType }'">신규등록</button>
+		<button onclick="location.href='/user/write?boardType=${ param.boardType }'">신규등록</button>
 	</div>
 	<br><br>
 	<h5>댓글목록</h5>

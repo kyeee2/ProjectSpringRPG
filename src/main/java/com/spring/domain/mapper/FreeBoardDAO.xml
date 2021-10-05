@@ -17,7 +17,7 @@
 			fb_uid uid,
 			(
 				SELECT 
-					ifnull(good.cus_uid, 0)
+					ifnull(count(good.cus_uid), 0)
 				FROM 
 					freeboard fb LEFT JOIN fb_good good
 				ON 
@@ -28,6 +28,18 @@
 					fb.fb_uid
 			) goodCnt,
 			fb_title title,
+			(
+				SELECT 
+					count(com.fb_co_uid)
+				FROM 
+					freeboard fb LEFT JOIN fb_comment com
+				ON 
+					fb.fb_uid = com.fb_uid
+				WHERE 
+					fb.fb_uid = uid			<!-- uid : 위의 게시판 uid 컬럼 값 -->
+				GROUP BY 
+					fb.fb_uid
+			) commentCnt,
 			(
 				SELECT 
 					cus.cus_nickname 
@@ -76,7 +88,7 @@
 			fb_viewcnt viewCnt,
 			(
 				SELECT 
-					ifnull(good.cus_uid, 0)
+					ifnull(count(good.cus_uid), 0)
 				FROM 
 					freeboard fb LEFT JOIN fb_good good
 				ON 
@@ -173,4 +185,35 @@
 			</foreach>
 			)
 	</delete>
+	
+	<!-- 좋아요를 이미 눌렀는지 확인 -->
+	<select id="chkCusUid" resultType="String">
+		SELECT 
+			cus_uid uid 
+		FROM 
+			fb_good 
+		WHERE 
+			fb_uid = #{boardUid}
+			AND 
+			cus_uid = #{cusUid}
+	</select>
+	
+	<!-- 좋아요 추가 -->
+	<insert id="incGoodCnt">
+		INSERT INTO 
+			fb_good
+		VALUES 
+			(#{cusUid}, #{boardUid})
+	</insert>
+	
+	<!-- 좋아요 삭제 -->
+	<delete id="decGoodCnt">
+		DELETE FROM 
+			fb_good 
+		WHERE 
+			cus_uid = #{cusUid}
+			AND 
+			fb_uid = #{boardUid}
+	</delete>
+	
 </mapper>	
