@@ -1,6 +1,7 @@
 package com.spring;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +39,7 @@ class PremiereDummyData {
 			// 테스트용 dummy 데이터 만들기
 			pstmt = conn.prepareStatement(SQL_PREMIERE_INSERT);
 			
-			for(int i = 0; i < 10; i++) {				
+			for(int i = 0; i < 50; i++) {				
 				pstmt.setString(1, String.format("title%02d", i));
 				pstmt.setString(2, String.format("photo%02d", i));
 				pstmt.setString(3, String.format("content%02d", i));
