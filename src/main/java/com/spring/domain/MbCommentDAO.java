@@ -25,7 +25,7 @@ public interface MbCommentDAO {
 			public abstract int findCusUid(String nickName);
 			
 			// 댓글 삭제
-			public abstract int deleteByUid(String boardType, int uid[]);
+			public abstract int deleteByUid(int uid[]);
 			
 			public abstract int findByUid(String nickName);
 }

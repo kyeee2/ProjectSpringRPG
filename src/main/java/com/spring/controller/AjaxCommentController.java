@@ -95,9 +95,9 @@ public class AjaxCommentController {
 			if(authentication != null) {
 				
             PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
-              String nickName = userDetails.getUsername();   // 아이디 뽑아내기
+              String id = userDetails.getUsername();   // 아이디 뽑아내기
               // 아이디로 특정 회원의 고유번호 찾아서 dto에 세팅해주기
-              int uid = commentservice.findCusUidById(nickName);
+              int uid = commentservice.findCusUidById(id);
               dto.setCusuid(uid);
 			}
             dto.toString();
@@ -136,7 +136,7 @@ public class AjaxCommentController {
 		
 		try {
 			
-			count = commentservice.update(dto);
+			count = commentservice.update(dto);	
 			
 			if(count == 0) {
 				message.append("[트랜잭션 실패 : 0 UPDATE]");

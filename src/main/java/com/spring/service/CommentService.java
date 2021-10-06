@@ -79,17 +79,17 @@ public class CommentService {
 
 	public int delete(String boardType, int uid []) { 
 		if(boardType != null && boardType.equals("freeboard")) {
-			return fbComDAO.deleteByUid(boardType, uid);
+			return fbComDAO.deleteByUid(uid);
 		} else if (boardType != null && boardType.equals("movieboard")) {
-			return mbComDAO.deleteByUid(boardType, uid);
-		} else {
+			return mbComDAO.deleteByUid(uid);
+		} else { 
 			return 0;
 		}
 	}
 	
 	// 회원의 uid 찾기
-	public int findCusUidById(String nickName) {
-		int uid = fbComDAO.findByUid(nickName);
+	public int findCusUidById(String id) {
+		int uid = fbComDAO.findByUid(id);
 		
 		return uid;
 	}	

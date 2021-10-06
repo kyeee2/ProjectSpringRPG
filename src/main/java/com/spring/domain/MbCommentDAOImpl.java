@@ -30,8 +30,8 @@ private MbCommentDAO mapper;
 	}
 
 	@Override
-	public int deleteByUid(String boardType, int uid[]) {
-		return mapper.deleteByUid(boardType, uid);
+	public int deleteByUid(int uid[]) {
+		return mapper.deleteByUid(uid);
 	}
 	
 

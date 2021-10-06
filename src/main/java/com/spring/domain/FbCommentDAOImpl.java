@@ -32,9 +32,9 @@ private FbCommentDAO mapper;
 	}
 
 	@Override
-	public int deleteByUid(String boardType, int uid[]) {
+	public int deleteByUid(int uid[]) {
 		
-		return mapper.deleteByUid(boardType, uid);
+		return mapper.deleteByUid(uid);
 	}
 
 	@Override
@@ -59,8 +59,8 @@ private FbCommentDAO mapper;
 
 
 	@Override
-	public int findByUid(String nickName) {
-		return mapper.findByUid(nickName);
+	public int findByUid(String id) {
+		return mapper.findByUid(id);
 	}
 
 	
