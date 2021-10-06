@@ -7,25 +7,29 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class PremiereDAOImpl implements PremiereDAO {
-	
+
 	private PremiereDAO mapper;
 	
 	@Autowired
-	public PremiereDAOImpl(SqlSession sqlSession) {
-		System.out.println("PremiereDAOImpl() 생성");
+	public PremiereDAOImpl (SqlSession sqlSession) {
 		mapper = sqlSession.getMapper(PremiereDAO.class);
 	}
-
+	
 	@Override
-	public List<PremiereDTO> select() {
-		return mapper.select();
+	public int count() {
+		return mapper.count();
+	}
+	
+	@Override
+	public List<PremiereDTO> select(int from, int pageRows){
+		return mapper.select(from, pageRows);
 	}
 
 	@Override
 	public int insert(PremiereDTO dto) {
 		return mapper.insert(dto);
 	}
-
+	
 	@Override
 	public List<PremiereDTO> selectByUid(int uid) {
 		return mapper.selectByUid(uid);
@@ -37,8 +41,33 @@ public class PremiereDAOImpl implements PremiereDAO {
 	}
 
 	@Override
-	public int deleteByUid(int uid) {
-		return mapper.deleteByUid(uid);
+	public int deleteByUid(int [] uids) {
+		return mapper.deleteByUid(uids);
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

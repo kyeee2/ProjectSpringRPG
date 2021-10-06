@@ -13,6 +13,7 @@
         <li><a href="../movieInfo">영화 정보</a></li>
         <li><a href="#">영화관 위치</a></li>
         <li><a href="../noticeboard">공지사항</a></li>
+      	<li><a href="../premiere/list">시사회</a>
       </ul>
 
       <ul class="header-icons">

@@ -9,7 +9,7 @@ import com.spring.domain.PremiereDAO;
 import com.spring.domain.PremiereDTO;
 
 @Service
-public class PremiereService {
+public class AjaxPremiereService {
 	
 	PremiereDAO dao;
 	
@@ -18,29 +18,30 @@ public class PremiereService {
 		this.dao = dao;
 	}
 	
-	public PremiereService() {
-		System.out.println("PremiereService() 생성");
+	public int count() {
+		return dao.count();
 	}
 	
-	public List<PremiereDTO> list(){
-		return dao.select();
-	}
-	
-	public int write(PremiereDTO dto) {
-		return dao.insert(dto);
+	public List<PremiereDTO> list(int from, int pageRows){
+		return dao.select(from, pageRows);
 	}
 	
 	public List<PremiereDTO> selectByUid(int uid){
 		return dao.selectByUid(uid);
+	}
+	
+	public int write(PremiereDTO dto) {
+		return dao.insert(dto);
 	}
 
 	public int update(PremiereDTO dto) {
 		return dao.update(dto);
 	}
 	
-	public int deleteByUid(int uid) {
-		return dao.deleteByUid(uid);
+	public int deleteByUid(int [] uids) {
+		return dao.deleteByUid(uids);
 	}
+	
 }
 
 
