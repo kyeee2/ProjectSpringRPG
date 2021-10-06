@@ -66,4 +66,19 @@ public class FreeBoardDAOImpl implements FreeBoardDAO {
 		return mapper.delete(uids);
 	}
 
+	@Override
+	public String chkCusUid(int boardUid, int cusUid) {
+		return mapper.chkCusUid(boardUid, cusUid);
+	}
+
+	@Override
+	public int incGoodCnt(int boardUid, int cusUid) {
+		return mapper.incGoodCnt(boardUid, cusUid);
+	}
+
+	@Override
+	public int decGoodCnt(int boardUid, int cusUid) {
+		return mapper.decGoodCnt(boardUid, cusUid);
+	}
+
 }

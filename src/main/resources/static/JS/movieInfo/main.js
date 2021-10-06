@@ -2,8 +2,15 @@ $(document).ready(function() {
 	
 	$("#search").click(function() {
 		var movieName = $("#searchMovie").val();	// 검색창에 적은 값 가져오기
-		//alert(movieName);
-		searchNaver(movieName);
+		if(movieName == ""){
+			alert("영화 이름은 필수입니다.");
+		} else {
+			searchNaver(movieName);
+		}
+	});
+	
+	$("#findMovie").click(function(){
+		$("#searchForm").slideToggle();
 	});
 
 });

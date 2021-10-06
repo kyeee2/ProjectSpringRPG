@@ -12,10 +12,11 @@ DROP TABLE IF EXISTS mb_good;
 DROP TABLE IF EXISTS message;
 DROP TABLE IF EXISTS movieboard;
 DROP TABLE IF EXISTS noticeboard;
+DROP TABLE IF EXISTS profile;
 DROP TABLE IF EXISTS customer;
 DROP TABLE IF EXISTS primiereWinBoard;
 DROP TABLE IF EXISTS premiere;
-drop table if exists premierewin;
+
 
 
 
@@ -47,7 +48,7 @@ CREATE TABLE customer
 	cus_nickname varchar(45) NOT NULL,
 	cus_name varchar(45) NOT NULL,
 	cus_birthday int NOT NULL,
-	cus_profile text,
+	cus_profile mediumblob,
 	-- 회원가입시 1로 디폴트, 탈퇴하면 0
 	cus_enable int DEFAULT '1' COMMENT '회원가입시 1로 디폴트, 탈퇴하면 0',
 	PRIMARY KEY (cus_uid),
@@ -168,6 +169,16 @@ CREATE TABLE primiereWinBoard
 );
 
 
+CREATE TABLE profile
+(
+	pro_uid int NOT NULL AUTO_INCREMENT,
+	pro_source varchar(100) NOT NULL,
+	pro_file varchar(100) NOT NULL,
+	cus_uid int NOT NULL,
+	PRIMARY KEY (pro_uid)
+);
+
+
 
 /* Create Foreign Keys */
 
@@ -228,7 +239,7 @@ ALTER TABLE mb_good
 
 
 ALTER TABLE message
-	ADD FOREIGN KEY (cus_RecUid)
+	ADD FOREIGN KEY (cus_sendUid)
 	REFERENCES customer (cus_uid)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
@@ -236,7 +247,7 @@ ALTER TABLE message
 
 
 ALTER TABLE message
-	ADD FOREIGN KEY (cus_sendUid)
+	ADD FOREIGN KEY (cus_RecUid)
 	REFERENCES customer (cus_uid)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
@@ -252,6 +263,14 @@ ALTER TABLE movieboard
 
 
 ALTER TABLE noticeboard
+	ADD FOREIGN KEY (cus_uid)
+	REFERENCES customer (cus_uid)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE profile
 	ADD FOREIGN KEY (cus_uid)
 	REFERENCES customer (cus_uid)
 	ON UPDATE RESTRICT
