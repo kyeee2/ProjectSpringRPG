@@ -30,8 +30,8 @@ private MbCommentDAO mapper;
 	}
 
 	@Override
-	public int deleteByUid(String boardType, int uids[]) {
-		return mapper.deleteByUid(boardType, uids);
+	public int deleteByUid(String boardType, int uid[]) {
+		return mapper.deleteByUid(boardType, uid);
 	}
 	
 
@@ -50,6 +50,12 @@ private MbCommentDAO mapper;
 	@Override
 	public int findCusUid(String nickName) {
 		return mapper.findCusUid(nickName);
+	}
+
+
+	@Override
+	public int findByUid(String nickName) {
+		return mapper.findByUid(nickName);
 	}
 
 }

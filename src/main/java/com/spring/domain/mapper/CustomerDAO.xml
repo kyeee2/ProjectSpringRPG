@@ -40,9 +40,9 @@
 			cus_name name, 
 			cus_nickname nickname, 
 			cus_birthday birthday, 
-			cus_profile profile, 
+			cus_profile profile,
 			cus_phonenum phonenum, 
-			cus_enabled enabled,
+			cus_enable enable
 			
 		FROM customer
 		WHERE cus_id = #{id}	
@@ -53,13 +53,14 @@
 		FROM authority
 		WHERE cus_id = #{id}
 	</select>
-	<select id="idChk" resultType="int">
-		SELECT COUNT(*) FROM customer
+	
+	<select id="idChk" resultType="String">	<!-- lit 형태로 반환 -> 없으면 null 반환 -->
+		SELECT cus_id FROM customer
 		WHERE cus_id = #{id}
 	
 	</select>
-	<select id="nickChk" resultType="int">
-		SELECT COUNT(*) FROM customer
+	<select id="nickChk" resultType="String">
+		SELECT cus_nickname FROM customer
 		WHERE cus_nickname = #{nickname}
 	
 	</select>

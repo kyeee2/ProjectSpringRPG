@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE 
 			mb_uid = #{buid}
 		ORDER BY 
-			mb_co_uid DESC		
+			mb_co_uid ASC		
 	</select>
 	<!-- 댓글작성 -->
 	<insert id="insert" flushCache="true"
@@ -69,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteByUid" flushCache="true"
  	 	parameterType="java.util.ArrayList">
 		DELETE FROM mb_comment WHERE mb_uid in (
-		 <foreach collection="array" item="item" index="index" separator=",">
+		 <foreach collection="array" item="item" index="index" separator=", ">
  	 			${item}
  	 		</foreach>
 	</delete>

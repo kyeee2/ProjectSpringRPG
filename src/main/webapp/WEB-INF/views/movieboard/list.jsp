@@ -53,7 +53,7 @@ table, th, td {
 		
 		<br>
 		<button onclick="deleteData()">삭제하기</button>
-		<button onclick="location.href = 'write?boardType=movieboard'">신규등록</button>
+		<button onclick="location.href = '/user/write?boardType=movieboard'">신규등록</button>
 
 </body>
 </html>

@@ -43,5 +43,19 @@ public interface FreeBoardDAO {
 	
 	// 특정 uid 게시글 삭제
 	public abstract int delete(int [] uids);								// 삭제하는 게시글의 uid
+	
+	// 좋아요를 이미 눌렀는지 확인
+	// 눌렀으면 cusUid 1개 반환
+	// 안눌렀으면 cusUid 없음 => null
+	public abstract String chkCusUid(int boardUid						// 좋아요를 추가할 게시글의 uid
+									, int cusUid);							// 좋아요를 누른 회원의 uid
+	
+	// 좋아요 추가
+	public abstract int incGoodCnt(int boardUid								// 좋아요를 추가할 게시글의 uid
+									, int cusUid);							// 좋아요를 누른 회원의 uid
+	
+	// 좋아요 삭제
+	public abstract int decGoodCnt(int boardUid								// 좋아요를 삭제할 게시글의 uid
+									, int cusUid);								// 좋아요를 삭제할 회원의 uid
 
 }

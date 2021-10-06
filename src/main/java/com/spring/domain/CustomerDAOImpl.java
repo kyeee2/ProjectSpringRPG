@@ -63,17 +63,17 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
 	@Override
-	public int idChk(CustomerDTO user) throws Exception {
-		int checkid = sqlSession.selectOne("mapper.idChk", user);
-		return checkid;
+	public List<String> idChk(String id) throws Exception {
+		return mapper.idChk(id);
 	}
 
 
 	@Override
-	public int nickChk(CustomerDTO user) throws Exception {
-		int checknick = sqlSession.selectOne("mapper.nickChk", user);
-		return checknick;
+	public List<String> nickChk(String nickname) throws Exception {
+		return mapper.nickChk(nickname);
 	}
+
+
 	
 	
 	

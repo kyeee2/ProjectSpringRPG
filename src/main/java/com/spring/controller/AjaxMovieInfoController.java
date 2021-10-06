@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring.movieAPI.MovieDatasDTO;
-import com.spring.movieAPI.MovieInfoDTO;
+import com.spring.domain.MovieDatasDTO;
+import com.spring.domain.MovieInfoDTO;
 import com.spring.service.MovieApiService;
 import com.spring.service.MovieCrawlingService;
 

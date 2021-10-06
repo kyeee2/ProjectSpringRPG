@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.domain.CommentDTO;
+import com.spring.domain.CustomerDAO;
+import com.spring.domain.CustomerDTO;
 import com.spring.domain.FbCommentDAO;
 import com.spring.domain.MbCommentDAO;
 
@@ -27,6 +29,8 @@ public class CommentService {
 		this.mbComDAO = mbDAO;
 	}
 	
+	
+	
 	//리스트,보기 작성 수정 삭제 조건은 게시글 uid 비교.
 
 	//댓글 보기
@@ -46,9 +50,6 @@ public class CommentService {
 	@Transactional
 	public int insert(CommentDTO dto) {
 		String boardType =dto.getBoardType();
-		int cusUid = (int)(Math.ceil(Math.random() * 5));	//	1-5
-		dto.setCusuid(cusUid);
-		System.out.println(dto.toString());
 		
 		if(boardType != null && boardType.equals("freeboard")) {
 			return fbComDAO.insert(dto);
@@ -63,9 +64,8 @@ public class CommentService {
 	
 	//댓글수정
 
-	public int update(CommentDTO dto) { // 댓글을 수정하려면 고유번호가 필요
+	public int update(CommentDTO dto) { 
 		String boardType =dto.getBoardType();
-		System.out.println(dto.toString());
 		if(boardType != null && boardType.equals("freeboard")) {
 			return fbComDAO.update(dto);
 		} else if (boardType != null && boardType.equals("movieboard")) {
@@ -77,14 +77,20 @@ public class CommentService {
 	
 	//댓글삭제
 
-	public int delete(String boardType, int uids[]) { // 댓글을 삭제하려면 댓글의 고유번호도 필요!
-		
+	public int delete(String boardType, int uid []) { 
 		if(boardType != null && boardType.equals("freeboard")) {
-			return fbComDAO.deleteByUid(boardType, uids);
+			return fbComDAO.deleteByUid(boardType, uid);
 		} else if (boardType != null && boardType.equals("movieboard")) {
-			return mbComDAO.deleteByUid(boardType, uids);
+			return mbComDAO.deleteByUid(boardType, uid);
 		} else {
 			return 0;
 		}
+	}
+	
+	// 회원의 uid 찾기
+	public int findCusUidById(String nickName) {
+		int uid = fbComDAO.findByUid(nickName);
+		
+		return uid;
 	}	
 }

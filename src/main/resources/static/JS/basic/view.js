@@ -28,18 +28,29 @@ $(document).ready(function() {
 	
 	//댓글등록 버튼 클릭 시
 	$('[name=commentInsertBtn]').click(function(event) {	//댓글등록 버튼 클릭 시
-		if(chkCosubmit()==true) {
-			
-		var insertData = $('[name=commentFrm]').serialize(); //commentFrm 내용 가져오기
-		commentinsert(insertData);//TODO
+		if(chkCosubmit() == true) {
+			var insertData = $('[name=commentFrm]').serialize(); //commentInsertForm 내용 가져오기
+			commentinsert(insertData);//TODO
 		} else {
 			event.preventDefault();
 		}
 		
 	});
 
-	
 });
+
+	function chkCosubmit() {
+		frm = document.forms['commentFrm'];
+		
+		var content = frm['content'].value.trim();
+		
+		if(content="") {
+			alert("댓글내용은 반드시 한 글자 이상 작성해야 합니다")
+			frm['content'].focus();
+			return false;
+		}
+		return true;
+	}
 
 function viewData(boardType, uid) {
 
@@ -97,8 +108,8 @@ function chkDelete() {
 	
 	// DELETE 방식
 	$.ajax({
-		url : "/board",
-		type : "DELETE",
+		url : "/board/delete",
+		type : "POST",
 		data : data,
 		cache : false,
 		success : function(data, status) {
@@ -125,7 +136,9 @@ function chkDelete() {
 			success : function(data){
 				if(data.count == 1) {
 					alert("댓글 작성 완료");
+
 					//댓글 읽어오기
+
 					commentList(boardType, uid);
 					$('[name=content]').val('');
 				}
@@ -137,127 +150,117 @@ function chkDelete() {
 	function commentList(boardType, uid){
 		$.ajax({
 			url : "comment/view/" + boardType + "/" + uid, // url : /comment/view/{boardType}/{uid}
+
 			type : 'GET',
 			datatype : 'json',
 			//data : {'uid':uid},
 			cahce : false,
 			success : function(data, status) {
 				if(status=="success") {
+
 					writeComment(data.data);
-				
+
+						for(var i=0; i<data.data.length; i++) {
+							writeComment(data.data);	//
+						
+					}
+
 				}
 			}
 			
 		});
 	}//end commentList()
 	
+	// 댓글 목록 작성
 	function writeComment(jsonObj) {
 		
 		var comment ="";
 		
-		
+
 		for(i=0; i<jsonObj.length; i++) {
-		
-		comment += "<form name='frm" + i +"'>\n";
+			
+		comment += "<form name='frm'>\n"
+		comment += "<input type='hidden' name='uid' value='" + jsonObj[i].uid + "'>";
 		comment += "닉네임 : " + jsonObj[i].nickName + "<br>\n"; 
 		comment += "댓글내용 : <span>" + jsonObj[i].content + "</span><br>\n"; 
-		comment += "작성시간 : " + jsonObj[i].datetime + "<br>\n"; 
-		comment += "</form>\n";
-		comment += "<form name='update" + i +"'>\n";
-		comment += "<div class='exam'>\n";
-		comment += "<button type='button' class='CoUpdateBtn' name='CoUpdateBtn' onclick='clickUpdate(event)'>댓글수정</button>";
-		comment += "<button type='button' name='CoDeleteBtn' onclick='clickDelete(event)'>댓글삭제</button>";
-		comment += "</div>\n";
-		comment += "</form>\n";
-		}
-		
+		comment += "작성시간 : " + jsonObj[i].dateTime + "<br>\n"; 
+		comment += "<div class= 'exam'>\n";
+		comment += "<button type='button' name='btn_update' onclick='clickUpdate(event)'>댓글수정</button>";
+		comment += "<button type='button' name='btn_delete' onclick='clickDelete(event)'>댓글삭제</button>";
+		comment += "<button type='button' name='btn_updateOk' style='display : none;' onclick='clickUpdateOk(event)'>수정완료</button>";
+		comment += "</div>\n"
+		comment += "</form>\n"
+
 		
 		$("#comment").html(comment);	// 정보 업데이트
-	
+
 		
 		
 	}//end wrtieComment
-	
-	
-	//->clickUpdate(event) 클릭 시 content가 textarea로 바뀌고, 댓글삭제버튼 없어지고 수정완료버튼 생기고 댓글수정버튼 생김
-	//수정완료버튼 누를 시, 입력한 content로 댓글이 바뀌고 writeComment(jsonObj)형식으로 다시 바뀜
-	//->어떻게 적용해야할까?
-	
-	function clickUpdate(event){
-		var $form = $(event.target).parent().parent().parent();	// form 가져오기
-	
-		//console.log(form.html());
-		//console.log($form.html());
-		console.log($form.parentElement());
-		
-		
-		
-			
-
 	}
+	function clickUpdate(event) {
+		var $form =$(event.target).parent().parent();
+		console.log($form.html());
+		var $span = $form.children('span');
 
-
-
-
-	
-	function chkCosubmit() {
-		frm = document.forms['commentFrm'];
 		
-		var content =frm['content'].value.trim();
+		var text = $span.text();
 		
-		if(content=="") {
-			alert("댓글내용은 반드시 한글자 이상 작성해야 합니다");
-			frm['content'].focus();
-			return false;
-			
-		}
-		return true;
-	}
-	
-	//댓글 특정 조건(작성한 customer의 nickName과 같을 경우)
-	function matchNickName() {
+		$span.replaceWith("<input name='content' class='comContent' />");
+		$('input[class="comContent"]').val(text);
 		
-	}//end matchNickName
+		// 버튼 토글
+		$form.children('div').children(1).toggle();
+		$form.children('div').children(2).toggle();
+		$form.children('div').children(3).toggle();
+	};
 	
-	
-	//댓글 수정 -댓글 내용 출력을 input폼으로 변경
-	function updateC() {
-		var updateC ='';	
-		// updateC += "닉네임 : " +jsonObj[0].nickName + "<br>\n";
-		updateC += '<div>';
-		updateC +=	'<input type="text" id = "content" name="content" placeholder="내용을 입력하세요"/>';
-		updateC +=	'<span> <button type="button" name="commentUpdateBtn">댓글수정</button> </span>';
-		updateC +=	'</div>'
-		// updateC += "작성시간 : " +jsonObj[0].dateTime + "<br>\n";
+	// 댓글 수정 완료
+	function clickUpdateOk(event) {
+		var $form =$(event.target).parent().parent();
 		
-		$("#comment").html(updateC); 
-	}//end updateComment
-	
-	
-	//댓글 수정 -댓글 수정 버튼을 누를 경우
-	function CommentupdateBtn() {
-		var updateComment = $("#CommentFrm").serialize();
+		var comUid = $form.children('input[type=hidden]').val();
+		var content = $form.children('input[name=content]').val();
+		
+		var data = "content=" + content + "&uid=" + comUid + "&buid" + uid + "&boardType=" + boardType;
+		
 		$.ajax({
-			url : "comment/updateOK/{boardType}/{buid}",
-			type : "PUT",
-			datatype : "json",
-			data : updateComment,
+			url : "/comment/updateOk",
+			type : "POST",
+			data : data,
 			cache : false,
-			success : function(data,status) {
-			if(data.status == "OK"){
-					alert("UPDATE 성공" + data.status + " : " + data.message);
+			success : function(data, status) {
+				if(status == "success"){
+					if(data.count == 1) {
+						alert("댓글 수정 완료");
+						commentList(boardType, uid);
+					} else {
+						alert("댓글 수정 실패");
+					}
+				}
+			}
+		});
+	}
+	
+	
+	//댓글 삭제 ->가져올 정보는?boardType, 댓글 uid
+	function deleteComment(event) {
+		var data = "boardType=" + boardType + "&uid=" + uid;
+		
+		$.ajax({ 
+			url : "/comment/deleteOk",
+			type : "POST",
+			data : data,
+			cache : false,
+			success : function(data, status) {
+				if(status == "success") {
+					alert("댓글 삭제 완료")
+					commentList(boardType, uid);
 				} else {
-					alert("UPDATE 실패" + data.status + " : " + data.message);
+					alert("댓글 수정 실패");
+					
 				}
 			}
 			
 		})
-			
-		
-	} // end CommentupdateBtn
-	
-	//댓글 삭제
-	function deleteComment() {
-		
-	}//end deleteComment
-
+	}  //end deleteComment

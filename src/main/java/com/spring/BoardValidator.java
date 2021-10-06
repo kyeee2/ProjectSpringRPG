@@ -23,8 +23,18 @@ public class BoardValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		
 		BoardDTO dto = (BoardDTO)target;
+		System.out.println(dto.toString());
 		
+		// 게시판 title, content 검증하기
+		String title = dto.getTitle();
+		if(title == null || title.trim().isEmpty()) {
+			errors.rejectValue("title", "empty title");
+		}
 		
+		String content = dto.getContent();
+		if(content == null || content.trim().isEmpty()) {
+			errors.rejectValue("content", "empty content");
+		}
 
 	}
 
