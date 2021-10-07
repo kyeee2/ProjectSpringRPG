@@ -17,12 +17,15 @@
       </ul>
 
       <ul class="header-icons">
-      	<sec:authorize access="isAuthenticated()">
-        	<li><a href="/logout" class="header-login">로그아웃</a></li>
-        </sec:authorize>
-        <sec:authorize access="!isAuthenticated()">
-        	<li><a href="/login" class="header-login">로그인</a></li>
-        </sec:authorize>
+        <li>
+      		<sec:authorize access="isAuthenticated()">
+      			<a href="/myPage" id="myPage"><i class="far fa-smile"></i></a>
+      			<a href="/logout" id="header-logout">로그아웃</a>
+      		</sec:authorize>
+      		<sec:authorize access="!isAuthenticated()">
+      			<a href="/login" id="header-login">로그인</a>
+      		</sec:authorize>
+      	</li>
         <li><a href="#"><i class="fas fa-bell"></i></a></li>
         <li><a href="#"><i class="fas fa-search"></i></a></li>
         <li><button class="btn-hamburger"><span class="fas fa-bars"></span></button></li>

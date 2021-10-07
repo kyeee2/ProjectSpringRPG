@@ -11,6 +11,18 @@
 			freeboard
 	</select>
 	
+	<!-- 검색한 게시글 전체 개수 -->
+	<select id="countSearch" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			freeboard 
+		WHERE 
+			fb_title LIKE "%${text}%"	<!-- 검색한 내용 -->
+			OR
+			fb_content LIKE "%${text}%"	<!-- 검색한 내용 -->
+	</select>
+	
 	<!-- 게시글 목록 -->
 	<select id="selectAll" resultType="com.spring.domain.BoardDTO">
 		SELECT 
@@ -54,6 +66,110 @@
 			fb_boardtype boardType
 		FROM 
 			freeboard
+		ORDER BY 
+			fb_uid DESC
+		LIMIT 
+			#{from}, #{pageRows}
+	</select>
+	
+	<!-- 인기글 5개 목록 -->
+	<select id="selectVogue" resultType="com.spring.domain.BoardDTO">
+		SELECT 
+			fb_uid uid,
+			(
+				SELECT 
+					ifnull(count(good.cus_uid), 0)
+				FROM 
+					freeboard fb LEFT JOIN fb_good good
+				ON 
+					fb.fb_uid = good.fb_uid 
+				WHERE 
+					fb.fb_uid = uid		<!-- uid : 위의 게시판 uid 컬럼 값 -->
+				GROUP BY 
+					fb.fb_uid
+			) goodCnt,
+			fb_title title,
+			(
+				SELECT 
+					count(com.fb_co_uid)
+				FROM 
+					freeboard fb LEFT JOIN fb_comment com
+				ON 
+					fb.fb_uid = com.fb_uid
+				WHERE 
+					fb.fb_uid = uid			<!-- uid : 위의 게시판 uid 컬럼 값 -->
+				GROUP BY 
+					fb.fb_uid
+			) commentCnt,
+			(
+				SELECT 
+					cus.cus_nickname 
+				FROM 
+					freeboard fb, customer cus
+				WHERE fb.cus_uid = cus.cus_uid 
+					  AND 
+					  fb.fb_uid = uid		<!-- uid : 위의 게시판 uid 컬럼 값 -->
+			) nickName,
+			fb_datetime date,		<!-- BoardDTO 의 이름과 동일하게!!!! -->
+			fb_viewcnt viewCnt,
+			fb_boardtype boardType
+		FROM 
+			freeboard
+		ORDER BY 
+			fb_viewCnt DESC
+		LIMIT 
+			5
+	</select>
+	
+	<!-- 검색 목록 -->
+	<select id="selectSearch" parameterType="String" resultType="com.spring.domain.BoardDTO">
+		SELECT 
+			fb_uid uid,
+			(
+				SELECT 
+					cus.cus_nickname 
+				FROM 
+					freeboard fb, customer cus
+				WHERE 
+					fb.cus_uid = cus.cus_uid 
+					AND 
+					fb.fb_uid = uid
+			) nickName,
+			fb_datetime date,
+			fb_viewcnt viewCnt,
+			(
+				SELECT 
+					ifnull(count(good.cus_uid), 0)
+				FROM 
+					freeboard fb LEFT JOIN fb_good good
+				ON 
+					fb.fb_uid = good.fb_uid 
+				WHERE 
+					fb.fb_uid = uid
+				GROUP BY 
+				fb.fb_uid
+			) goodCnt,
+			(
+				SELECT 
+					count(com.fb_co_uid)
+				FROM 
+					freeboard fb LEFT JOIN fb_comment com
+				ON 
+					fb.fb_uid = com.fb_uid
+				WHERE 
+					fb.fb_uid = uid	
+				GROUP BY 
+					fb.fb_uid
+			) commentCnt,
+			fb_title title,
+			fb_content content,
+			fb_boardtype boardType
+		FROM 
+			freeboard 
+		WHERE 
+			fb_title LIKE "%${text}%"	<!-- 검색한 내용 -->
+			OR
+			fb_content LIKE "%${text}%"	<!-- 검색한 내용 -->
 		ORDER BY 
 			fb_uid DESC
 		LIMIT 
@@ -119,14 +235,25 @@
 			fb_uid = #{uid}		<!--  uid : 게시글의 uid -->
 	</select>
 	
+	
 	<!-- 닉네임으로 회원 uid 찾기 -->
-	<select id="findCusUid" resultType="int">
+	<select id="findCusUidByNickName" resultType="int">
 		SELECT 
 			cus_uid 
 		FROM 
 			customer 
 		WHERE 
 			cus_nickname = #{nickName}
+	</select>
+	
+	<!-- 아이디으로 회원 uid 찾기 -->
+	<select id="findCusUidById" resultType="int">
+		SELECT 
+			cus_uid 
+		FROM 
+			customer 
+		WHERE 
+			cus_id = #{id}
 	</select>
 	
 	<!-- 게시글 작성 -->
@@ -187,9 +314,9 @@
 	</delete>
 	
 	<!-- 좋아요를 이미 눌렀는지 확인 -->
-	<select id="chkCusUid" resultType="String">
+	<select id="chkCusUid" resultType="int">
 		SELECT 
-			cus_uid uid 
+			count(*)
 		FROM 
 			fb_good 
 		WHERE 
@@ -199,7 +326,7 @@
 	</select>
 	
 	<!-- 좋아요 추가 -->
-	<insert id="incGoodCnt">
+	<insert id="incGoodCnt" flushCache="true">
 		INSERT INTO 
 			fb_good
 		VALUES 
@@ -207,7 +334,7 @@
 	</insert>
 	
 	<!-- 좋아요 삭제 -->
-	<delete id="decGoodCnt">
+	<delete id="decGoodCnt" flushCache="true">
 		DELETE FROM 
 			fb_good 
 		WHERE 
@@ -215,5 +342,15 @@
 			AND 
 			fb_uid = #{boardUid}
 	</delete>
+	
+	<!-- 특정 게시글 좋아요 개수 -->
+	<select id="getGoodCnt" resultType="int">
+		SELECT 
+			count(*)
+		FROM
+			fb_good
+		WHERE
+			fb_uid = #{boardUid}
+	</select>
 	
 </mapper>	

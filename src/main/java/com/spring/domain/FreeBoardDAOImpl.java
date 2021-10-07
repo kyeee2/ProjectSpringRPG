@@ -22,8 +22,23 @@ public class FreeBoardDAOImpl implements FreeBoardDAO {
 	}
 
 	@Override
+	public int countSearch(String text) {
+		return mapper.countSearch(text);
+	}
+
+	@Override
 	public List<BoardDTO> selectAll(int from, int pageRows) {
 		return mapper.selectAll(from, pageRows);
+	}
+
+	@Override
+	public List<BoardDTO> selectVogue() {
+		return mapper.selectVogue();
+	}
+
+	@Override
+	public List<BoardDTO> selectSearch(String text, int from, int pageRows) {
+		return mapper.selectSearch(text, from, pageRows);
 	}
 
 	@Override
@@ -35,10 +50,15 @@ public class FreeBoardDAOImpl implements FreeBoardDAO {
 	public List<BoardDTO> selectByUid(int uid) {
 		return mapper.selectByUid(uid);
 	}
-	
+
 	@Override
-	public int findCusUid(String nickName) {
-		return mapper.findCusUid(nickName);
+	public int findCusUidById(String id) {
+		return mapper.findCusUidById(id);
+	}
+
+	@Override
+	public int findCusUidByNickName(String nickName) {
+		return mapper.findCusUidByNickName(nickName);
 	}
 
 	@Override
@@ -67,7 +87,7 @@ public class FreeBoardDAOImpl implements FreeBoardDAO {
 	}
 
 	@Override
-	public String chkCusUid(int boardUid, int cusUid) {
+	public int chkCusUid(int boardUid, int cusUid) {
 		return mapper.chkCusUid(boardUid, cusUid);
 	}
 
@@ -79,6 +99,11 @@ public class FreeBoardDAOImpl implements FreeBoardDAO {
 	@Override
 	public int decGoodCnt(int boardUid, int cusUid) {
 		return mapper.decGoodCnt(boardUid, cusUid);
+	}
+
+	@Override
+	public int getGoodCnt(int boardUid) {
+		return mapper.getGoodCnt(boardUid);
 	}
 
 }

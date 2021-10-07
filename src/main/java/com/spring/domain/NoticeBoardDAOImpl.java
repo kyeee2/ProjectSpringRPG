@@ -22,8 +22,18 @@ public class NoticeBoardDAOImpl implements NoticeBoardDAO {
 	}
 
 	@Override
+	public int countSearch(String text) {
+		return mapper.countSearch(text);
+	}
+
+	@Override
 	public List<BoardDTO> selectAll(int from, int pageRows) {
 		return mapper.selectAll(from, pageRows);
+	}
+
+	@Override
+	public List<BoardDTO> selectSearch(String text, int from, int pageRows) {
+		return mapper.selectSearch(text, from, pageRows);
 	}
 
 	@Override
