@@ -72,6 +72,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public List<String> nickChk(String nickname) throws Exception {
 		return mapper.nickChk(nickname);
 	}
+
+
 	
 	
 	

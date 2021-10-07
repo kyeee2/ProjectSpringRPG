@@ -34,13 +34,12 @@ $(document).ready(function() {
 	//댓글등록 버튼 클릭 시
 	$('[name=commentInsertBtn]').click(function(event) {	//댓글등록 버튼 클릭 시
 		if(chkCosubmit() == true) {
-			
 			var insertData = $('[name=commentFrm]').serialize(); //commentInsertForm 내용 가져오기
-			alert(insertData);
 			commentinsert(insertData);//TODO
 		} else {
 			event.preventDefault();
 		}
+		
 	});
 
 });
@@ -165,6 +164,9 @@ function doGood() {
 			success : function(data){
 				if(data.count == 1) {
 					alert("댓글 작성 완료");
+
+					//댓글 읽어오기
+
 					commentList(boardType, uid);
 					$('[name=content]').val('');
 				}
@@ -175,17 +177,22 @@ function doGood() {
 	//댓글 목록 
 	function commentList(boardType, uid){
 		$.ajax({
-			url : "/comment/view/" + boardType + "/" + uid, // url : /ajax/{boardType}/{uid}/{cuid}
+			url : "comment/view/" + boardType + "/" + uid, // url : /comment/view/{boardType}/{uid}
+
 			type : 'GET',
 			datatype : 'json',
-			data : {'uid':uid},
+			//data : {'uid':uid},
 			cahce : false,
 			success : function(data, status) {
 				if(status=="success") {
+
+					writeComment(data.data);
+
 						for(var i=0; i<data.data.length; i++) {
 							writeComment(data.data);	//
 						
 					}
+
 				}
 			}
 			
@@ -197,6 +204,7 @@ function doGood() {
 		
 		var comment ="";
 		
+
 		for(i=0; i<jsonObj.length; i++) {
 			
 		comment += "<form name='frm'>\n"
@@ -210,21 +218,22 @@ function doGood() {
 		comment += "<button type='button' name='btn_updateOk' style='display : none;' onclick='clickUpdateOk(event)'>수정완료</button>";
 		comment += "</div>\n"
 		comment += "</form>\n"
+
 		
 		$("#comment").html(comment);	// 정보 업데이트
-		}
+
 		
 		
 	}//end wrtieComment
-	
-	// 댓글 수정
+	}
 	function clickUpdate(event) {
 		var $form =$(event.target).parent().parent();
+		console.log($form.html());
 		var $span = $form.children('span');
+
 		
 		var text = $span.text();
 		
-		$('#abc').replaceWith("<select><option>M</option></select>");
 		$span.replaceWith("<input name='content' class='comContent' />");
 		$('input[class="comContent"]').val(text);
 		
@@ -232,7 +241,7 @@ function doGood() {
 		$form.children('div').children(1).toggle();
 		$form.children('div').children(2).toggle();
 		$form.children('div').children(3).toggle();
-	}
+	};
 	
 	// 댓글 수정 완료
 	function clickUpdateOk(event) {
@@ -262,4 +271,24 @@ function doGood() {
 	}
 	
 	
-	
+	//댓글 삭제 ->가져올 정보는?boardType, 댓글 uid
+	function deleteComment(event) {
+		var data = "boardType=" + boardType + "&uid=" + uid;
+		
+		$.ajax({ 
+			url : "/comment/deleteOk",
+			type : "POST",
+			data : data,
+			cache : false,
+			success : function(data, status) {
+				if(status == "success") {
+					alert("댓글 삭제 완료")
+					commentList(boardType, uid);
+				} else {
+					alert("댓글 수정 실패");
+					
+				}
+			}
+			
+		})
+	}  //end deleteComment

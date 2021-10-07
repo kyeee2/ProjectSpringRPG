@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			AND
 				fbc.fb_uid = buid
 			AND 
-				fbc.fb_co_uid = uid
+				fbc.fb_co_uid = uid    
 			) nickName, 
 			fb_co_datetime dateTime, 
 			(select 
@@ -87,13 +87,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!--  댓글 삭제 -->
 	<delete id="deleteByUid" flushCache="true"
  	 	parameterType="java.util.ArrayList">
-		DELETE FROM fb_comment WHERE fb_uid in (
-		 <foreach collection="array" item="item" separator=",">
+		DELETE FROM fb_comment 
+		WHERE fb_uid 
+		IN (
+		 <foreach collection="array" item="item" separator=", ">
  	 			${item}
- 	 		</foreach>
+ 	 		</foreach>)
 	</delete>
 	
-
+	<!-- 회원의 uid 찾기 -->
+	<select id="findByUid" parameterType="String" resultType="int">
+		SELECT 
+			cus_uid
+		FROM
+			customer
+		WHERE
+			cus_id = #{id}
+	</select>
 
 </mapper>
 

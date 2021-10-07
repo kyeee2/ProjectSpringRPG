@@ -24,7 +24,9 @@ public interface FbCommentDAO {
 			public abstract int findCusUid(String nickName);
 			
 			// 댓글 삭제
-			public abstract int deleteByUid(String boardType, int[] uids);
+			public abstract int deleteByUid(int[] uid);
 		
+			// 특정 회원의 uid 가져오기
+			public abstract int findByUid(String id);
 			
 }
