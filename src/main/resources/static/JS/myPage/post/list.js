@@ -39,13 +39,14 @@ function loadPage(page) {
 		th += "<th>NO</th>\n";
 		th += "<th>추천수</th>\n";
 		th += "<th>제목</th>\n";
+		th += "<th>게시판종류</th>\n"
 		th += "<th>작성일</th>\n";
 		th += "<th>조회수</th>\n";
 		$("#list thead").html(th);
 			
 		// 테이블 데이터 가져오기
 		$.ajax({
-			url: "/board/list/myPage/" + uid + "/" + page + "/" + pageRows,	// url : /board/myPage/list/{uid}/{page}/{pageRows}
+			url: "/board/list/myPage/" + page + "/" + pageRows,	// url : /board/myPage/list/{uid}/{page}/{pageRows}
 			type: "GET",
 			cache: false,
 			success: function(data, status) {
@@ -59,7 +60,7 @@ function loadPage(page) {
 		// 테이블 헤드 작성
 		var th = "<th></th>\n";
 		th += "<th>NO</th>\n";
-		th += "<th>제목</th>\n";
+		th += "<th>내용</th>\n";
 		th += "<th>작성일</th>\n";
 		$("#list thead").html(th);
 			
@@ -86,6 +87,13 @@ function updateList(jsonObj) {
 			result += "<td>" + items[i].uid + "</td>\n";
 			result += "<td>" + items[i].goodcnt + "</td>\n";
 			result += "<td><a href='../view?boardType=" + items[i].boardtype + "&uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
+			if(items[i].boardtype == "freeboard") {
+				result += "<td>자유게시판</td>\n";
+			} else if(items[i].boardtype == "movieboard") {
+				result += "<td>영화리뷰</td>\n";
+			} else {
+				result += "<td></td>\n";
+			}
 			result += "<td>" + items[i].datetime + "</td>\n";
 			result += "<td><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
 			result += "</tr>\n";
@@ -190,7 +198,7 @@ function deleteData() {
 		
 		// DELETE 방식
 		$.ajax({
-			url : "/board",	// localhost:8090
+			url : "/board",	// URI : /board
 			type : "DELETE",
 			data : "boardType=freeboard&" + data,	// 게시글 타입은 freeboard랑 movieboard 두가지가 있는데 어떻게 처리할 것인가?
 			cache : false,

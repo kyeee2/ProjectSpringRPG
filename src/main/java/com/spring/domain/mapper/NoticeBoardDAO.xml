@@ -11,6 +11,18 @@
 			noticeboard
 	</select>
 	
+	<!-- 검색한 게시글 전체 개수 -->
+	<select id="countSearch" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			noticeboard 
+		WHERE 
+			nb_title LIKE "%${text}%"	<!-- 검색한 내용 -->
+			OR
+			nb_content LIKE "%${text}%"	<!-- 검색한 내용 -->
+	</select>
+	
 	<!-- 게시글 목록 -->
 	<select id="selectAll" resultType="com.spring.domain.BoardDTO">
 		SELECT 
@@ -30,6 +42,36 @@
 			nb_boardtype boardType
 		FROM 
 			noticeboard
+		ORDER BY 
+			nb_uid DESC
+		LIMIT 
+			#{from}, #{pageRows}
+	</select>
+	
+	<!-- 검색 목록 -->
+	<select id="selectSearch" parameterType="String" resultType="com.spring.domain.BoardDTO">
+		SELECT 
+			nb_uid uid,
+			(
+				SELECT 
+					cus.cus_nickname 
+				FROM 
+					noticeboard nb, customer cus
+				WHERE 
+					nb.cus_uid = cus.cus_uid 
+					AND 
+					nb.nb_uid = uid
+			) nickName,
+			nb_datetime date,
+			nb_viewcnt viewCnt,
+			nb_title title,
+			nb_boardtype boardType
+		FROM 
+			noticeboard 
+		WHERE 
+			nb_title LIKE "%${text}%"	<!-- 검색한 내용 -->
+			OR
+			nb_content LIKE "%${text}%"	<!-- 검색한 내용 -->
 		ORDER BY 
 			nb_uid DESC
 		LIMIT 

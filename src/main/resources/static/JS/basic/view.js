@@ -18,6 +18,11 @@ $(document).ready(function() {
 	// 정보 읽어오기 (조회수 증가)
 	viewData(boardType, uid);
 	
+	// 좋아요 누르기
+	$("#btn_good").click(function() {
+		doGood();
+	});
+	
 	// uid로 삭제하기
 	$("#doDelete").click(function() {
 		chkDelete();
@@ -53,6 +58,7 @@ $(document).ready(function() {
 		return true;
 	}
 
+// 게시글 내용 읽어오기
 function viewData(boardType, uid) {
 
 	// 읽어오기
@@ -79,6 +85,7 @@ function viewData(boardType, uid) {
 	
 }	// end addViewEvent()
 
+// 게시글 내용 작성하기
 function writeData(jsonObj) {
 	
 	result = "";	// 결과값 초기화
@@ -88,7 +95,7 @@ function writeData(jsonObj) {
 	result += "조회수 : " + jsonObj.viewcnt + "<br>\n";
 	if(jsonObj.boardtype != "noticeboard") {
 		// 좋아요수와 댓글수는 공지사항에서는 보이지 않는다
-		result += "좋아요수 : " + jsonObj.goodcnt + "<br>\n";
+		result += "좋아요수 : <span id='goodCnt' data-cnt=' + +'>" + jsonObj.goodcnt + "</span><br>\n";
 		result += "댓글수 : " + jsonObj.commentcnt + "<br>\n";
 	}
 	if(jsonObj.boardtype == "movieboard"){	
@@ -102,6 +109,7 @@ function writeData(jsonObj) {
 	
 }	// end writeResult()
 
+// 게시글 삭제 확인
 function chkDelete() {
 	if(!confirm("이 글을 삭제하시겠습니까?")) return false;
 	
@@ -126,6 +134,26 @@ function chkDelete() {
 	});
 }
 
+// 게시글 좋아요
+function doGood() {
+	
+	$.ajax({
+		url : "/board/good/" + boardType + "/" + uid,
+		type : "GET",
+		cache : false,
+		success : function(data, status) {
+			if(status == "success") {
+				if(data.count == 1) {
+					var goodCnt = data.message;	// 성공했으면 메세지에 좋아요 수 담겨져있음
+					$("#goodCnt").text(goodCnt);
+				}
+			} else {
+				alert(data.message);
+			}
+		}
+	});
+	
+}	// end doGood()
 
 	//댓글 등록
 	function commentinsert(insertData) {

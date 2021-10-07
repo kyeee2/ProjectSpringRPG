@@ -11,6 +11,18 @@
 			movieboard
 	</select>
 	
+	<!-- 검색한 게시글 전체 개수 -->
+	<select id="countSearch" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			movieboard 
+		WHERE 
+			mb_title LIKE "%${text}%"	<!-- 검색한 내용 -->
+			OR
+			mb_content LIKE "%${text}%"	<!-- 검색한 내용 -->
+	</select>
+	
 	<!-- 게시글 목록 -->
 	<select id="selectAll" resultType="com.spring.domain.BoardDTO">
 		SELECT 
@@ -57,6 +69,110 @@
 			movieboard
 		ORDER BY 
 			mb_uid DESC
+		LIMIT 
+			#{from}, #{pageRows}
+	</select>
+	
+	<!-- 인기글 5개 목록 -->
+	<select id="selectVogue" resultType="com.spring.domain.BoardDTO">
+		SELECT 
+			mb_uid uid,
+			(
+				SELECT 
+					ifnull(count(good.cus_uid), 0)
+				FROM 
+					movieboard mb LEFT JOIN mb_good good
+				ON 
+					mb.mb_uid = good.mb_uid 
+				WHERE 
+					mb.mb_uid = uid		<!-- uid : 위의 게시판 uid 컬럼 값 -->
+				GROUP BY 
+					mb.mb_uid
+			) goodCnt,
+			mb_subject subject,
+			mb_title title,
+			(
+				SELECT 
+					count(com.mb_co_uid)
+				FROM 
+					movieboard mb LEFT JOIN mb_comment com
+				ON 
+					mb.mb_uid = com.mb_uid
+				WHERE 
+					mb.mb_uid = uid			<!-- uid : 위의 게시판 uid 컬럼 값 -->
+				GROUP BY 
+					mb.mb_uid
+			) commentCnt,
+			(
+				SELECT 
+					cus.cus_nickname 
+				FROM 
+					movieboard mb, customer cus
+				WHERE mb.cus_uid = cus.cus_uid 
+					  AND 
+					  mb.mb_uid = uid		<!-- uid : 위의 게시판 uid 컬럼 값 -->
+			) nickName,
+			mb_datetime date,		<!-- BoardDTO 의 이름과 동일하게!!!! -->
+			mb_viewcnt viewCnt,
+			mb_boardtype boardType
+		FROM 
+			movieboard
+		ORDER BY 
+			mb_viewCnt DESC
+		LIMIT 
+			5
+	</select>
+	
+	<!-- 검색 목록 -->
+	<select id="selectSearch" parameterType="String" resultType="com.spring.domain.BoardDTO">
+		SELECT 
+			mb_uid uid,
+			(
+				SELECT 
+					cus.cus_nickname 
+				FROM 
+					movieboard mb, customer cus
+				WHERE 
+					mb.cus_uid = cus.cus_uid 
+					AND 
+					mb.mb_uid = uid
+			) nickName,
+			mb_subject subject,
+			mb_datetime date,
+			mb_viewcnt viewCnt,
+			(
+				SELECT 
+					ifnull(count(good.cus_uid), 0)
+				FROM 
+					movieboard mb LEFT JOIN mb_good good
+				ON 
+					mb.mb_uid = good.mb_uid 
+				WHERE 
+					mb.mb_uid = uid
+				GROUP BY 
+				mb.mb_uid
+			) goodCnt,
+			(
+				SELECT 
+					count(com.mb_co_uid)
+				FROM 
+					movieboard mb LEFT JOIN mb_comment com
+				ON 
+					mb.mb_uid = com.mb_uid
+				WHERE 
+					mb.mb_uid = uid	
+				GROUP BY 
+					mb.mb_uid
+			) commentCnt,
+			mb_title title,
+			mb_content content,
+			mb_boardtype boardType
+		FROM 
+			movieboard 
+		WHERE 
+			mb_title LIKE "%${text}%"	<!-- 검색한 내용 -->
+			OR
+			mb_content LIKE "%${text}%"	<!-- 검색한 내용 -->
 		LIMIT 
 			#{from}, #{pageRows}
 	</select>
@@ -218,5 +334,15 @@
 			AND 
 			mb_uid = #{boardUid}
 	</delete>
+	
+	<!-- 특정 게시글 좋아요 개수 -->
+	<select id="getGoodCnt" resultType="int">
+		SELECT 
+			count(*)
+		FROM
+			mb_good
+		WHERE
+			mb_uid = #{boardUid}
+	</select>
 	
 </mapper>

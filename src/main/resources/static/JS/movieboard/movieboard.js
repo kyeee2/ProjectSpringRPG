@@ -1,16 +1,42 @@
 var page = 1;	// 현재 페이지
 var pageRows = 5;	// 페이징당 글의 개수
 
+var search = false;	// 검색을 사용했는지
+var searchPage = 1;	// 검색한 경우 검색의 현재 페이지
+
 $(document).ready(function() {
 	// 페이지 최초 로딩되면 1페이지 내용을 로딩
 	loadPage(page);
+	
+	// 검색한 경우
+	$("#btn-search").click(function() {
+		window.search = true;
+		searchData(searchPage);
+	});
+	
 });
 
 // page번째 페이지 목록 읽어오기
 function loadPage(page) {
 	
+	if(page == 1) {	// 첫 페이지에는 인기글 목록도 추가
+		$.ajax({
+			url: "/board/vogueList/movieboard",	// url : /board/vogueList/movieboard
+			type: "GET",
+			cache: false,
+			success: function(data, status) {
+				if(status == "success") {
+					// response가 application/json 이면 이미 parse된 결과가 data에 담겨있다.
+					addList(data)
+				}
+			}
+		});
+	} else {
+		$("#list #vogue_list").html("");	// 테이블 업데이트
+	}
+	
 	$.ajax({
-		url: "/board/list/movieboard/" + page + "/" + pageRows,	// url : /ajax/freeboard/{page}/{pageRows}
+		url: "/board/list/movieboard/" + page + "/" + pageRows,	// url : /board/list/freeboard/{page}/{pageRows}
 		type: "GET",
 		cache: false,
 		success: function(data, status) {
@@ -23,6 +49,34 @@ function loadPage(page) {
 }	// end loadPage()
 
 // 목록 업데이트
+
+// 인기글 목록
+function addList(jsonObj) {
+	var vogue = "";
+	
+	if(jsonObj.status == "OK") {
+		var count = jsonObj.count;
+		
+		var items = jsonObj.data;	// 배열
+		for(var i = 0; i < count; i++) {
+			vogue += "<tr>\n";
+			vogue += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
+			vogue += "<td>" + items[i].uid + "</td>\n";
+			vogue += "<td>" + items[i].goodcnt + "</td>\n";
+			vogue += "<td>" + items[i].subject + "</td>\n";
+			vogue += "<td><a href='view?boardType=movieboard&uid=" + items[i].uid + "'> (인기글)" + items[i].title + "</td>\n";
+			vogue += "<td>" + items[i].nickname + "</td>\n";
+			vogue += "<td>" + items[i].datetime + "</td>\n";
+			vogue += "<td><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
+			vogue += "</tr>\n";
+			
+			$("#list #vogue_list").html(vogue);	// 테이블 업데이트
+		}
+	} else {
+		return false;
+	}
+}
+
 // 성공하면 true, 실패하면 false 리턴
 function updateList(jsonObj) {
 	var result = "";	// 최종 결과
@@ -47,7 +101,7 @@ function updateList(jsonObj) {
 			result += "</tr>\n";
 		}
 		
-		$("#list tbody").html(result);	// 테이블 업데이트
+		$("#list #board_list").html(result);	// 테이블 업데이트
 		
 		// 페이지 정보 업데이트
 		$("#pageinfo").text(jsonObj.page + "/" + jsonObj.totalpage + "페이지, " + jsonObj.totalcnt + "개의 글");
@@ -90,18 +144,18 @@ function buildPagination(writePages, totalPage, curPage, pageRows) {
     
    //■ << 표시 여부
 	if(curPage > 1){
-		str += "<li><a onclick='loadPage(" + 1 + ")' class='tooltip-top' title='처음'><i class='fas fa-angle-double-left'></i></a></li>\n";
+		str += "<li><a onclick='" + ((window.search)?"searchData(":"loadPage(") + 1 + ")' class='tooltip-top' title='처음'><i class='fas fa-angle-double-left'></i></a></li>\n";
 	}
 	
   	//■  < 표시 여부
     if (start_page > 1) 
-    	str += "<li><a onclick='loadPage(" + (start_page - 1) + ")' class='tooltip-top' title='이전'><i class='fas fa-angle-left'></i></a></li>\n";
+    	str += "<li><a onclick='" + ((window.search)?"searchData(":"loadPage(") + (start_page - 1) + ")' class='tooltip-top' title='이전'><i class='fas fa-angle-left'></i></a></li>\n";
     
     //■  페이징 안의 '숫자' 표시	
 	if (totalPage > 1) {
 	    for (var k = start_page; k <= end_page; k++) {
 	        if (curPage != k)
-	            str += "<li><a onclick='loadPage(" + k + ")'>" + k + "</a></li>\n";
+	            str += "<li><a onclick='" + ((window.search)?"searchData(":"loadPage(") + k + ")'>" + k + "</a></li>\n";
 	        else
 	            str += "<li><a class='active tooltip-top' title='현재페이지'>" + k + "</a></li>\n";
 	    }
@@ -109,12 +163,12 @@ function buildPagination(writePages, totalPage, curPage, pageRows) {
 	
 	//■ > 표시
     if (totalPage > end_page){
-    	str += "<li><a onclick='loadPage(" + (end_page + 1) + ")' class='tooltip-top' title='다음'><i class='fas fa-angle-right'></i></a></li>\n";
+    	str += "<li><a onclick='" + ((window.search)?"searchData(":"loadPage(") + (end_page + 1) + ")' class='tooltip-top' title='다음'><i class='fas fa-angle-right'></i></a></li>\n";
     }
 
 	//■ >> 표시
     if (curPage < totalPage) {
-        str += "<li><a onclick='loadPage(" + totalPage + ")' class='tooltip-top' title='맨끝'><i class='fas fa-angle-double-right'></i></a></li>\n";
+        str += "<li><a onclick='" + ((window.search)?"searchData(":"loadPage(") + totalPage + ")' class='tooltip-top' title='맨끝'><i class='fas fa-angle-double-right'></i></a></li>\n";
     }
 
     return str;
@@ -124,7 +178,11 @@ function buildPagination(writePages, totalPage, curPage, pageRows) {
 // <select> 에서 pageRows 값 변경될때마다
 function changePageRows() {
 	window.pageRows = $("#rows").val();	// select 의 id : rows
-	loadPage(window.page);
+	if(window.search) {	// 검색한 상태면 
+		searchData(window.searchPage);
+	} else {	// 검색이 아니라면
+		loadPage(window.page);
+	}
 }	// end changePageRows()
 
 // 특정 uid들로 삭제
@@ -164,3 +222,72 @@ function deleteData() {
 		});	// end ajax
 	}	// if-else
 } // end deleteData()
+
+// 게시판 안에서 검색했을 때 해당 목록 가져오기
+function searchData(searchPage) {
+	var text = $("#input-search").val();
+	
+	$.ajax({
+			url : "/board/searchList/movieboard/" + searchPage + "/" + pageRows,
+			type : "POST",
+			data : "text=" + text,
+			cache : false,
+			success : function(data, status) {
+				if(status == "success")	{	//	200
+					if(data.status == "OK") {
+						alert("검색 성공");
+						writeSearchList(data);
+					} else {
+						alert("검색 실패");
+					}
+				}
+			}
+		});	// end ajax
+}	// end searchData(searchPage)
+
+function writeSearchList(jsonObj){
+	var result = "";	// 최종 결과
+	
+	if(jsonObj.status == "OK" ) {
+		var count = jsonObj.count;
+		
+		if(count == 0) {	// 데이터가 없다면
+			alert("찾으시는 항목이 없습니다.");
+			$("#input-search").val("");
+			loadPage(page);
+		} else {
+			window.page = jsonObj.page;
+			window.pageRows = jsonObj.pagerows;
+			
+			var items = jsonObj.data;	// 배열
+			for(var i = 0; i < count; i++) {
+				result += "<tr>\n";
+				result += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
+				result += "<td>" + items[i].uid + "</td>\n";
+				result += "<td>" + items[i].goodcnt + "</td>\n";
+				result += "<td>" + items[i].subject + "</td>\n";
+				result += "<td><a href='view?boardType=freeboard&uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
+				result += "<td>" + items[i].nickname + "</td>\n";
+				result += "<td>" + items[i].datetime + "</td>\n";
+				result += "<td><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
+				result += "</tr>\n";
+			}
+			
+			
+			$("#list #vogue_list").html("");	// 테이블 업데이트
+			$("#list #board_list").html("");	// 테이블 업데이트
+			$("#list #search_list").html(result);	// 테이블 업데이트
+			
+				
+			// 페이지 정보 업데이트
+			$("#pageinfo").text(jsonObj.page + "/" + jsonObj.totalpage + "페이지, " + jsonObj.totalcnt + "개의 글");
+			
+			// [페이징] 정보 업데이트
+			var pagination = buildPagination(jsonObj.writepages, jsonObj.totalpage, jsonObj.page, jsonObj.pagerows);
+			$("#pagination").html(pagination);
+		}
+	} else {
+		alert("데이터를 불러오는데 실패했습니다.");
+	}
+	
+}	// end writeSearchList(jsonObj)

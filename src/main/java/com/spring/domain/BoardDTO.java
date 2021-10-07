@@ -25,7 +25,7 @@ public class BoardDTO {
 	private String boardType;		// 게시판 종류 (자유게시판, 영화 리뷰, 공지사항, 시사회 당첨자)
 	private LocalDateTime date;		// 게시판 작성일
 
-	// 자유게시판, 영화 리뷰에 추가적으로 필요한 데이타
+	// 자유게시판, 영화 리뷰에 추가적으로 필요한 데이터
 	@JsonProperty("nickname")
 	private String nickName;		// 게시판 작성자 닉네임
 	private String subject; 		// 게시판 글 카테고리
@@ -36,7 +36,7 @@ public class BoardDTO {
 	@JsonProperty("reportcnt")
 	private int reportCnt;			// 게시판 신고 수
 	
-	public String getDatetime() {	// 이름 소문자로 통일하기 위해서
+	public String getDatetime() {	// 게시판 날짜 포맷 바꾸기
 		if(this.date == null) {
 			return "";
 		}

@@ -56,7 +56,7 @@ function chkSubmit(){
 	return true;
 } // end chkSubmit()
 
-
+// 글 작성
 function writeData() {
 	
 	var formData = $("#frm").serialize();	// form 안의 name 값들을 모두 가져옴

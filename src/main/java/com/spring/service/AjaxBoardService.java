@@ -48,6 +48,19 @@ public class AjaxBoardService {
 		}
 	}
 
+	// 특정 게시판의 검색 글 개수
+	public int countSearch(String boardType, String text) {
+		if(boardType != null && boardType.equals("freeboard")) {
+			return fbDAO.countSearch(text);
+		} else if (boardType != null && boardType.equals("movieboard")) {
+			return mbDAO.countSearch(text);
+		} else if (boardType != null && boardType.equals("noticeboard")) {
+			return nbDAO.countSearch(text);
+		} else {
+		}
+		return 0;
+	}
+
 	// 특정 게시판의 전체 글 목록
 	public List<BoardDTO> list(String boardType, int from, int pageRows) {
 		if(boardType != null && boardType.equals("freeboard")) {
@@ -61,9 +74,33 @@ public class AjaxBoardService {
 		}
 	}
 
+	// 특정 게시판(자유게시판, 영화 리뷰)의 인기글 5개 가져오기(조회순)
+	public List<BoardDTO> vogueList(String boardType) {
+		if(boardType != null && boardType.equals("freeboard")) {
+			return fbDAO.selectVogue();
+		} else if (boardType != null && boardType.equals("movieboard")) {
+			return mbDAO.selectVogue();
+		} else {
+			return null;
+		}
+	}
+
+	// 게시판 내 검색 목록 가져오기
+	public List<BoardDTO> searchList(String boardType, String text, int from, int pageRows) {
+		if(boardType != null && boardType.equals("freeboard")) {
+			return fbDAO.selectSearch(text, from, pageRows);
+		} else if (boardType != null && boardType.equals("movieboard")) {
+			return mbDAO.selectSearch(text, from, pageRows);
+		} else if (boardType != null && boardType.equals("noticeboard")) {
+			return nbDAO.selectSearch(text, from, pageRows);
+		} else {
+			return null;
+		}
+	}
+
 	// 특정 게시판의 특정 게시글 조회 (조회수 증가 o)
 	@Transactional
-	public List<BoardDTO> view(String boardType, int uid) {
+	public List<BoardDTO> view(String boardType, int uid) {	// uid : 게시글uid
 		if(boardType != null && boardType.equals("freeboard")) {
 			fbDAO.incViewCnt(uid);
 			return fbDAO.selectByUid(uid);
@@ -79,7 +116,7 @@ public class AjaxBoardService {
 	}
 
 	// 특정 게시판의 특정 게시글 조회 (조회수 증가 x)
-	public List<BoardDTO> read(String boardType, int uid) {
+	public List<BoardDTO> read(String boardType, int uid) {	// uid : 게시글uid
 		if(boardType != null && boardType.equals("freeboard")) {
 			return fbDAO.selectByUid(uid);
 		} else if (boardType != null && boardType.equals("movieboard")) {
@@ -91,14 +128,22 @@ public class AjaxBoardService {
 		}
 	}
 
+	// 아이디로 특정 회원의 고유번호 가져오기
+	public int findCusUidById(String id) {
+		return fbDAO.findCusUidById(id);	// Customer DAO로 바꾸기
+	}
+	
+	// 아이디로 특정 회원의 고유번호 가져오기
+	public int findCusUidByNickName(String nickName) {
+		return fbDAO.findCusUidByNickName(nickName);	// Customer DAO로 바꾸기
+	}
+
 	// 특정 게시판에 게시글 작성
 	@Transactional
 	public int write(BoardDTO dto) {
 		
 		// 작성된 닉네임으로 회원 고유번호, boardType 가져오기
 		String boardType = dto.getBoardType();
-		int cusUid = fbDAO.findCusUid(dto.getNickName());
-		dto.setCusUid(cusUid);
 		
 		if(boardType != null && boardType.equals("freeboard")) {
 			return fbDAO.insert(dto);
@@ -114,8 +159,6 @@ public class AjaxBoardService {
 	// 특정 게시판에 게시글 수정
 	public int update(BoardDTO dto) {
 
-		// 유효성 검사가 끝나면 update 실행하기
-		
 		// dto에서 boardType 가져오기
 		String boardType = dto.getBoardType();
 		
@@ -132,7 +175,7 @@ public class AjaxBoardService {
 
 	// 특정 게시판에 게시글 삭제
 	@Transactional
-	public int delete(String boardType, int [] uids) {
+	public int delete(String boardType, int [] uids) {	// uids : 게시글 uid들
 		if(boardType != null && boardType.equals("freeboard")) {
 			fbDAO.deleteGood(uids);
 			fbDAO.deleteComment(uids);
@@ -147,26 +190,46 @@ public class AjaxBoardService {
 			return 0;
 		}
 	}
-	
-	// 특정 게시글에 좋아요 눌렀을 때
-	@Transactional
-	public int good(String boardType, int boardUid, int cusUid) {
+
+	// 좋아요 눌렀는지 확인 눌렀으면 1, 아니면 0
+	public int isGood(String boardType, int boardUid, int cusUid) {
 		if(boardType != null && boardType.equals("freeboard")) {
-			if(fbDAO.chkCusUid(boardUid, cusUid) == null) {
-				// 아직 좋아요를 안눌렀다면
-				return fbDAO.incGoodCnt(boardUid, cusUid);
-			} else {
-				// 좋아요를 이미 눌렀다면
-				return fbDAO.decGoodCnt(boardUid, cusUid);
-			}
+			return fbDAO.chkCusUid(boardUid, cusUid);
 		} else if (boardType != null && boardType.equals("movieboard")) {
-			if(mbDAO.chkCusUid(boardUid, cusUid) == null) {
-				// 아직 좋아요를 안눌렀다면
-				return mbDAO.incGoodCnt(boardUid, cusUid);
-			} else {
-				// 좋아요를 이미 눌렀다면
-				return mbDAO.decGoodCnt(boardUid, cusUid);
-			}
+			return mbDAO.chkCusUid(boardUid, cusUid);
+		} else {
+			return 0;
+		}
+	}
+	
+	// 좋아요 증가
+	public int incGoodCnt(String boardType, int boardUid, int cusUid) {
+		if(boardType != null && boardType.equals("freeboard")) {
+			return fbDAO.incGoodCnt(boardUid, cusUid);
+		} else if (boardType != null && boardType.equals("movieboard")) {
+			return mbDAO.incGoodCnt(boardUid, cusUid);
+		} else {
+			return 0;
+		}
+	}
+	
+	// 좋아요 감소
+	public int decGoodCnt(String boardType, int boardUid, int cusUid) {
+		if(boardType != null && boardType.equals("freeboard")) {
+			return fbDAO.decGoodCnt(boardUid, cusUid);
+		} else if (boardType != null && boardType.equals("movieboard")) {
+			return mbDAO.decGoodCnt(boardUid, cusUid);
+		} else {
+			return 0;
+		}
+	}
+
+	// 특정 게시글에 좋아요 수
+	public int getGoodCnt(String boardType, int boardUid) {
+		if(boardType != null && boardType.equals("freeboard")) {
+			return fbDAO.getGoodCnt(boardUid);
+		} else if (boardType != null && boardType.equals("movieboard")) {
+			return mbDAO.getGoodCnt(boardUid);
 		} else {
 			return 0;
 		}
@@ -189,5 +252,5 @@ public class AjaxBoardService {
 	public List<BoardDTO> listMyPost(int uid, int from, int pageRows) {
 		return myPageDAO.listMyPage(uid, from, pageRows);
 	}
-	
+
 }
