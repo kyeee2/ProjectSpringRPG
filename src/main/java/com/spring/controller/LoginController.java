@@ -42,8 +42,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.spring.CustomerValidator;
+import com.spring.config.PrincipalDetails;
 import com.spring.domain.CustomerDTO;
+import com.spring.service.AjaxBoardService;
 import com.spring.service.LoginService;
+import com.spring.service.MovieCrawlingService;
 
 @Controller
 
@@ -56,6 +59,10 @@ public class LoginController {
 	@Autowired
 	LoginService loginService;
 	
+	// 메인페이지용
+	MovieCrawlingService movieInfoService;
+	AjaxBoardService ajaxBoardService;
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -63,7 +70,18 @@ public class LoginController {
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
 	}
-		
+	
+	@Autowired
+	public void setMovieInfoService(MovieCrawlingService movieInfoService) {
+		this.movieInfoService = movieInfoService;
+	}
+
+	@Autowired
+	public void setAjaxBoardService(AjaxBoardService ajaxBoardService) {
+		this.ajaxBoardService = ajaxBoardService;
+	}
+	
+	public void naverlogin() {	}
 	//아이디 로그인
 	@GetMapping("/login")
 	public String login() {	
@@ -431,8 +449,19 @@ public class LoginController {
 		
 	}
 	@RequestMapping("/main")
-	public String mainpage() {
+	public String mainpage(Model model) {
 		System.out.println("main입장");
+
+		// 박스오피스 순위 5개
+		//System.out.println("현재 상영 영화 순위 1 ~ 5");
+		
+		model.addAttribute("titleShowing", movieInfoService.titleShowing());
+		model.addAttribute("posterShowing", movieInfoService.posterShowing());
+		model.addAttribute("codeShowing", movieInfoService.linkShowing());
+		
+		// 전체 게시판의 인기글 10개
+		model.addAttribute("vogueList", ajaxBoardService.allVogueList());
+		
 		return "basic/main";
 	}
 	 @PostMapping("/upload")

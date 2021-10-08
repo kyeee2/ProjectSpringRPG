@@ -30,7 +30,7 @@
 		SELECT 
 			fb_uid uid, 
 			fb_title title, 
-			fb_datetime date, 
+			fb_datetime datetime, 
 			fb_boardtype boardtype, 
 			fb_viewcnt viewcnt, 
 			cus_uid cUid 
@@ -42,7 +42,7 @@
 		SELECT 
 			mb_uid uid, 
 			mb_title title, 
-			mb_datetime date, 
+			mb_datetime datetime, 
 			mb_boardtype boardtype, 
 			mb_viewcnt viewcnt, 
 			cus_uid cUid 
@@ -51,7 +51,7 @@
 		WHERE 
 			cus_uid = #{uid}
 		ORDER BY 
-			date DESC
+			datetime DESC
 		LIMIT 
 			#{from}, #{pageRows}
 	</select>
