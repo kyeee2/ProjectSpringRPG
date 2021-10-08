@@ -116,7 +116,7 @@ $('#sendPhoneNumber').click(function(){
 	
     $.ajax({
         type: "POST",
-        url: "/basic/certified",
+        url: "/certified",
         data: {
             "phonenum" : phonenum
         },
@@ -163,7 +163,7 @@ function fn_idChk(){
 		//return false;
 	//}
 	$.ajax({
-		url : "/basic/idChk",
+		url : "/idChk",
 		type : "POST",
 		dataType : "json",
 		data : {"id" : $("input[name=id]").val()},
@@ -196,7 +196,7 @@ function fn_nickChk(){
 	//}
 	
 	$.ajax({
-		url : "/basic/nickChk",
+		url : "/nickChk",
 		type : "POST",
 		dataType : "json",
 		data : {"nickname" : $("input[name=nickname]").val()},

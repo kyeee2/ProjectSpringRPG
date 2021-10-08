@@ -74,7 +74,18 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 
-	
+	@Override
+	public int updateUser(CustomerDTO user)  {
+		
+		return mapper.updateUser(user);
+	}
+
+
+	@Override
+	public List<CustomerDTO> selectByUid(int uid) {
+		
+		return mapper.selectByUid(uid);
+	}
 	
 	
 

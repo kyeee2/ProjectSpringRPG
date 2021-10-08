@@ -272,8 +272,10 @@ function doGood() {
 	
 	
 	//댓글 삭제 ->가져올 정보는?boardType, 댓글 uid
-	function deleteComment(event) {
-		var data = "boardType=" + boardType + "&uid=" + uid;
+	function clickDelete(event) {
+		var $form =$(event.target).parent().parent();
+		var comUid = $form.children('input[type=hidden]').val();
+		var data = "boardType=" + boardType + "&uid=" + comUid + "&buid" +uid;
 		
 		$.ajax({ 
 			url : "/comment/deleteOk",
@@ -290,5 +292,5 @@ function doGood() {
 				}
 			}
 			
-		})
+		});
 	}  //end deleteComment
