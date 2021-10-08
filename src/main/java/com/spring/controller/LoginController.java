@@ -2,7 +2,6 @@
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -10,7 +9,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -21,10 +19,6 @@ import javax.validation.Valid;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,7 +27,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -43,19 +36,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import com.spring.CustomerValidator;
 import com.spring.config.PrincipalDetails;
-import com.spring.domain.CustomerDAO;
 import com.spring.domain.CustomerDTO;
+import com.spring.service.AjaxBoardService;
 import com.spring.service.LoginService;
-
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+import com.spring.service.MovieCrawlingService;
 
 @Controller
 
@@ -64,6 +54,10 @@ public class LoginController {
 	@Autowired
 	LoginService loginService;
 	
+	// 메인페이지용
+	MovieCrawlingService movieInfoService;
+	AjaxBoardService ajaxBoardService;
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -71,7 +65,17 @@ public class LoginController {
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
 	}
-		
+	
+	@Autowired
+	public void setMovieInfoService(MovieCrawlingService movieInfoService) {
+		this.movieInfoService = movieInfoService;
+	}
+
+	@Autowired
+	public void setAjaxBoardService(AjaxBoardService ajaxBoardService) {
+		this.ajaxBoardService = ajaxBoardService;
+	}
+	
 	public void naverlogin() {	}
 	//아이디 로그인
 	@GetMapping("/login")
@@ -406,8 +410,19 @@ public class LoginController {
 		return "/basic/logout";
 	}
 	@RequestMapping("/main")
-	public String mainpage() {
+	public String mainpage(Model model) {
 		System.out.println("main입장");
+
+		// 박스오피스 순위 5개
+		//System.out.println("현재 상영 영화 순위 1 ~ 5");
+		
+		model.addAttribute("titleShowing", movieInfoService.titleShowing());
+		model.addAttribute("posterShowing", movieInfoService.posterShowing());
+		model.addAttribute("codeShowing", movieInfoService.linkShowing());
+		
+		// 전체 게시판의 인기글 10개
+		model.addAttribute("vogueList", ajaxBoardService.allVogueList());
+		
 		return "basic/main";
 	}
 	 @PostMapping("/upload")

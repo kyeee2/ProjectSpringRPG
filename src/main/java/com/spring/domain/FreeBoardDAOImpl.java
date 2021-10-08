@@ -37,6 +37,10 @@ public class FreeBoardDAOImpl implements FreeBoardDAO {
 	}
 
 	@Override
+	public List<BoardDTO> selectAllVogue() {
+		return mapper.selectAllVogue();
+	}
+	@Override
 	public List<BoardDTO> selectSearch(String text, int from, int pageRows) {
 		return mapper.selectSearch(text, from, pageRows);
 	}
@@ -105,5 +109,6 @@ public class FreeBoardDAOImpl implements FreeBoardDAO {
 	public int getGoodCnt(int boardUid) {
 		return mapper.getGoodCnt(boardUid);
 	}
+
 
 }

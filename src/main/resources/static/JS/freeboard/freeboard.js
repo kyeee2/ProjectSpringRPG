@@ -65,7 +65,7 @@ function addvogueList(jsonObj) {
 			vogue += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
 			vogue += "<td>" + items[i].uid + "</td>\n";
 			vogue += "<td>" + items[i].goodcnt + "</td>\n";
-			vogue += "<td><a href='view?boardType=freeboard&uid=" + items[i].uid + "'> (인기글)" + items[i].title + "</td>\n";
+			vogue += "<td><a href='view?boardType=freeboard&uid=" + items[i].uid + "'> (인기글)" + items[i].title + "(" + items[i].commentcnt + ")" + "</td>\n";
 			vogue += "<td>" + items[i].nickname + "</td>\n";
 			vogue += "<td>" + items[i].datetime + "</td>\n";
 			vogue += "<td><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
@@ -94,7 +94,7 @@ function updateList(jsonObj) {
 			result += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
 			result += "<td>" + items[i].uid + "</td>\n";
 			result += "<td>" + items[i].goodcnt + "</td>\n";
-			result += "<td><a href='view?boardType=freeboard&uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
+			result += "<td><a href='view?boardType=freeboard&uid=" + items[i].uid + "'>" + items[i].title + "(" + items[i].commentcnt + ")" + "</td>\n";
 			result += "<td>" + items[i].nickname + "</td>\n";
 			result += "<td>" + items[i].datetime + "</td>\n";
 			result += "<td><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
@@ -265,7 +265,7 @@ function writeSearchList(jsonObj){
 				result += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
 				result += "<td>" + items[i].uid + "</td>\n";
 				result += "<td>" + items[i].goodcnt + "</td>\n";
-				result += "<td><a href='view?boardType=freeboard&uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
+				result += "<td><a href='view?boardType=freeboard&uid=" + items[i].uid + "'>" + items[i].title + "(" + items[i].commentcnt + ")" + "</td>\n";
 				result += "<td>" + items[i].nickname + "</td>\n";
 				result += "<td>" + items[i].datetime + "</td>\n";
 				result += "<td><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
