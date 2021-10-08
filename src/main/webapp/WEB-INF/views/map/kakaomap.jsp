@@ -26,12 +26,11 @@
 
     <div id="menu_wrap" class="bg_white">
         <div class="option">
-            <div>
-                <form onsubmit="searchPlaces(); return false;">
-                    키워드 : <input type="text" value="" id="keyword" size="15"> 
+            <div class="my">
+                    자신의 위치 입력 : <input type="text" value="" id="keyword" size="15"> 
                     <button type="submit" id="a">검색하기</button> 
-                </form>
             </div>
+                    <div class="clear"></div>
         </div>
         <hr>
         <ul id="placesList"></ul>

@@ -7,7 +7,7 @@
 
 section{	/* 전체 section의 범위 조정*/
 	max-width:1280px;
-	width:690px;
+	width:900px;
 	margin: auto;
 }
 table {	/* table 크기 조정*/
@@ -19,7 +19,7 @@ table {	/* table 크기 조정*/
 	text-align : center;
 	margin: auto;
 	border-radius: 10px;
-	width:auto;
+	width:900px;
 	
 	
 }
@@ -53,12 +53,12 @@ td {
 }
 
 #pageinfo {	
-	padding: 0px 20px;
+	padding: 0px 0px;
 	font-size:5px;
 }
 #pageRows {
 	float: right;
-	padding: 0px 20px;
+	padding: 0px 0px;
 }
 
 select {
@@ -69,16 +69,38 @@ select {
 }
 
 #head {
-	text-align: center;
+	text-align: left;
 	font-size:20px;
 }
 
-li a {
+.head-wrap {
+	display: grid;
+}
+
+.center ul {
 	text-align: center;
+	width :630px;
+}
+ul li{
+	text-align: center;
+	list-style-type: none;
+	display: inline;
+	margin-left: 10px;
+}
+li a {
+	display: inline-block;
 }
 
 li a:hover {
 	cursor: pointer;
 }
 
+.center input, .center #btn-search {
+	margin-left:5px;
+	float:right;
+	padding:0px 0px;
+}
+.center #new-regi {
+	float:left;
+}
 }
