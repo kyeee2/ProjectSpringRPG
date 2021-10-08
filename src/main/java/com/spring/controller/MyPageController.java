@@ -1,12 +1,14 @@
 package com.spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.spring.config.PrincipalDetails;
 import com.spring.domain.CustomerDTO;
 import com.spring.service.LoginService;
 
@@ -23,9 +25,14 @@ public class MyPageController {
 	
 	// 마이페이지 컨트롤러
 	@RequestMapping("/myInfo")
-	public String myInfo(CustomerDTO user) {
-		if(user.getId() != null)
-		loginService.findById(user.getId());
+	public String myInfo(Authentication authentication, Model model) {
+
+		// 로그인 정보에서 고유번호 가져오기
+		PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
+        int uid = userDetails.getUid();
+       
+        model.addAttribute("list", loginService.selectByUid(uid));
+		
 		
 		return "/myPage/info/view";
 	}
