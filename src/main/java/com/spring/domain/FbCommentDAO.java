@@ -12,16 +12,21 @@ public interface FbCommentDAO {
 			public abstract List<CommentDTO> view(int buid);
 			
 			// 댓글 작성
-			public abstract int insert(String boardType, int buid);
+			public abstract int insert(CommentDTO dto);
 			
 			// 특정(회원의)uid 댓글 조회
 			public abstract List<CommentDTO> selectByUid(int buid);
 			
 			// 댓글 수정
-			public abstract int update(String boardType, int buid);
+			public abstract int update(CommentDTO dto);
+			
+			// 닉네임으로 회원 uid 찾기 (쿼리문 사용 용도)
+			public abstract int findCusUid(String nickName);
 			
 			// 댓글 삭제
-			public abstract int deleteByUid(int buid);
+			public abstract int deleteByUid(int[] uid);
 		
+			// 특정 회원의 uid 가져오기
+			public abstract int findByUid(String id);
 			
 }

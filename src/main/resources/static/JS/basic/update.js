@@ -49,7 +49,8 @@ function writeValue(data) {
 	
 	$("input[name=boardType]").val(boardType);
 	$("input[name=uid]").val(uid);
-	$("span[name=nickName]").text(data.nickname);
+	$("span[class=nickName]").text(data.nickname);
+	$("input[name=nickName]").val(data.nickname);
 	if(boardType == "movieboard") {
 		// 영화 리뷰라면 주제에 원래 내용 넣어주기
 		$("input[name=subject]").val(data.subject);	
@@ -64,7 +65,7 @@ function chkSubmit(){
 	
 	var title = frm['title'].value.trim();
 	var content = CKEDITOR.instances.ckeditor.getData();	// ckeditor에 적은 데이터 뽑아내기
-
+	
 	if(title == ""){
 		$("#title-message").text("  제목은 필수입니다.");
 		$("#content-message").text("");
@@ -90,6 +91,7 @@ function chkSubmit(){
 // 글 수정
 function updateData() {
 	
+	CKEDITOR.instances.ckeditor.updateElement();	// ckeditor 수정사항 갱신! <- 이거 안하니까 수정사항이 바뀌지 않고 저장됨
 	var formData = $("#frm").serialize();	// form 안의 name 값들을 모두 가져옴
 	
 	$.ajax({

@@ -11,7 +11,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			fb_co_uid uid, 
 			fb_co_content content, 
 			fb_uid buid, 
-			cus_uid nickName, 
+			(SELECT 
+				cus.cus_nickname
+			FROM 
+				fb_comment fbc, customer cus
+			WHERE 
+				fbc.cus_uid = cus.cus_uid
+			AND
+				fbc.fb_uid = buid
+			AND 
+				fbc.fb_co_uid = uid    
+			) nickName, 
 			fb_co_datetime dateTime, 
 			(select 
 				fb.fb_boardtype 
@@ -21,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				fb.fb_uid = com.fb_uid 
 				and 
 				fb.fb_uid  = buid
-				and 
+			AND 
 				com.fb_co_uid = uid
 			) boardType
 		FROM 
@@ -29,21 +39,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE 
 			fb_uid = #{buid}
 		ORDER BY 
-			fb_co_uid DESC		
+			fb_co_uid ASC		
+	</select>
+	<!--사용자 -->
+	<select id="findCusUid" resultType="int">
+		SELECT 
+			cus_uid 
+		FROM 
+			customer 
+		WHERE 
+			cus_nickname = #{nickName}
 	</select>
 	<!-- 댓글작성 -->
 	<insert id="insert" flushCache="true"
-		parameterType="com.spring.domain.CommentDTO"
-		keyProperty="uid" useGeneratedKeys="true" keyColumn="fb_uid">	
+		parameterType="com.spring.domain.CommentDTO">	
 		INSERT INTO fb_comment 
-			(cus_uid, fb_co_datetime, fb_co_content)
-		VALUES
-			(#{nickName}, #{dateTime}, #{content})
+			(fb_co_content, cus_uid, fb_uid)
+		VALUE
+			(#{content}, #{cusuid}, #{buid}) 
 	</insert>
 	<!--특정 회원uid 댓글 조회.마이페이지용  -->
 	<select id="selectByUid" resultType="com.spring.domain.CommentDTO">
 		SELECT 
-			fb_co_uid uid, fb_co_content content, cus_uid nickName, fb_co_datetime dateTime 
+			fb_co_uid uid, fb_co_content content, (SELECT 
+				cus.cus_nickname
+			FROM 
+				fb_comment fbc, customer cus
+			WHERE 
+				fbc.cus_uid = cus.cus_uid
+			AND
+				fbc.fb_uid = uid
+			) nickName, fb_co_datetime dateTime 
 		FROM fb_comment 
 		WHERE fb_co_uid=#{uid}
 	</select>
@@ -61,13 +87,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!--  댓글 삭제 -->
 	<delete id="deleteByUid" flushCache="true"
  	 	parameterType="java.util.ArrayList">
-		DELETE FROM fb_comment WHERE fb_uid in (
-		 <foreach collection="array" item="item" index="index" separator=",">
+		DELETE FROM fb_comment 
+		WHERE fb_uid 
+		IN (
+		 <foreach collection="array" item="item" separator=", ">
  	 			${item}
- 	 		</foreach>
+ 	 		</foreach>)
 	</delete>
 	
-
+	<!-- 회원의 uid 찾기 -->
+	<select id="findByUid" parameterType="String" resultType="int">
+		SELECT 
+			cus_uid
+		FROM
+			customer
+		WHERE
+			cus_id = #{id}
+	</select>
 
 </mapper>
 

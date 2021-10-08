@@ -51,7 +51,7 @@ public class MyPageController {
 	}
 	// 마이페이지 게시글/ 댓글 조회 페이지
 	@RequestMapping("/myPost")
-	public String myPost(int uid) {	// 특정 회원 uid
+	public String myPost() {	// 특정 회원 uid
 		return "/myPage/post/list";
 	}
 }

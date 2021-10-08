@@ -21,20 +21,20 @@ private FbCommentDAO mapper;
 	
 
 	@Override
-	public int insert(String boardType, int buid) {
-		return mapper.insert(boardType, buid);
+	public int insert(CommentDTO dto) {
+		return mapper.insert(dto);
 	}
 
 
 	@Override
-	public int update(String boardType, int buid) {
-		return mapper.update(boardType, buid);
+	public int update(CommentDTO dto) {
+		return mapper.update(dto);
 	}
 
 	@Override
-	public int deleteByUid(int buid) {
+	public int deleteByUid(int uid[]) {
 		
-		return mapper.deleteByUid(buid);
+		return mapper.deleteByUid(uid);
 	}
 
 	@Override
@@ -47,6 +47,20 @@ private FbCommentDAO mapper;
 	@Override
 	public List<CommentDTO> selectByUid(int buid) {
 		return mapper.selectByUid(buid);
+	}
+
+
+
+	@Override
+	public int findCusUid(String nickName) {
+		return mapper.findCusUid(nickName);
+	}
+
+
+
+	@Override
+	public int findByUid(String id) {
+		return mapper.findByUid(id);
 	}
 
 	

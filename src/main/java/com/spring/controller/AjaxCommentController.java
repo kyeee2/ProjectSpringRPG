@@ -2,15 +2,19 @@ package com.spring.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.security.core.Authentication;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.config.PrincipalDetails;
 import com.spring.domain.AjaxCommentList;
 import com.spring.domain.AjaxCommentResult;
 import com.spring.domain.CommentDTO;
@@ -42,7 +46,6 @@ public class AjaxCommentController {
 		
 		try {
 			list = commentservice.view(boardType, buid);
-			System.out.println(list.size());
 			
 			if(list == null) {
 				message.append("[리스트할 데이터가 없습니다.]");
@@ -63,15 +66,23 @@ public class AjaxCommentController {
 			cresult.setCount(list.size());	
 			cresult.setList(list);
 		}
-		System.out.println(cresult.getCount());
 		
 		return cresult;
 		
 	} // end view(boardType, uid)
 	
-	
-	@PostMapping("/writeOK/{boardType}/{uid}")
-	public AjaxCommentResult writeOk(@PathVariable String boardType, @PathVariable(value="uid") int buid) {	
+
+	@PostMapping("/writeOk")
+	public AjaxCommentResult writeOk(@Valid CommentDTO dto 
+			 , Authentication authentication
+			, BindingResult bresult
+			, Model model) {	
+		
+		// 유효성 검사 결과 먼저 확인
+				if(bresult.hasErrors()) {
+					// 에러가 존재한다면
+					
+				}
 		
 		int count = 0;
 		
@@ -80,8 +91,18 @@ public class AjaxCommentController {
 		String status = "FAIL";
 		
 		try {
-			
-			count = commentservice.insert(boardType, buid);
+			// 로그인 정보에서 아이디 가져오기
+			if(authentication != null) {
+				
+            PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
+              String id = userDetails.getUsername();   // 아이디 뽑아내기
+              // 아이디로 특정 회원의 고유번호 찾아서 dto에 세팅해주기
+              int uid = commentservice.findCusUidById(id);
+              dto.setCusuid(uid);
+			}
+            dto.toString();
+
+			count = commentservice.insert(dto);
 			
 			if(count == 0) {
 				message.append("[트랜잭션 실패 : 0 INSERT]");
@@ -102,9 +123,10 @@ public class AjaxCommentController {
 		return cresult;
 		
 	} // end writeOk()
-	
-	@PutMapping("/updateOK/{boardType}/{uid}")
-	public AjaxCommentResult updateOk(String boardType, int uid) {
+
+	@PostMapping("/updateOk")
+	public AjaxCommentResult updateOk(@Valid CommentDTO dto, BindingResult bresult,
+			 Model model) {
 
 		int count = 0;
 		
@@ -114,7 +136,7 @@ public class AjaxCommentController {
 		
 		try {
 			
-			count = commentservice.update(boardType, uid);
+			count = commentservice.update(dto);	
 			
 			if(count == 0) {
 				message.append("[트랜잭션 실패 : 0 UPDATE]");
@@ -136,8 +158,9 @@ public class AjaxCommentController {
 		
 	} // end updateOk()
 	
-	@DeleteMapping("/deleteOK/{boardType}/{uid}")
-	public AjaxCommentResult deleteOk(String boardType, int buid) {
+	
+	@PostMapping("/deleteOk")
+	public AjaxCommentResult deleteOk(String boardType, int [] uid) {
 		
 		int count = 0;
 		
@@ -147,7 +170,7 @@ public class AjaxCommentController {
 		
 		try {
 
-			count = commentservice.delete(boardType, buid);
+			count = commentservice.delete(boardType, uid);
 			
 			if(count == 0) {
 				message.append("[트랜잭션 실패 : 0 DELETE]");
@@ -167,6 +190,6 @@ public class AjaxCommentController {
 		
 		return cresult;
 		
-	} // end deleteOk(CommentDTO, uid)
+	} // end deleteOk(CommentDTO, buid, uid)
 	
 }

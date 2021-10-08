@@ -14,7 +14,7 @@ public class AjaxBoardList extends AjaxBoardResult {
 	@JsonProperty("data")	// 기획서 이름과 동일하게 맞춰주기
  	List<BoardDTO> list;  // 데이터 목록
 		
-	int page;  // 현재 페이지 #
+	int page;  // 현재 페이지 
 	
 	@JsonProperty("totalpage")
 	int totalPage; // 총 몇 '페이지' 분량인가?

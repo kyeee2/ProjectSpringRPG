@@ -8,9 +8,15 @@ public interface NoticeBoardDAO {
 	// 게시글 총 개수
 	public abstract int count();
 
+	// 게시글 검색 목록 개수
+	public abstract int countSearch(String text);
+
 	// 게시글 목록
 	public abstract List<BoardDTO> selectAll(int from, int pageRows);
-	
+
+	// 게시판 검색 목록
+	public abstract List<BoardDTO> selectSearch(String text, int from, int pageRows);
+
 	// 게시글을 조회하기 위해서는
 	// 먼저 게시글의 조회수를 1 증가시키고
 	// 그 다음 게시글을 불러와야한다!

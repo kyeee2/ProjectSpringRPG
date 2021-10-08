@@ -30,7 +30,12 @@ CREATE TABLE apply
 	pr_win boolean DEFAULT false
 );
 
-
+SELECT 
+			cus_uid
+		FROM
+			customer
+		WHERE
+			cus_nickName = '홍길동1';
 CREATE TABLE authority
 (
 	cus_auth varchar(45) NOT NULL,

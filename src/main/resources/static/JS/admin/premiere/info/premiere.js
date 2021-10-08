@@ -1,77 +1,77 @@
-var page = 1;	// 현재 페이지
-var pageRows = 5;	// 페이징당 글의 개수
+var page = 1;	// 현재 페이지  
+var pageRows = 10;	// 페이지당 글의 개수 
 
-$(document).ready(function() {
-	// 페이지 최초 로딩되면 1페이지 내용을 로딩
-	loadPage(page);
+$(document).ready(function(){
+	// 페이지 최초 로딩 -> 1페이지 로딩
+	loadPage(page); 
 });
-
-// page번째 페이지 목록 읽어오기
+// 페이지 목록 읽어오기 
 function loadPage(page) {
 	
 	$.ajax({
-		url: "/list/movieboard/" + page + "/" + pageRows,	// url : /ajax/freeboard/{page}/{pageRows}
-		type: "GET",
-		cache: false,
-		success: function(data, status) {
+		url : "/premiere/list/" + page  + "/" + pageRows,
+		type : "GET",
+		cache : false,
+		success : function(data, status) {
 			if(status == "success") {
-				// response가 application/json 이면 이미 parse된 결과가 data에 담겨있다.
-				updateList(data)
+				if(data.status == "OK") {
+					updateList(data);
+				} else {
+					alert(data.message);
+				}
 			}
 		}
 	});
-}	// end loadPage()
+} // end loadList(page, pageRows)
 
 // 목록 업데이트
-// 성공하면 true, 실패하면 false 리턴
+// 성공하면 true, 실패하면 false 리턴 
 function updateList(jsonObj) {
-	var result = "";	// 최종 결과
+	var result = ""; // 최종 결과 
 	
-	if(jsonObj.status == "OK") {
+	if(jsonObj.status == "OK"){
 		var count = jsonObj.count;
 		
 		window.page = jsonObj.page;
 		window.pageRows = jsonObj.pagerows;
 		
-		var items = jsonObj.data;	// 배열
-		for(var i = 0; i < count; i++) {
+		var items = jsonObj.data; // 배열
+		for(var i = 0; i < count; i++){
 			result += "<tr>\n";
+			
 			result += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
 			result += "<td>" + items[i].uid + "</td>\n";
-			result += "<td>" + items[i].goodcnt + "</td>\n";
-			result += "<td>" + items[i].subject + "</td>\n";
-			result += "<td><a href='view?boardType=movieboard&uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
-			result += "<td>" + items[i].nickname + "</td>\n";
-			result += "<td>" + items[i].datetime + "</td>\n";
-			result += "<td><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
+			result += "<td><a href='view?uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
+			result += "<td>" + items[i].photo + "</td>\n";
+			result += "<td>" + items[i].content + "</td>\n";
+
 			result += "</tr>\n";
 		}
-		
-		$("#list tbody").html(result);	// 테이블 업데이트
+		$("#list tbody").html(result); // 업데이트
 		
 		// 페이지 정보 업데이트
-		$("#pageinfo").text(jsonObj.page + "/" + jsonObj.totalpage + "페이지, " + jsonObj.totalcnt + "개의 글");
+		$("#pageinfo").text(jsonObj.page + "/" + jsonObj.totalpage + "페이지, " + jsonObj.totalcnt + "개의 ");
 		
 		// pageRows
 		var txt = "<select id='rows' onchange='changePageRows()'>\n";
-		txt += "<option " + ((window.pageRows == 1)?"selected":"")  + " value='1'>1개씩</option>\n";
-		txt += "<option " + ((window.pageRows == 2)?"selected":"")  + " value='2'>2개씩</option>\n";
-		txt += "<option " + ((window.pageRows == 5)?"selected":"")  + " value='5'>5개씩</option>\n";
-		txt += "<option " + ((window.pageRows == 10)?"selected":"")  + " value='10'>10개씩</option>\n";
+		txt += "<option " + ((window.pageRows == 1)?"selected":"") + " value='1'>1개씩</option>\n";
+		txt += "<option " + ((window.pageRows == 2)?"selected":"") + " value='2'>2개씩</option>\n";
+		txt += "<option " + ((window.pageRows == 5)?"selected":"") + " value='5'>5개씩</option>\n";
+		txt += "<option " + ((window.pageRows == 10)?"selected":"") + " value='10'>10개씩</option>\n";
 		txt += "</select>\n";
-		$("#pageRows").html(txt);	// pageRows 업데이트
+		$("#pageRows").html(txt);
 		
 		// [페이징] 정보 업데이트
 		var pagination = buildPagination(jsonObj.writepages, jsonObj.totalpage, jsonObj.page, jsonObj.pagerows);
 		$("#pagination").html(pagination);
 		
 	} else {
-		alert("내용이 없습니다.");
+		alert("내용이 없습니다");
 		return false;
 	}
 	
 	return true;
-}	// end updateList()
+} // end updateList()
 
 // [페이징] 생성
 // 한 [페이징]에 표시될 페이지수 --> writePages
@@ -142,25 +142,43 @@ function deleteData() {
 	} else {
 		if(!confirm(uids.length + "개의 글을 삭제하시겠습니까?")) return false;
 		
-		var data = $("#frm").serialize();
+		var data = $("#frmList").serialize();
 		
 		// DELETE 방식
 		$.ajax({
-			url : "/",
+			url : "/premiere",	
 			type : "DELETE",
-			data : "boardType=movieboard&" + data,
+			data : data,
 			cache : false,
 			success : function(data, status) {
 				if(status == "success")	{	//	200
 					if(data.status == "OK") {
 						alert("DELETE 성공 : " + data.count + "개");
 						loadPage(window.page);	// 현재 페이지 목록 리로딩
-
 					} else {
 						alert("DELETE 실패 " + data.message);
+						return false;
 					}
 				}
 			}
 		});	// end ajax
 	}	// if-else
 } // end deleteData()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.spring.domain.CustomerDTO;
 import com.spring.service.LoginService;
 
+import lombok.Getter;
+
 public class PrincipalDetails implements UserDetails{
 	
 	private static final long serialVersionUID = 1L;
@@ -24,8 +26,6 @@ public class PrincipalDetails implements UserDetails{
 		System.out.println("PrincipalDetails(user) 생성: " + user);
 		this.user = user;
 	}
-	
-	
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -56,12 +56,16 @@ public class PrincipalDetails implements UserDetails{
 	}
 	
 	@Override
-	public String getUsername() {
+	public String getUsername() {	// 아이디 가져오기
 		return user.getId();
 	}
 	
 	public void setPassword(String pw) {
 		user.setPw(pw);
+	}
+	
+	public int getUid() {
+		return user.getUid();
 	}
 
 	// 계정이 만료된건 아닌지?

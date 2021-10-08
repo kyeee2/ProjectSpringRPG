@@ -5,11 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.spring.ckeditor.common.Consts;
 import com.spring.service.AjaxBoardService;
 
 @Controller
 public class BoardController {
+	public BoardController() {
+		System.out.println("BoardController()생성");
+	}
 	
 	@Autowired
 	AjaxBoardService service;
@@ -31,6 +33,7 @@ public class BoardController {
  
 	@RequestMapping("/user/write")
 	public String boardWrite() {
+		System.out.println("글쓰기 페이지");
 		return "/basic/write";
 	}
 	

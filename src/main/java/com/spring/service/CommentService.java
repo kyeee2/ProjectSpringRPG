@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.domain.CommentDTO;
+import com.spring.domain.CustomerDAO;
+import com.spring.domain.CustomerDTO;
 import com.spring.domain.FbCommentDAO;
 import com.spring.domain.MbCommentDAO;
 
@@ -27,6 +29,8 @@ public class CommentService {
 		this.mbComDAO = mbDAO;
 	}
 	
+	
+	
 	//리스트,보기 작성 수정 삭제 조건은 게시글 uid 비교.
 
 	//댓글 보기
@@ -44,11 +48,15 @@ public class CommentService {
 	
 	//댓글작성
 	@Transactional
-	public int insert(String boardType, int buid) {
+	public int insert(CommentDTO dto) {
+		String boardType =dto.getBoardType();
+		
 		if(boardType != null && boardType.equals("freeboard")) {
-			return fbComDAO.insert(boardType, buid);
-		} else if (boardType != null && boardType.equals("movieboard")) {
-			return mbComDAO.insert(boardType, buid);
+			return fbComDAO.insert(dto);
+		} 
+	
+		else if (boardType != null && boardType.equals("movieboard")) {
+			return mbComDAO.insert(dto);
 		} else {
 			return 0;
 		}
@@ -56,11 +64,12 @@ public class CommentService {
 	
 	//댓글수정
 
-	public int update(String boardType, int buid) {
+	public int update(CommentDTO dto) { 
+		String boardType =dto.getBoardType();
 		if(boardType != null && boardType.equals("freeboard")) {
-			return fbComDAO.update(boardType, buid);
+			return fbComDAO.update(dto);
 		} else if (boardType != null && boardType.equals("movieboard")) {
-			return mbComDAO.update(boardType, buid);
+			return mbComDAO.update(dto);
 		} else {
 			return 0;
 		}
@@ -68,13 +77,20 @@ public class CommentService {
 	
 	//댓글삭제
 
-	public int delete(String boardType, int buid) {
+	public int delete(String boardType, int uid []) { 
 		if(boardType != null && boardType.equals("freeboard")) {
-			return fbComDAO.deleteByUid(buid);
+			return fbComDAO.deleteByUid(uid);
 		} else if (boardType != null && boardType.equals("movieboard")) {
-			return mbComDAO.deleteByUid(buid);
-		} else {
+			return mbComDAO.deleteByUid(uid);
+		} else { 
 			return 0;
 		}
+	}
+	
+	// 회원의 uid 찾기
+	public int findCusUidById(String id) {
+		int uid = fbComDAO.findByUid(id);
+		
+		return uid;
 	}	
 }

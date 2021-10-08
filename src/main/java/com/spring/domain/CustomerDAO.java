@@ -46,4 +46,8 @@ public interface CustomerDAO {
 //		
 //		List<FileDTO> selectFileByUid(int uid);
 		
+		
+		
+		
+		
 }

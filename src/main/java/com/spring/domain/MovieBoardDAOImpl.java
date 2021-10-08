@@ -22,8 +22,23 @@ public class MovieBoardDAOImpl implements MovieBoardDAO {
 	}
 
 	@Override
+	public int countSearch(String text) {
+		return mapper.countSearch(text);
+	}
+
+	@Override
 	public List<BoardDTO> selectAll(int from, int pageRows) {
 		return mapper.selectAll(from, pageRows);
+	}
+
+	@Override
+	public List<BoardDTO> selectVogue() {
+		return mapper.selectVogue();
+	}
+
+	@Override
+	public List<BoardDTO> selectSearch(String text, int from, int pageRows) {
+		return mapper.selectSearch(text, from, pageRows);
 	}
 
 	@Override
@@ -67,7 +82,7 @@ public class MovieBoardDAOImpl implements MovieBoardDAO {
 	}
 
 	@Override
-	public String chkCusUid(int boardUid, int cusUid) {
+	public int chkCusUid(int boardUid, int cusUid) {
 		return mapper.chkCusUid(boardUid, cusUid);
 	}
 
@@ -79,6 +94,11 @@ public class MovieBoardDAOImpl implements MovieBoardDAO {
 	@Override
 	public int decGoodCnt(int boardUid, int cusUid) {
 		return mapper.decGoodCnt(boardUid, cusUid);
+	}
+
+	@Override
+	public int getGoodCnt(int boardUid) {
+		return mapper.getGoodCnt(boardUid);
 	}
 
 }
