@@ -62,13 +62,12 @@ function addvogueList(jsonObj) {
 		var items = jsonObj.data;	// 배열
 		for(var i = 0; i < count; i++) {
 			vogue += "<tr>\n";
-			vogue += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
-			vogue += "<td>" + items[i].uid + "</td>\n";
-			vogue += "<td>" + items[i].goodcnt + "</td>\n";
+			vogue += "<td class='num'>" + items[i].uid + "</td>\n";
+			vogue += "<td class='num'>" + items[i].goodcnt + "</td>\n";
 			vogue += "<td><a href='view?boardType=freeboard&uid=" + items[i].uid + "'> (인기글)" + items[i].title + "</td>\n";
-			vogue += "<td>" + items[i].nickname + "</td>\n";
-			vogue += "<td>" + items[i].datetime + "</td>\n";
-			vogue += "<td><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
+			vogue += "<td class='num1'>" + items[i].nickname + "</td>\n";
+			vogue += "<td class='num1'>" + items[i].datetime + "</td>\n";
+			vogue += "<td class='num1'><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
 			vogue += "</tr>\n";
 			
 			$("#list #vogue_list").html(vogue);	// 테이블 업데이트
@@ -91,13 +90,12 @@ function updateList(jsonObj) {
 		var items = jsonObj.data;	// 배열
 		for(var i = 0; i < count; i++) {
 			result += "<tr>\n";
-			result += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
-			result += "<td>" + items[i].uid + "</td>\n";
-			result += "<td>" + items[i].goodcnt + "</td>\n";
-			result += "<td><a href='view?boardType=freeboard&uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
-			result += "<td>" + items[i].nickname + "</td>\n";
-			result += "<td>" + items[i].datetime + "</td>\n";
-			result += "<td><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
+			result += "<td class='num'>" + items[i].uid + "</td>\n";
+			result += "<td class='num'>" + items[i].goodcnt + "</td>\n";
+			result += "<td class='text'><a href='view?boardType=freeboard&uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
+			result += "<td class='num1'>" + items[i].nickname + "</td>\n";
+			result += "<td class='num1'>" + items[i].datetime + "</td>\n";
+			result += "<td class='num1'><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
 			result += "</tr>\n";
 		}
 		
@@ -262,13 +260,12 @@ function writeSearchList(jsonObj){
 			var items = jsonObj.data;	// 배열
 			for(var i = 0; i < count; i++) {
 				result += "<tr>\n";
-				result += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
-				result += "<td>" + items[i].uid + "</td>\n";
-				result += "<td>" + items[i].goodcnt + "</td>\n";
-				result += "<td><a href='view?boardType=freeboard&uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
-				result += "<td>" + items[i].nickname + "</td>\n";
-				result += "<td>" + items[i].datetime + "</td>\n";
-				result += "<td><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
+				result += "<td class='num'>" + items[i].uid + "</td>\n";
+				result += "<td class='num'>" + items[i].goodcnt + "</td>\n";
+				result += "<td class='text'><a href='view?boardType=freeboard&uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
+				result += "<td class='num1'>" + items[i].nickname + "</td>\n";
+				result += "<td class='num1'>" + items[i].datetime + "</td>\n";
+				result += "<td class='num1'><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
 				result += "</tr>\n";
 			}
 			
