@@ -83,7 +83,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
 	public List<CustomerDTO> selectByUid(int uid) {
-		
+		System.out.println("dao에 걸렸니?");
 		return mapper.selectByUid(uid);
 	}
 	

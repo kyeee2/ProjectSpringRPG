@@ -64,6 +64,7 @@ public class LoginService {
 		return dao.findById(id);
 	}
 	public List<CustomerDTO> selectByUid(int uid) {
+		System.out.println("서비스에 걸렸니?");
 		return dao.selectByUid(uid);
 	}
 	// 특정 id 의 권한(들) 정보 가져오기
