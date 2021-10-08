@@ -8,6 +8,10 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<<<<<<< HEAD
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insert title here</title>
+=======
 <title>MOVIEMANIA</title>
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
 
@@ -18,6 +22,7 @@
 <!-- JS 적용 -->
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/baisc/main.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
+>>>>>>> branch 'master' of https://github.com/kyeee2/ProjectSpringRPG
 </head>
 <body>
 	<%-- 헤더 삽입 --%>

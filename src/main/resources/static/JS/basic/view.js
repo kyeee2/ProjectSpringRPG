@@ -284,11 +284,13 @@ function doGood() {
 			cache : false,
 			success : function(data, status) {
 				if(status == "success") {
+					if(data.count == 1) {		
 					alert("댓글 삭제 완료")
 					commentList(boardType, uid);
 				} else {
-					alert("댓글 수정 실패");
+					alert("댓글 삭제 실패");
 					
+					}
 				}
 			}
 			
