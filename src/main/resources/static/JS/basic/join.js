@@ -116,7 +116,7 @@ $('#sendPhoneNumber').click(function(){
 	
     $.ajax({
         type: "POST",
-        url: "/basic/certified",
+        url: "/certified",
         data: {
             "phonenum" : phonenum
         },

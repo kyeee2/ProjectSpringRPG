@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+* {
+    font-family: 'Rubik', sans-serif;
+}
+@media only screen and (min-width:1024px){
+h2{
+	position: absolute;
+    
+    transform: translate(-40%, -30%);
+}
+body{
+	width:100%;
+	min-height:100%;
+}
+.totallogin{
+	position: absolute;
+	top: 35%;
+    left: 35%;
+    width:600px;
+    height:350px;
+}
+#loginbtn{
+	position:absolute;
+	transform: translate(-40%, 90px);
+	height:38px;
+	width:160px;
+	
+	background-color:#000080;
+	border-radius:6%
+}
+#loginfrm{
+	position:absolute;
+	width:190px; 
+	min-height:200px;
+	border-right:1px solid #c0c0c0;
+	padding-right:30px;
+	text-align:justify;
+}
+
+.login-1 {
+	position: absolute;
+    transform: translate(-40%, 50px);
+}
+.login-2{
+	position: absolute;
+    transform: translate(-40%, 70px);
+}
+.login-3{
+	position: absolute;
+    transform: translate(250px, 10%);
+}
+.login-4{
+	position: absolute;
+    transform: translate(250px, 50%);
+}
+
+.apilogin-1{
+	transform:translate(80%, 10%);
+	max-width:300px;
+}
+hr{
+	padding-left:130px;
+	max-width:200px;
+}
+.apilogin-2{
+	transform:translate(80%, 50px);
+	margin-right:0px;
+	
+}
+
+.idandpw{
+	width:150px;
+}
+.line {
+	width:190px; 
+	border-right:1px solid #c0c0c0;
+	padding-right:12px;
+	text-align:justify;
+}
+}
+	.login {
+  	display: flex;
+  	justify-content: center;
+  	align-items: center;
+  	width: 100%;
+    height: auto;
+  
+	}
+	.apilogin{
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+  	width: 100%;
+    height: auto;
+}
+

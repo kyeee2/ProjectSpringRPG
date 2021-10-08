@@ -72,6 +72,20 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public List<String> nickChk(String nickname) throws Exception {
 		return mapper.nickChk(nickname);
 	}
+
+
+	@Override
+	public int updateUser(CustomerDTO user)  {
+		
+		return mapper.updateUser(user);
+	}
+
+
+	@Override
+	public List<CustomerDTO> selectByUid(int uid) {
+		
+		return mapper.selectByUid(uid);
+	}
 	
 	
 	

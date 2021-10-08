@@ -64,7 +64,23 @@
 		WHERE cus_nickname = #{nickname}
 	
 	</select>
-
-
+	<update id="updateUser">
+		UPDATE customer SET cus_phonenum= #{phonenum} , cus_nickname=#{nickname} WHERE cus_uid=#{uid} 
+	</update>
+	<select id="selectByUid" resultType="com.spring.domain.CustomerDTO">
+		SELECT
+			cus_uid uid,
+			cus_id id,
+			cus_pw pw,
+			cus_name name, 
+			cus_nickname nickname, 
+			cus_birthday birthday, 
+			cus_profile profile,
+			cus_phonenum phonenum 
+			
+			
+		FROM customer
+		WHERE cus_uid = #{uid}	
+	</select>
 
 </mapper>

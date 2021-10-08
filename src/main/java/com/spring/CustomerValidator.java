@@ -84,7 +84,7 @@ public class CustomerValidator implements Validator{
 
 
 			    // ASCII 문자 비교를 위한 UpperCase
-			    String tmpPw = pw.toUpperCase();
+			    String tmpPw = pw;
 			    // 문자열 길이
 			    int strLen = tmpPw.length();
 
