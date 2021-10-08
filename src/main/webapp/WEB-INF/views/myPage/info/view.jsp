@@ -59,10 +59,19 @@
 <div></div>
 <div></div>
 <div></div>
-<button onclick="location.href='pwUpdate?uid=${list[0].uid }'">비밀번호 변경</button>
-<button onclick="location.href='update?uid=${list[0].uid }'">회원 정보 수정</button>
-<button onclick="location.href='deleteOk?uid=${list[0].uid }'">회원탈퇴</button>
-
+<button onclick="location.href='myInfo/pwUpdate'">비밀번호 변경</button>
+<button onclick="location.href='myInfo/update'">회원 정보 수정</button>
+<button onclick="deleteUser()">회원탈퇴</button>
+<script>
+    function deleteUser() {
+        if (!confirm("정말 회원정보를 삭제하시겠습니까?")) {
+            history.back();
+        } else {
+            alert("회원 탈퇴되었습니다.");
+            location.href='myInfo/deleteOk';
+        }
+    }
+</script>
 </body>
 </html>
 

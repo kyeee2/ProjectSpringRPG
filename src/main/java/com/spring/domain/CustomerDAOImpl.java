@@ -37,8 +37,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public int deleteUser(CustomerDTO user) {
-		return mapper.deleteUser(user);
+	public int deleteUser(int enable, String id) {
+		return mapper.deleteUser(enable, id);
 	}
 
 	@Override
@@ -75,9 +75,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
 	@Override
-	public int updateUser(CustomerDTO user)  {
+	public int updateUser(String phonenum, String nickname, int uid)  {
 		
-		return mapper.updateUser(user);
+		return mapper.updateUser(phonenum, nickname, uid);
 	}
 
 
@@ -86,6 +86,15 @@ public class CustomerDAOImpl implements CustomerDAO {
 		System.out.println("dao에 걸렸니?");
 		return mapper.selectByUid(uid);
 	}
+
+
+	@Override
+	public int updatePw(String pw, int uid) {
+		return mapper.updatePw(pw, uid);
+	}
+
+
+	
 	
 	
 

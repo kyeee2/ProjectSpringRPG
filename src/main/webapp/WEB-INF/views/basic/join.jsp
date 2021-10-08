@@ -21,6 +21,8 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <!-- 만든 JS -->
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/basic/join.js"></script>
+<!-- 헤더 적용 -->
+<script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
 
 </head>
 <body>

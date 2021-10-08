@@ -19,7 +19,7 @@
       <ul class="header-icons">
         <li>
       		<sec:authorize access="isAuthenticated()">
-      			<a href="/myPage" id="myPage"><i class="far fa-smile"></i></a>
+      			<a href="user/myInfo" id="myPage"><i class="far fa-smile"></i></a>
       			<a href="/logout" id="header-logout">로그아웃</a>
       		</sec:authorize>
       		<sec:authorize access="!isAuthenticated()">

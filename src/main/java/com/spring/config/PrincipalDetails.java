@@ -63,6 +63,10 @@ public class PrincipalDetails implements UserDetails{
 	public void setPassword(String pw) {
 		user.setPw(pw);
 	}
+	public CustomerDTO getUser(){
+		
+		return user;
+	}
 	
 	public int getUid() {
 		return user.getUid();

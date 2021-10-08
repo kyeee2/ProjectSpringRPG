@@ -48,15 +48,19 @@ public class LoginService {
 	}
 	
 	// 회원삭제
-	@Transactional
-	public int deleteMember(CustomerDTO user) {
-		dao.deleteAuths(user.getId());  // 권한(들) 먼저 삭제
-		int cnt = dao.deleteUser(user);
+	
+	public int deleteMember(int enable, String id) {
+		dao.deleteAuths(id);  // 권한(들) 먼저 삭제
+		int cnt = dao.deleteUser(enable, id);
 		return cnt;
 	}
-	public int updateUser(CustomerDTO user) throws Exception{
-		int cnt = dao.updateUser(user);
-		return cnt;
+	public int updateUser(String phonenum, String nickname, int uid) throws Exception{
+		System.out.println("업데이트서비스에 걸렸니?");
+		return dao.updateUser(phonenum, nickname, uid);
+	}
+	
+	public int updatePw(String pw, int uid) throws Exception{
+		return dao.updatePw(pw, uid);
 	}
 	
 	// 특정 id(username) 의 정보 가져오기
