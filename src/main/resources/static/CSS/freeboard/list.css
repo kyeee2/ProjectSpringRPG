@@ -6,7 +6,8 @@
 }
 
 section{	/* 전체 section의 범위 조정*/
-	width:650px;
+	max-width:1280px;
+	width:690px;
 	margin: auto;
 }
 table {	/* table 크기 조정*/
@@ -18,6 +19,7 @@ table {	/* table 크기 조정*/
 	text-align : center;
 	margin: auto;
 	border-radius: 10px;
+	width:auto;
 	
 	
 }
@@ -51,11 +53,12 @@ td {
 }
 
 #pageinfo {	
+	padding: 0px 20px;
 	font-size:5px;
 }
 #pageRows {
 	float: right;
-	padding: 0px 1px;
+	padding: 0px 20px;
 }
 
 select {

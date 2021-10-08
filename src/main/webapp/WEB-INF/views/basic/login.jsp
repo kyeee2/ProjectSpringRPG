@@ -10,74 +10,103 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- CSS 적용 -->
+
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/login.css" rel="stylesheet" type="text/css">
 <!-- fontawesome 적용 -->
 <script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
 <!-- JS 적용 -->
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
+
+<!-- JQuery 적용 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<jsp:include page="/WEB-INF/views/global/header.jsp"/>
 </head>
 <body>
+	<% 
+    String clientId = "MdDnprhEU_V4J7WsPkRu";//애플리케이션 클라이언트 아이디값";
+    String redirectURI = URLEncoder.encode("http://localhost:8090/callback", "UTF-8");
+    SecureRandom random = new SecureRandom();
+    String state = new BigInteger(130, random).toString();
+    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+    apiURL += "&client_id=" + clientId;
+    apiURL += "&redirect_uri=" + redirectURI;
+    apiURL += "&state=" + state;
+    session.setAttribute("state", state);
+
+		%>
 <%-- 헤더 삽입 --%>
-<jsp:include page="/WEB-INF/views/global/header.jsp"/>
 	
- 	<%
-		// 현재 로그인 상태인지, 즉 로그인 세션 (name이 'userid'인 세션값)이 있는지 확인
-		//System.out.println(session.getAttribute("id"));
-		//if(session.getAttribute("id") != null){					
-	%>
+ 	
 	<sec:authorize access="isAuthenticated()">
 		<h2>로그인 상태입니다 </h2>
 		<form action="logout">
 			<input type="submit" value="로그아웃"><br>
+			<a href=" http://nid.naver.com/nidlogin.logout"><input type="submit" value="로그아웃"></a><br>
+		<a href="http://developers.kakao.com/logout"><input type="submit" value="로그아웃"></a>
 		</form>
-		<a href="http://developers.kakao.com/logout">카카오 로그아웃</a>
 	</sec:authorize>
-	<%
-		// } else {
-		//로그인 상태가 아니라면 ... 
-	%>
-	<sec:authorize access="!isAuthenticated()">
-		<h2>로그인 </h2>
-		<form action="loginOk" method="POST">
-			<input type="text" id="id" name="id" placeholder="아이디"><br>
-			<input type="password" id="pw" name="pw" placeholder="비밀번호"><br>
-			<input type="submit" id="loginbtn" value="로그인"><br>
-		</form>
-		<a href="joinAgree">회원가입</a>
-		<a href="find">ID/PW 찾기</a>
-	</sec:authorize>
-	<%
-	  // String clientId = "MdDnprhEU_V4J7WsPkRu";//애플리케이션 클라이언트 아이디값";
-	  // String redirectURI = URLEncoder.encode("http://localhost:8090/callback", "UTF-8");
-	  // SecureRandom random = new SecureRandom();
-	   //String state = new BigInteger(130, random).toString();
-	   
-	  // String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
-	  // apiURL += "&client_id=" + clientId;
-	  // apiURL += "&redirect_uri=" + redirectURI;
-	  // apiURL += "&state=" + state;
-	   
-	   //session.setAttribute("state", state);
-	%>
-	<a href=""><img height="38px" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>	
-	
-		<%
-		//<%=apiURL%>
-		<%
-		//String redirectURI2 = URLEncoder.encode("http://localhost:8090/kakao", "UTF-8");
-		//String reqUrl = 
-			//		"https://kauth.kakao.com/oauth/authorize"
-			//		+ "?client_id=d11a12ee85c98662914e0bac1931a617"
-			//		+ "&redirect_uri=" + redirectURI2
-			//		+ "&response_type=code";
+	<div class="totallogin">
+	<sec:authorize access="!isAuthenticated()">	
+		<div><h2>로그인 </h2>
+		</div>
+		<br>
+		<form id="loginfrm" action="loginOk" method="POST">
+			<div class="login-1">
+			<input type="text" class="idandpw" id="id" name="id" placeholder="아이디"></div><br>
+			<div class="login-2"><input type="password" class="idandpw" id="pw" name="pw" placeholder="비밀번호">
+			</div><br>
+			<input type="submit" id="loginbtn" value="로그인">
+			<br>
 			
-			//<%=reqUrl %>
-		 <% %>
-	<a href="">
-		<img height="38px" src="../img/kakao_login_medium_narrow.png" />
- </a>
-<%//}%>
+		</form>
+		
+	</sec:authorize>
+	
+	<div class="apilogin-1">
+	<a href="<%=apiURL%>"><img height="38px" width="160px" src="../img/naver.png"/></a>
+		<br></div>
+	<hr>
+	<div id=kakaologin class="apilogin-2" onclick="kakaoLogin()">
+		<img height="38px" width="160px" src="../img/kakao_login_medium_narrow.png" /></div>
+		<div class="login-3"><form action="joinagree"><input type="submit" value="회원가입"></form><br></div>
+		<div class="login-4"><a href="find">ID/PW 찾기</a>
+	</div></div>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script>
+  //카카오로그인
+  function kakaoLogin() {
 
+    $.ajax({
+        url: '/getKakaoAuthUrl',
+        type: 'get',
+        async: false,
+        dataType: 'text',
+        success: function (res) {
+            location.href = res;
+        }
+    });
+
+  }
+
+  $(document).ready(function() {
+
+      var kakaoInfo = '${kakaoInfo}';
+
+      if(kakaoInfo != ""){
+          var data = JSON.parse(kakaoInfo);
+
+          alert("카카오로그인 성공 \n accessToken : " + data['accessToken']);
+          alert(
+          "user : \n" + "email : "
+          + data['email']  
+          + "\n nickname : " 
+          + data['nickname']);
+      }
+  });  
+
+  </script>
 </body>
 </html>

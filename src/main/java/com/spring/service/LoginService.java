@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.spring.domain.CustomerDAO;
 import com.spring.domain.CustomerDTO;
 
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
@@ -32,9 +33,17 @@ public class LoginService {
 	}
 	
 	@Transactional
-	public int addMember(CustomerDTO user) {
-		int cnt = dao.addUser(user);
-		dao.addAuth(user.getId(), "ROLE_USER");
+	public int addMember(CustomerDTO user) throws Exception {
+		int cnt = 0;
+		
+		System.out.println("컨트롤러에 걸렸니?");
+		// 중복확인
+		System.out.println("아이디 : " + dao.idChk(user.getId()));
+		List<String> checkid = dao.idChk(user.getId());
+		if(checkid == null || checkid.size() == 0) {
+			cnt = dao.addUser(user);
+			dao.addAuth(user.getId(), "ROLE_USER");
+		}
 		return cnt;
 	}
 	
@@ -45,12 +54,18 @@ public class LoginService {
 		int cnt = dao.deleteUser(user);
 		return cnt;
 	}
+	public int updateUser(CustomerDTO user) throws Exception{
+		int cnt = dao.updateUser(user);
+		return cnt;
+	}
 	
 	// 특정 id(username) 의 정보 가져오기
 	public CustomerDTO findById(String id) {
 		return dao.findById(id);
 	}
-	
+	public List<CustomerDTO> selectByUid(int uid) {
+		return dao.selectByUid(uid);
+	}
 	// 특정 id 의 권한(들) 정보 가져오기
 	public List<String> selectAuthoritiesById(String id){
 		return dao.selectAuthoritiesById(id);
@@ -71,6 +86,7 @@ public class LoginService {
 		else
 			return 1;
 	}
+	
 	 public void certifiedPhoneNumber(String phonenum, String cerNum) {
 		 	
 		    

@@ -2,9 +2,11 @@ package com.spring.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor	// 생성자
+@NoArgsConstructor
 // 회원정보
 public class CustomerDTO {
 	private Integer uid;		// 회원 고유 번호

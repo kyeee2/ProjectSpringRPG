@@ -24,6 +24,12 @@ public interface CustomerDAO {
 		// 특정 사용자 권한(들) 전부 삭제
 		int deleteAuths(String id);
 		
+		//유저정보 수정
+		int updateUser(CustomerDTO user);
+		
+		//유저 정보 가져오기(uid)
+		List<CustomerDTO> selectByUid(int uid);
+		
 		// 특정 id (username) 의 사용자 찾기
 		CustomerDTO findById(String id);
 		
@@ -31,6 +37,7 @@ public interface CustomerDAO {
 		List<String> selectAuthoritiesById(String id);
 		
 		public List<String> idChk(String id) throws Exception;
+		
 		
 		public List<String> nickChk(String nickname) throws Exception;
 //		int insert(int uid, List<String> originalFileNames, List<String> fileSystemNames);

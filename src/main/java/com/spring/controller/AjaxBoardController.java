@@ -309,7 +309,6 @@ public class AjaxBoardController {
 		        String id = userDetails.getUsername();	// 아이디 뽑아내기
 		        
 		        // 아이디로 특정 회원의 고유번호 찾아서 dto에 세팅해주기
-//		        int uid = ajaxBoardService.findCusUidById(id);
 		        int uid = userDetails.getUid();
 		        dto.setCusUid(uid);
 		        

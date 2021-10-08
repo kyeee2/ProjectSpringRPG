@@ -85,6 +85,11 @@ public class AjaxBoardService {
 		}
 	}
 
+	// 전체 게시판(자유게시판, 영화리뷰)의 인기글 10개
+	public List<BoardDTO> allVogueList() {
+		return fbDAO.selectAllVogue();
+	}
+
 	// 게시판 내 검색 목록 가져오기
 	public List<BoardDTO> searchList(String boardType, String text, int from, int pageRows) {
 		if(boardType != null && boardType.equals("freeboard")) {

@@ -4,8 +4,9 @@
 <!-- header -->
   <header class="header">
     <div class="header-container">
-      <!-- 무비마니아 로고 -->
-      <a href="#"><div class="header-logo"></div></a>
+
+      <!-- 대한항공 로고 -->
+      <a href="/main"><div class="header-logo"></div></a>
 
       <ul class="header-nav">
         <li><a href="../freeboard">자유게시판</a></li>

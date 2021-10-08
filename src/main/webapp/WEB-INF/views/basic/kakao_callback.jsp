@@ -18,5 +18,6 @@
   profile : <img src="${ profile }" style="width:500px; hieght:auto;" />
    birthday : ${ birthday }<br>
   mobile : ${ mobile }<br>
+  http://developers.kakao.com/logout
 </body>
 </html>

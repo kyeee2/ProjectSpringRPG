@@ -121,6 +121,29 @@
 			5
 	</select>
 	
+	<!-- 메인페이지용 전체 게시판(자유게시판, 영화리뷰)의 인기글 10개 -->
+	<select id="selectAllVogue" resultType="com.spring.domain.BoardDTO">
+		SELECT 
+			fb_uid uid, 
+			fb_title title, 
+			fb_boardtype boardtType, 
+			fb_viewcnt viewcnt 
+		FROM 
+			freeboard 
+		UNION ALL
+		SELECT 
+			mb_uid uid, 
+			mb_title title, 
+			mb_boardtype boardType, 
+			mb_viewcnt viewcnt 
+		FROM 
+			movieboard 
+		ORDER BY 
+			viewcnt DESC
+		LIMIT 
+			10
+	</select>
+	
 	<!-- 검색 목록 -->
 	<select id="selectSearch" parameterType="String" resultType="com.spring.domain.BoardDTO">
 		SELECT 

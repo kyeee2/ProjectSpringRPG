@@ -3,6 +3,7 @@ package com.spring.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +26,11 @@ public class BoardFileUploadController {
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=utf-8");
  
+        // 랜덤문자생성
+        UUID uid = UUID.randomUUID();
+        
         //업로드한 파일 이름
-        String fileName = upload.getOriginalFilename();
+        String fileName = uid + upload.getOriginalFilename();
  
         //파일을 바이트 배열로 변환
         byte[] bytes = upload.getBytes();
