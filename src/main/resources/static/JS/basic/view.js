@@ -89,21 +89,23 @@ function writeData(jsonObj) {
 	
 	result = "";	// 결과값 초기화
 
-	result += "작성자 : " + jsonObj.nickname + "<br>\n";
-	result += "등록일 : " + jsonObj.datetime + "<br>\n";
-	result += "조회수 : " + jsonObj.viewcnt + "<br>\n";
+	result += "<div class='flexcon'><div class='container1'>" + jsonObj.nickname + "</div><br>\n";
+	result += "<div class='container2'>" + jsonObj.datetime + "</div><br>\n";
+	result += "<div class='container3'>" + jsonObj.viewcnt + "</div><br>\n";
 	if(jsonObj.boardtype != "noticeboard") {
 		// 좋아요수와 댓글수는 공지사항에서는 보이지 않는다
-		result += "좋아요수 : <span id='goodCnt' data-cnt=' + +'>" + jsonObj.goodcnt + "</span><br>\n";
-		result += "댓글수 : " + jsonObj.commentcnt + "<br>\n";
-	}
+		
+		result += "<br>\n<div class='container4'>좋아요수 : <span id='goodCnt' data-cnt=' + +'>" + jsonObj.goodcnt + "</span></div><br>\n";
+		result += "<div class='container5'>댓글수 : " + jsonObj.commentcnt + "</div><br>\n";
+		result += "</div>\n";
+	} 
 	if(jsonObj.boardtype == "movieboard"){	
 		// 주제는 영화 리뷰에서만 보임
 		result += "주제 : " + jsonObj.subject + "<br>\n";
 	}
-	result += "제목 : " + jsonObj.title + "<br>\n";
-	result += "내용 : " + jsonObj.content + "<br>\n";
-	
+	result += "<div class='gridecon'><div class='content'>제목 : " + jsonObj.title +"</div><br>\n";
+	result += "<div class='text'>내용 : " + jsonObj.content + "</div><br>\n";
+	result += "</div>"
 	$("#result").html(result);	// 정보 업데이트
 	
 }	// end writeResult()

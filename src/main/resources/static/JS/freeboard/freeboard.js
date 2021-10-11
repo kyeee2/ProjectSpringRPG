@@ -55,10 +55,9 @@ function loadPage(page) {
 // 인기글 목록
 function addvogueList(jsonObj) {
 	var vogue = "";
-	
 	if(jsonObj.status == "OK") {
 		var count = jsonObj.count;
-		
+			
 		var items = jsonObj.data;	// 배열
 		for(var i = 0; i < count; i++) {
 			vogue += "<tr>\n";
@@ -75,9 +74,10 @@ function addvogueList(jsonObj) {
 		}
 	} else {
 		return false;
-	}
+	
+	} 
 }
-
+		
 // 성공하면 true, 실패하면 false 리턴
 function updateList(jsonObj) {
 	var result = "";	// 최종 결과

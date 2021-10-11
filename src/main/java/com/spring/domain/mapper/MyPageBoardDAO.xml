@@ -55,5 +55,4 @@
 		LIMIT 
 			#{from}, #{pageRows}
 	</select>
-	
 </mapper>

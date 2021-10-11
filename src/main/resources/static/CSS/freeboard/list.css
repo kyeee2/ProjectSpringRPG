@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+@media screen and (max-width: 1024px) {
+th {
+	display: none;
+}
+}
+
+
 @media screen and (min-width: 1024px) {
 .clear { /* float 사용 후 반드시 사용해줄것*/
 	clear: both;
