@@ -2,7 +2,6 @@ var page = 1;	// 현재 페이지
 var pageRows = 5;	// 페이징당 글의 개수
 var type = "post";	// 게시글(post)인지 댓글(comment)인지
 var uid = "";
-var boardType = "";
 $(document).ready(function() {
 	
 	// 파라미터 값 받아오기
@@ -13,7 +12,6 @@ $(document).ready(function() {
 	
 	// URLSearchParams.get('parameter') : 파라미터명이 'parameter'인 것 중 첫번째 value 값 리턴
 	uid = urlParams.get('uid'); // 파라미터명이 uid인 value 값 받기 	
-	boardType = urlParams.get('boardType'); // 파라미터명이 boardType인 value 값 받기
 	// 페이지 최초 로딩되면 1페이지 내용을 로딩
 	loadPage(page);
 	
@@ -66,12 +64,12 @@ function loadPage(page) {
 			
 		// 테이블 데이터 가져오기
 		$.ajax({ 
-			url: "/comment/list/myPage/" +boardType +"/" + page + "/" + pageRows,
+			url: "/comment/list/myPage/" + page + "/" + pageRows,
 			type: "GET",
 			cache: false,
 			success: function(data, status) {
 				if(status == "success") {
-					updateCoList(data, boardType);
+					updateCoList(data);
 				}
 			}
 		})
@@ -137,7 +135,7 @@ function updateList(jsonObj) {
 
 //댓글 목록 업데이트
 
-function updateCoList(jsonObj, boardType) {
+function updateCoList(jsonObj) {
 		var result = "";	// 최종 결과
 	if(jsonObj.status == "OK") {
 		var count = jsonObj.count;
@@ -150,7 +148,7 @@ function updateCoList(jsonObj, boardType) {
 			result += "<tr>\n";
 			result += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
 			result += "<td>" + items[i].uid + "</td>\n";
-			result += "<td><a href='../view?boardType=" + boardType + "&uid=" + items[i].uid + "'>" + items[i].content + "</td>\n";
+			result += "<td><a href='../view?boardType=" + items[i].boardType + "&uid=" + items[i].buid + "'>" + items[i].content + "</td>\n";
 			result += "<td>" + items[i].dateTime + "</td>\n";
 			result += "</tr>\n";
 		}

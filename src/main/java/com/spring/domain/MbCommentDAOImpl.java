@@ -54,8 +54,8 @@ private MbCommentDAO mapper;
 
 
 	@Override
-	public int findByUid(String nickName) {
-		return mapper.findByUid(nickName);
+	public int findByUid(String id) {
+		return mapper.findByUid(id);
 	}
 
 }

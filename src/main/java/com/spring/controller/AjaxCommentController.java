@@ -72,7 +72,7 @@ public class AjaxCommentController {
 	} // end view(boardType, uid)
 	
 	//마이페이지용 목록 출력
-	@GetMapping("/list/myPage/{boardType}/{page}/{pageRows}")	// URI : /view/boardType/uid
+	@GetMapping("/list/myPage/{page}/{pageRows}")	// URI : /view/boardType/uid
 	public AjaxCommentList list(
 			@PathVariable int page,
 			@PathVariable int pageRows,
@@ -107,7 +107,6 @@ public class AjaxCommentController {
 						// from : 몇 번째 row 부터?
 						int from = (page - 1) * pageRows;	// MySQL 의 LIMIT 는 0-base
 						list = commentservice.listMyCo(uid, from, pageRows);
-						System.out.println(list.toString());
 						if(list == null) {
 							message.append("[리스트할 데이터가 없습니다.]");
 						} else {
@@ -227,7 +226,7 @@ public class AjaxCommentController {
 	
 	@PostMapping("/deleteOk")
 	public AjaxCommentResult deleteOk(String boardType, int [] uid) {
-		
+
 		int count = 0;
 		
 		// message
@@ -237,7 +236,6 @@ public class AjaxCommentController {
 		try {
 
 			count = commentservice.delete(boardType, uid);
-			
 			if(count == 0) {
 				message.append("[트랜잭션 실패 : 0 DELETE]");
 			} else {

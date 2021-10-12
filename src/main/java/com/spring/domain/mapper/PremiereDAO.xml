@@ -25,15 +25,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{from}, #{pageRows}
 	</select>
 	
-	  <!-- 게시글 작성 writeOk -->
-   <insert id="insert" flushCache="true" 
-      parameterType="com.spring.domain.PremiereDTO"
-      keyProperty="uid" useGeneratedKeys="true" keyColumn="pr_uid">   
-	   INSERT INTO premiere
-	      (pr_title, pr_photo, pr_content, pr_photo_origin)
-	   VALUES
-	      (#{title}, #{photo}, #{content}, #{photo_origin})
-   </insert>
+	<!-- 게시글 작성 writeOk -->
+	<insert id="insert" flushCache="true" 
+	   parameterType="com.spring.domain.PremiereDTO"
+	   keyProperty="uid" useGeneratedKeys="true" keyColumn="pr_uid">   
+	 INSERT INTO premiere
+	    (pr_title, pr_photo, pr_content, pr_photo_origin)
+	 VALUES
+	    (#{title}, #{photo}, #{content}, #{photo_origin})
+	</insert>
    
 	<!-- 해당 글 조회 view -->
 	<select id="selectByUid" resultType="com.spring.domain.PremiereDTO">
@@ -102,17 +102,119 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			0, 3
 	</select>
 	
+	
+	<!-- 응모할때  -->
+	<!-- 특정 회원 ID로 회원 UID 찾 -->
+	<select id="findUidById" resultType="int">
+		SELECT
+			cus_uid uid
+		FROM
+			customer
+		WHERE
+			cus_id = #{id}
+	</select>
+	
+	<!-- 응모 정보 DB에 넣기 -->
+	<insert id="apply" flushCache="true">
+		INSERT INTO apply(pr_uid, cus_uid, cus_email)
+		VALUES(#{prUid}, #{cusUid}, #{email})
+	</insert>
+	
+	<!-- 응모한 아이디 존재 여부 체크 -->
+	<select id="chkId" resultType="int">
+		select 
+			count(*) 
+		from 
+			apply 
+		where 
+			cus_uid = (
+						select 
+							cus_uid 
+						from 
+							customer
+						where 
+							cus_id = #{id}
+					) 
+			and 
+				pr_uid = #{prUid} 
+	</select>
+	
+	<!-- 제목으로 해당 글 uid 찾기  -->
+	<select id="findUidByTitle" resultType="int">
+		SELECT 
+			pr_uid
+		FROM
+			premiere
+		WHERE 
+			pr_title = #{title}
+	</select>	
+	
+	<!-- 응모된 계정중에 당첨자 닉네임 추첨 -->
+	<select id="selectWin" resultType="com.spring.domain.PremiereWinDTO">
+		select 
+			cus.cus_nickname nickname , ap.cus_email email
+		from 
+			customer cus, apply ap
+		WHERE 
+			cus.cus_uid = ap.cus_uid 
+			and
+			cus.cus_uid in (
+				 select * 
+				from (
+					select 
+						cus_uid 
+					from 
+						apply 
+					where 
+						pr_uid = #{prUid}
+					order by 
+						rand() 
+					limit 
+						#{count} )
+				a ) 
+	</select>
+	
+	<!-- select box 시사회 제목, uid 불러오기 -->
+	<select id="getTitle" resultType="com.spring.domain.PremiereDTO">
+		select
+			pr_uid uid,
+			pr_title title
+		from
+			premiere
+		order by
+			pr_uid	
+	</select>
+	
+	<!-- 추첨 완료버튼 클릭 시 pr_win 1 로 변경 -->
+	<update id="updateBool" flushCache="true">
+		update
+			apply
+		set 
+			pr_win = 1 
+		where 
+			pr_uid = #{prUid}
+		and
+			cus_email in (${email})
+	</update>
+	
+	<!--  	시사회 별 당첨자 리스트 출력 -->
+	<select id="winUserList" resultType="com.spring.domain.PremiereWinDTO">
+		select 
+			cus_nickname 
+		from 
+			customer 
+		where 
+			cus_uid 
+		in ( select * 
+			from ( select 
+						cus_uid 
+					from 
+						apply 
+					where 
+						pr_win = 1 
+					and 
+						pr_uid = #{prUid} ) a ) ;
+	</select>
+	
 </mapper> 
-
-
-
-
-
-
-
-
-
-
-
-
 

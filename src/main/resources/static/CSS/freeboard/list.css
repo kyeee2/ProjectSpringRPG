@@ -1,9 +1,19 @@
 @charset "UTF-8";
-
 @media screen and (max-width: 1024px) {
-th {
-	display: none;
+	
+#head {
+	text-align: center;
+	font-size:20px;
 }
+
+table {
+	border:0.5px solid black;
+}
+
+.page-wrap a{
+	visibility: hidden;
+}
+
 }
 
 
@@ -36,12 +46,12 @@ th {
 }
 
 table,th,td {
-	font-size: 10px;
 	font-family: system-ui;
 	padding: 10px 40px;
 }
 
 td {
+	font-size:17px;
 	border-bottom: 0.5px solid black;
 }
 
