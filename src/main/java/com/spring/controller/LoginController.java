@@ -138,10 +138,6 @@ public class LoginController {
         return "/basic/main"; //본인 원하는 경로 설정
 	}
 	
-
-	
-	
-	
     //토큰발급
 	public String getAccessToken (String authorize_code) {
         String access_Token = "";

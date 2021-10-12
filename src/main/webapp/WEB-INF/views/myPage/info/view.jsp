@@ -3,8 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-
-
 <c:choose>
 	<c:when test="${empty list || fn:length(list) == 0 }">
 		<script>
@@ -24,12 +22,12 @@
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
 <!-- fontawesome 적용 -->
 <script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
-<!-- JS 적용 -->
-<script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
 
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <jsp:include page="/WEB-INF/views/global/header.jsp"/>
+<!-- JS 적용 -->
+<script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
 
 </head>
 <body>
@@ -49,7 +47,7 @@
 <br>
 생년월일 ${list[0].birthday }
 <br>
-프로필 사진
+프로필 사진 <img src="/file/customer/${ list[0].profile }" />
 <br>
 
 <div></div>
@@ -64,10 +62,7 @@
 <button onclick="deleteUser()">회원탈퇴</button>
 <script>
     function deleteUser() {
-        if (!confirm("정말 회원정보를 삭제하시겠습니까?")) {
-            history.back();
-        } else {
-            alert("회원 탈퇴되었습니다.");
+        if (confirm("정말 회원정보를 삭제하시겠습니까?")) {
             location.href='myInfo/deleteOk';
         }
     }

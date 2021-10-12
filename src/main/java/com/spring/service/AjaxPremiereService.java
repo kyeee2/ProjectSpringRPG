@@ -41,6 +41,10 @@ public class AjaxPremiereService {
 	public int deleteByUid(int [] uids) {
 		return dao.deleteByUid(uids);
 	}
+
+	public int updateNoFile(PremiereDTO dto) {
+		return dao.updateNoFile(dto);
+	}
 	
 	public List<String> getFileName(int [] uids) {
 		return dao.getFileName(uids);
@@ -51,7 +55,7 @@ public class AjaxPremiereService {
 	public List<PremiereDTO> getThreeRecently() {
 		return dao.getThreeRecently();
 	}
-	
+
 }
 
 

@@ -1,5 +1,6 @@
 var boardType = "";	// boardType 세팅
 var uid = "";	//게시글 고유번호
+var nickName = "";
 
 $(document).ready(function() {
 	
@@ -108,17 +109,19 @@ function writeData(jsonObj) {
 	result += "</div>"
 	$("#result").html(result);	// 정보 업데이트
 	
+	nickName = jsonObj.nickname;
+	
 }	// end writeResult()
 
 // 게시글 삭제 확인
 function chkDelete() {
 	if(!confirm("이 글을 삭제하시겠습니까?")) return false;
 	
-	var data = "boardType=" + boardType + "&uid=" + uid;
+	var data = "boardType=" + boardType + "&buid=" + uid + "&nickName=" + nickName;
 	
 	// DELETE 방식
 	$.ajax({
-		url : "/board/delete",
+		url : "/board/deleteOne",
 		type : "POST",
 		data : data,
 		cache : false,

@@ -22,6 +22,9 @@ public interface PremiereDAO {
 	
 	// 특정 uid 글 수정 ( 제목, 내용 )
 	public abstract int update(PremiereDTO dto);
+
+	// 파일은 수정하지 않고 수정
+	public abstract int updateNoFile(PremiereDTO dto);
 	
 	// 특정 uid 글 삭제하기
 	public abstract int deleteByUid(int [] uids);
@@ -32,4 +35,5 @@ public interface PremiereDAO {
 	// 메인페이지용
 	// 시사회 최근 글 3개
 	public abstract List<PremiereDTO> getThreeRecently();
+
 }

@@ -41,6 +41,11 @@ public class PremiereDAOImpl implements PremiereDAO {
 	}
 
 	@Override
+	public int updateNoFile(PremiereDTO dto) {
+		return mapper.updateNoFile(dto);
+	}
+
+	@Override
 	public int deleteByUid(int [] uids) {
 		return mapper.deleteByUid(uids);
 	}

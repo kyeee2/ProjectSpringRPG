@@ -25,16 +25,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{from}, #{pageRows}
 	</select>
 	
-	<!-- 게시글 작성 writeOk -->
-	<insert id="insert" flushCache="true" 
-		parameterType="com.spring.domain.PremiereDTO"
-		keyProperty="uid" useGeneratedKeys="true" keyColumn="pr_uid">	
-	INSERT INTO premiere
-		(pr_title, pr_photo, pr_content, pr_photo_origin)
-	VALUES
-		(#{title}, #{photo}, #{content}, #{photo_origin})
-	</insert>
-	
+	  <!-- 게시글 작성 writeOk -->
+   <insert id="insert" flushCache="true" 
+      parameterType="com.spring.domain.PremiereDTO"
+      keyProperty="uid" useGeneratedKeys="true" keyColumn="pr_uid">   
+	   INSERT INTO premiere
+	      (pr_title, pr_photo, pr_content, pr_photo_origin)
+	   VALUES
+	      (#{title}, #{photo}, #{content}, #{photo_origin})
+   </insert>
+   
 	<!-- 해당 글 조회 view -->
 	<select id="selectByUid" resultType="com.spring.domain.PremiereDTO">
 		SELECT 
@@ -47,7 +47,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="update" flushCache="true"
 		parameterType="com.spring.domain.PremiereDTO">
 		UPDATE premiere
-		SET pr_title = #{title}, pr_photo = #{photo}, pr_content = #{content}
+		SET pr_title = #{title}, pr_photo = #{photo}, pr_content = #{content}, pr_photo_origin = #{photo_origin}
+		WHERE pr_uid = #{uid}
+	</update>
+	
+	<!-- 파일을 수정하지 않을 글 수정 -->
+	<update id="updateNoFile" flushCache="true"
+		parameterType="com.spring.domain.PremiereDTO">
+		UPDATE premiere
+		SET pr_title = #{title}, pr_content = #{content}
 		WHERE pr_uid = #{uid}
 	</update>
 	
