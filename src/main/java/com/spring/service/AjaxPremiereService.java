@@ -73,6 +73,16 @@ public class AjaxPremiereService {
 		return dao.updateBool(prUid, email);
 	}
 	
+	public List<String> getFileName(int [] uids) {
+		return dao.getFileName(uids);
+	}
+
+	// 메인페이지용
+	// 시사회 최근 글 3개
+	public List<PremiereDTO> getThreeRecently() {
+		return dao.getThreeRecently();
+	}
+	
 }
 
 

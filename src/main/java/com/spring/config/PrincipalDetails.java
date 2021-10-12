@@ -63,6 +63,10 @@ public class PrincipalDetails implements UserDetails{
 	public void setPassword(String pw) {
 		user.setPw(pw);
 	}
+	public CustomerDTO getUser(){
+		
+		return user;
+	}
 	
 	public int getUid() {
 		return user.getUid();
@@ -89,7 +93,10 @@ public class PrincipalDetails implements UserDetails{
 	// 계정이 활성화 되었는지?
 	@Override
 	public boolean isEnabled() {
-		return true;
+		if(user.getEnable() ==1 ) {
+			return true;
+		}
+		return false;
 		// ex)
 		// 사이트에서 1년동안 회원이 로그인을 안하면 휴면계정으로 하기로 했다면?
 		// 현재시간 - 로그인시간 => 1년을 초과하면 false  

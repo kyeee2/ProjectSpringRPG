@@ -13,7 +13,15 @@
     });
   });
   </script>
-
+  <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/basic/joinAgree.css" rel="stylesheet" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- fontawesome 적용 -->
+<script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
+<!-- JS 적용 -->
+<script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
+<!-- JQuery 적용 -->
+<jsp:include page="/WEB-INF/views/global/header.jsp"/>
 </head>
 <body>
 <form action="join" method="get" id="form1">
@@ -90,7 +98,9 @@
  
  <div align="center">
   <br/>
-  <input type="submit" value="동의"><input type="reset" value="비동의">
+  <span>
+  <input type="submit" class="button" value="동의"><input type="reset" class="button" value="취소">
+  </span>
   <br/>
  </div>
 </div>

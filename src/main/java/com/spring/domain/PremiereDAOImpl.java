@@ -81,6 +81,14 @@ public class PremiereDAOImpl implements PremiereDAO {
 	}
 	
 	
+	public List<String> getFileName(int[] uids) {
+		return mapper.getFileName(uids);
+	}
+
+	@Override
+	public List<PremiereDTO> getThreeRecently() {
+		return mapper.getThreeRecently();
+	}
 
 }
 

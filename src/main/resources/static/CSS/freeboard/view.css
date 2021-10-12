@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+@media screen and (min-width: 1024px) {
+
+/* 작성자 좋아요 조회수 좋아요수 댓글수 순서대로 container12345*/
+.flexcon {
+	display: flex;
+	}
+
+.gridcon {
+	display: grid;
+}
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

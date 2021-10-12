@@ -5,11 +5,20 @@ import org.springframework.validation.Validator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 
 import com.spring.domain.CustomerDTO;
+import com.spring.service.LoginService;
 
 public class CustomerValidator implements Validator{
+	
+	LoginService loginService;
+	
+	public CustomerValidator() {}
+	public CustomerValidator(LoginService loginService) {
+		this.loginService = loginService;
+	}
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -53,6 +62,13 @@ public class CustomerValidator implements Validator{
 				}
 				
 			}
+		
+			
+			
+			if(name != null && name.equals(loginService.findNameByPhonenum(phonenum))) {
+				System.out.println("이미 회원 가입된 정보입니다.");
+				errors.rejectValue("name", "이미 회원 가입된 정보입니다.");
+			}
 			
 			String nickname = user.getNickname();
 			if(nickname == null || nickname.trim().isEmpty() || nickname.trim().length() < 2) {
@@ -68,6 +84,7 @@ public class CustomerValidator implements Validator{
 			if(pw == null || pw.trim().isEmpty()) {
 				System.out.println("비밀번호 오류 : 반드시 한 글자라도 입력해야 합니다");
 				errors.rejectValue("pw", "비밀번호 오류 : 반드시 한 글자라도 입력해야 합니다");
+				
 			}
 			    final int MIN = 8;
 			    final int MAX = 20;
@@ -84,7 +101,7 @@ public class CustomerValidator implements Validator{
 
 
 			    // ASCII 문자 비교를 위한 UpperCase
-			    String tmpPw = pw.toUpperCase();
+			    String tmpPw = pw;
 			    // 문자열 길이
 			    int strLen = tmpPw.length();
 

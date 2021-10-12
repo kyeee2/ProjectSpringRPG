@@ -37,8 +37,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public int deleteUser(CustomerDTO user) {
-		return mapper.deleteUser(user);
+	public int deleteUser(int enable, String id) {
+		return mapper.deleteUser(enable, id);
 	}
 
 	@Override
@@ -72,6 +72,66 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public List<String> nickChk(String nickname) throws Exception {
 		return mapper.nickChk(nickname);
 	}
+
+
+	@Override
+	public int updateUser(String phonenum, String nickname, int uid)  {
+		
+		return mapper.updateUser(phonenum, nickname, uid);
+	}
+
+
+	@Override
+	public List<CustomerDTO> selectByUid(int uid) {
+		System.out.println("dao에 걸렸니?");
+		return mapper.selectByUid(uid);
+	}
+
+
+	@Override
+	public int updatePw(String pw, int uid) {
+		return mapper.updatePw(pw, uid);
+	}
+
+
+	@Override
+	public String findID(String name, String phonenum) throws Exception {
+		return mapper.findID(name, phonenum);
+	}
+
+
+	@Override
+	public List<CustomerDTO> findPW(String pw, String name, String phonenum, String id) throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.findPW(pw, name, phonenum, id);
+	}
+
+
+	@Override
+	public List<CustomerDTO> selectByUidAll(int from, int pageRows) {
+		// TODO Auto-generated method stub
+		return mapper.selectByUidAll(from, pageRows);
+	}
+
+	@Override
+	public int count() {
+		return mapper.count();
+	}
+
+
+	@Override
+	public String findNameByPhonenum(String phonenum) {
+	
+		return mapper.findNameByPhonenum(phonenum);
+	}
+
+
+	@Override
+	public int changePw(String pw, String id, String name, String phonenum) {
+		
+		return mapper.changePw(pw, id, name, phonenum);
+	}
+	
 
 
 	

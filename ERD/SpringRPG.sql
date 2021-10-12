@@ -18,8 +18,6 @@ DROP TABLE IF EXISTS premiereWinBoard;
 DROP TABLE IF EXISTS premiere;
 
 
-
-
 /* Create Tables */
 
 CREATE TABLE apply

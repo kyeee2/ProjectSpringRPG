@@ -14,8 +14,11 @@ public interface FreeBoardDAO {
 	// 게시글 목록
 	public abstract List<BoardDTO> selectAll(int from, int pageRows);
 
-	// 게시판 인기글 목록
+	// 특정 게시판 인기글 목록
 	public abstract List<BoardDTO> selectVogue();
+
+	// 전체 게시판 인기글 목록
+	public abstract List<BoardDTO> selectAllVogue();
 
 	// 게시판 검색 목록
 	public abstract List<BoardDTO> selectSearch(String text, int from, int pageRows);
