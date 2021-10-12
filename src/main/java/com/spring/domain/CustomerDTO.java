@@ -2,8 +2,10 @@ package com.spring.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor	// 생성자
 // 회원정보
 public class CustomerDTO {

@@ -16,6 +16,11 @@ $(document).ready(function(){
 	$("#doDelete").click(function(){
 		chkDelete();
 	});
+	
+	// 응모하기 버튼 누르면
+	$("#btn_apply").click(function() {
+		doApply();
+	});
 });
 
 function viewData(uid){
@@ -51,6 +56,8 @@ function writeData(jsonObj){
 	
 	$("#result").html(result); // 정보 업데이트 
 	
+	$("input[name=prUid]").val(jsonObj.pruid);
+	
 }// end writeData()
 
 function chkDelete(){
@@ -78,6 +85,31 @@ function chkDelete(){
 	});
 }
 
+function doApply() {
+	
+	var data = $("#apply").serialize();
+	alert(data);
+	
+	$.ajax({
+		url : "/premiere/apply",
+		type : "POST",
+		data : data,
+		cache : false,
+		success : function(data, status) {
+			$("input[value=prUid]").val();
+			if(status == "success") {
+				if(data.status == "OK") {
+					alert("응모완료");
+					// 응모 완료하면 폼 초기화
+					$("input[name=cusId]").val("");
+					$("input[name=email]").val("");
+				} else {
+					alert(data.message);
+				}
+			}
+		}
+	});
+}
 
 
 

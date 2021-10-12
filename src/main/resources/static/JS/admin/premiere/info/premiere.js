@@ -1,5 +1,5 @@
 var page = 1;	// 현재 페이지  
-var pageRows = 10;	// 페이지당 글의 개수 
+var pageRows = 2;	// 페이지당 글의 개수 
 
 $(document).ready(function(){
 	// 페이지 최초 로딩 -> 1페이지 로딩
@@ -39,31 +39,31 @@ function updateList(jsonObj) {
 		for(var i = 0; i < count; i++){
 			result += "<tr>\n";
 			
-			result += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
-			result += "<td>" + items[i].uid + "</td>\n";
+			//result += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
+			//result += "<td>" + items[i].uid + "</td>\n";
 			result += "<td><a href='view?uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
-			result += "<td>" + items[i].photo + "</td>\n";
-			result += "<td>" + items[i].content + "</td>\n";
+			//result += "<td>" + items[i].photo + "</td>\n";
+			//result += "<td>" + items[i].content + "</td>\n";
 
 			result += "</tr>\n";
 		}
 		$("#list tbody").html(result); // 업데이트
 		
 		// 페이지 정보 업데이트
-		$("#pageinfo").text(jsonObj.page + "/" + jsonObj.totalpage + "페이지, " + jsonObj.totalcnt + "개의 ");
+		//$("#pageinfo").text(jsonObj.page + "/" + jsonObj.totalpage + "페이지, " + jsonObj.totalcnt + "개의 ");
 		
 		// pageRows
-		var txt = "<select id='rows' onchange='changePageRows()'>\n";
-		txt += "<option " + ((window.pageRows == 1)?"selected":"") + " value='1'>1개씩</option>\n";
-		txt += "<option " + ((window.pageRows == 2)?"selected":"") + " value='2'>2개씩</option>\n";
-		txt += "<option " + ((window.pageRows == 5)?"selected":"") + " value='5'>5개씩</option>\n";
-		txt += "<option " + ((window.pageRows == 10)?"selected":"") + " value='10'>10개씩</option>\n";
-		txt += "</select>\n";
-		$("#pageRows").html(txt);
+		//var txt = "<select id='rows' onchange='changePageRows()'>\n";
+		//txt += "<option " + ((window.pageRows == 1)?"selected":"") + " value='1'>1개씩</option>\n";
+		//txt += "<option " + ((window.pageRows == 2)?"selected":"") + " value='2'>2개씩</option>\n";
+		//txt += "<option " + ((window.pageRows == 5)?"selected":"") + " value='5'>5개씩</option>\n";
+		//txt += "<option " + ((window.pageRows == 10)?"selected":"") + " value='10'>10개씩</option>\n";
+		//txt += "</select>\n";
+		//$("#pageRows").html(txt);
 		
 		// [페이징] 정보 업데이트
 		var pagination = buildPagination(jsonObj.writepages, jsonObj.totalpage, jsonObj.page, jsonObj.pagerows);
-		$("#pagination").html(pagination);
+		$(".pagination").html(pagination);
 		
 	} else {
 		alert("내용이 없습니다");

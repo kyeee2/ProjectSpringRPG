@@ -18,79 +18,92 @@
 <script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
 <style>
 table {
-width: 80%;
+width: 40%;
 margin: auto;
 }
 table, th, td {
 	border: 1px solid black;
-	border-collapse: collapse;
 }
 #btn_write {
-	float: right;
 	background-color: #4CAF50;
   border: none;
   color: white;
-  padding: 10px 10px;
+  padding: 5px 5px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 12px;
+  float: right;
+  margin-right: 40px;
+  border-radius: 5px;
+  
 }
 
-#btn_write:hover {
-	box-shadow: 0 80px 0 0 rgba(0,0,0,0.25) inset, 0 -80px 0 0 rgba(0,0,0,0.25) inset;
+button:hover {
+	box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
-#btn_delete:hover {
-	box-shadow: 0 80px 0 0 rgba(0,0,0,0.25) inset, 0 -80px 0 0 rgba(0,0,0,0.25) inset;
-}
-
-#btn_delete {
-	float: left;
-	background-color: #f44336;
-  border: none;
-  color: white;
-  padding: 10px 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-}
-
-#pagination {
-	display: inline-block;
-	color: black;
-  	float: left;
-  	padding: 8px 16px;
-  	text-decoration: none;
-}
-
-.menu_btn {
+.menu {
 	width:15%;
-	height:100px;
-	background-color:red;
+	height:120px;
+	background-color: #EAEAEA;
 	float:left;
 	margin:auto;
 	text-align: center;
+	border-radius: 20px;
+	margin-left: 20px;
 }
 
-.button_group {
+div.page {
 	width:85%;
-	height:150px;
-	background-color:yellow;
-	float:right;
+	height:35px;
+	float: right;
+}
+.paginations {
+	display: block;
+	border-radius: 5px;
+}
+.paginations a{
+	color: black;
+	float: none;
+	padding: 8px 16px;
+	text-decoration: none;
+	border-radius: 5px;
+}
+.paginations a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+.paginations a:hover:not(.active) {
+  background-color: #ddd;
+}
+ul.pagination {
+	justify-content : center;
 }
 
+p:hover {
+	background-color: #BDBDBD;
+}
 
+p > a {
+	text-decoration : none;
+}
 
 </style>
 </head>
 <body>
 	
 	<h2>시사회 관리</h2>
-	<div class="menu_btn">
-		<p><a href="list">시사회 정보</a></p>
-		<p><a href="/premiereWin">시사회 당첨자 발표</a></p>
+	<div class="menu">
+		<div class="m01">
+			<p><a href="list">시사회 정보</a></p>
+		</div>
+		<div>
+			<p><a href="/premiereWin">시사회 당첨자 발표</a></p>
+		</div>
+		<div>
+			<p><a href="../admin/premiere/win">시사회 추첨하기</a>
+		</div>
 	</div>
 	
 	
@@ -106,33 +119,22 @@ table, th, td {
 	<form id="frmList" name="frmList">
 		<table id="list">
 			<thead>
-				<th></th>
-				<th>uid</th>
-				<th>제목</th>
-				<th>첨부파일</th>
-				<th>내용</th>
+				<th> 시사회 제목 </th>
 			</thead>
 			<tbody>
 			</tbody>
 		</table>
 	</form>
 	
-	<%-- 페이징 --%>
-	<div>
-		<div id="pagination"></div>
-	</div>
-	
-	<%-- 추첨 --%>
-	<input type="number">
-	<button id="btn_win" onclick="">추첨하기</button>
-	<button id="btn_win" onclick="">추첨하기</button>
-	
-	
 	<%-- bottom button --%>
-	<div class="button_group">
-	<button id="btn_delete" onclick="deleteData()">삭제하기</button>
-	<button id="btn_write" onclick="location.href = 'write'">글 쓰기</button>
+	<div class="button">
+	<button id="btn_write" onclick="location.href = '/admin/premiere/write'">글 쓰기</button>
 	</div>
+	
+	<div class="paginations">
+		<ul class="pagination"></ul>
+	</div>
+	
 </body>
 </html>
 

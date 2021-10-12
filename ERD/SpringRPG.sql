@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS movieboard;
 DROP TABLE IF EXISTS noticeboard;
 DROP TABLE IF EXISTS profile;
 DROP TABLE IF EXISTS customer;
-DROP TABLE IF EXISTS primiereWinBoard;
+DROP TABLE IF EXISTS premiereWinBoard;
 DROP TABLE IF EXISTS premiere;
 
 
@@ -161,7 +161,7 @@ CREATE TABLE premiere
 );
 
 
-CREATE TABLE primiereWinBoard
+CREATE TABLE premiereWinBoard
 (
 	pwb_uid int NOT NULL AUTO_INCREMENT,
 	pwb_title varchar(150) NOT NULL,
