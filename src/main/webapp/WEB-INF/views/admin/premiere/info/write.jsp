@@ -21,17 +21,17 @@
 </script>
 <body>
 <h2>시사회 작성</h2>
-<form id="frm" name="frm" method="post" enctype="multipart/form-data">
+<form action="./writeOk" id="frmWrite" name="frmWrite" method="post" enctype="multipart/form-data">
 	제목:
 	<input type="text" name="title" placeholder="제목을 입력하세요"/><br>
 	내용:<br>
 	<textarea name="content" placeholder="내용을 입력하세요"></textarea>
 	<div>
 		첨부파일(이미지 파일만 가능):
-		<input type="file" name="photo" accept="image/png, image/jpeg"/><br>
+		<input type="file" name="file" id="file" accept="*" multiple /><br>
 	</div>
 	<br><br>
-	<button id="btn-submit" type="button">작성완료</button>
+	<button  id="btn-submit">작성완료</button>
 </form>
 <br>
 <button type="button" onclick="location.href = 'list'">목록으로</button>

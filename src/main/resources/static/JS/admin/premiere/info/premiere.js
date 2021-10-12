@@ -37,17 +37,26 @@ function updateList(jsonObj) {
 		
 		var items = jsonObj.data; // 배열
 		for(var i = 0; i < count; i++){
-			result += "<tr>\n";
-			
-			result += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
-			result += "<td>" + items[i].uid + "</td>\n";
-			result += "<td><a href='view?uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
-			result += "<td>" + items[i].photo + "</td>\n";
-			result += "<td>" + items[i].content + "</td>\n";
+			//result += "<tr>\n";
+			result += "<div class='card' style='width:100px'>\n";
+			result += "<input type='checkbox' name='uid' value='" + items[i].uid + "'>\n";
+			result += "<img class='card-img-top' src='/file/premiere/" + ((items[i].photo == "")?('no_img.png'):(items[i].photo)) + "' alt='빈이미지' style='width:100px'>\n";
+			result += "<div class='card-body'>\n";
+			result += "<h4 class='card-title'>" + items[i].title + "</h4>\n";
+			result += "<p class='card-text'>" + items[i].content + "</p>\n";
+			result += "<a href='view?uid=" + items[i].uid + "' class='btn btn-primary'>추첨하기</a>\n";
+			result += "</div>";
+			result += "</div>";
+			//result += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
+			//result += "<td>" + items[i].uid + "</td>\n";
+			//result += "<td><a href='view?uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
+			//result += "<td>" + items[i].photo + "</td>\n";
+			//result += "<td>" + items[i].content + "</td>\n";
 
-			result += "</tr>\n";
+			//result += "</tr>\n";
 		}
-		$("#list tbody").html(result); // 업데이트
+		//$("#list tbody").html(result); // 업데이트
+		$("#card-list").html(result); // 업데이트
 		
 		// 페이지 정보 업데이트
 		$("#pageinfo").text(jsonObj.page + "/" + jsonObj.totalpage + "페이지, " + jsonObj.totalcnt + "개의 ");
@@ -131,7 +140,8 @@ function changePageRows() {
 function deleteData() {
 	
 	var uids = [];	// check 된 uid 들을 담을 배열
-	$("#list tbody input[name=uid]").each(function() {
+	//$("#list tbody input[name=uid]").each(function() {
+	$("#card-list input[name=uid]").each(function() {
 		if($(this).is(":checked")) {	// jQuery에서 check 여부 확인 함수
 			uids.push(parseInt($(this).val()));	// uids 배열에 check 된 uid값 추가
 		}

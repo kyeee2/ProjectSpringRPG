@@ -45,8 +45,14 @@ function writeData(jsonObj){
 	
 	result = "";
 	
+	result += "<input type='hidden' name='uid' value=" + jsonObj.uid + ">";
 	result += "제목 : " + jsonObj.title + "<br>\n"
-	result += "첨부파일 : " + jsonObj.photo + "<br>\n"
+	if(jsonObj.photo == "") {
+		// 저장된 사진이 없다면 디폴트 이미지 보여주기
+		result += "첨부파일 : <img src='/file/premiere/no_img.png' alt='빈이미지'/><br>\n"
+	} else {
+		result += "첨부파일 : <img src='/file/premiere/" + jsonObj.photo + "'/><br>\n"
+	}
 	result += "내용 : " + jsonObj.content + "<br>\n"
 	
 	$("#result").html(result); // 정보 업데이트 
@@ -56,26 +62,7 @@ function writeData(jsonObj){
 function chkDelete(){
 	if(!confirm("이 글 삭제?")) return false;
 	
-	var data = "uid=" + uid;
-	
-	// DELETE 방식
-	$.ajax({
-		url : "/premiere",
-		type : "DELETE",
-		data : data,
-		cache : false,
-		success : function(data, status){
-			if(status == "success"){
-				if(data.status == "OK"){
-					alert("DELETE 성공 : " + data.count + "개");
-					location.href = "/premiere/list";
-				} else {
-					alert("DELETE 실패" + data.message);
-				}
-			}
-		}
-		
-	});
+	$("#frmDelete").submit();
 }
 
 

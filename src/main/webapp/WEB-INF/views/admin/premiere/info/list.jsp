@@ -16,6 +16,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- fontawesome 적용 -->
 <script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
+
+<!-- 부트스트랩 사용 -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
 table {
 width: 80%;
@@ -81,8 +89,6 @@ table, th, td {
 	float:right;
 }
 
-
-
 </style>
 </head>
 <body>
@@ -104,6 +110,7 @@ table, th, td {
 	
 	<%-- 목록 --%>
 	<form id="frmList" name="frmList">
+		<%--
 		<table id="list">
 			<thead>
 				<th></th>
@@ -115,18 +122,14 @@ table, th, td {
 			<tbody>
 			</tbody>
 		</table>
+		--%>
+		<div id="card-list"></div>
 	</form>
 	
 	<%-- 페이징 --%>
 	<div>
 		<div id="pagination"></div>
 	</div>
-	
-	<%-- 추첨 --%>
-	<input type="number">
-	<button id="btn_win" onclick="">추첨하기</button>
-	<button id="btn_win" onclick="">추첨하기</button>
-	
 	
 	<%-- bottom button --%>
 	<div class="button_group">
@@ -135,34 +138,6 @@ table, th, td {
 	</div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

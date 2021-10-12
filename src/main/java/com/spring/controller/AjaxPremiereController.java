@@ -1,7 +1,15 @@
 package com.spring.controller;
 
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Paths;
 import java.util.List;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 //import java.io.File;
 //import javax.swing.filechooser.FileSystemView;
@@ -9,13 +17,17 @@ import java.util.List;
 //import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.domain.AjaxBoardResult;
 import com.spring.domain.AjaxPremiereList;
@@ -117,80 +129,36 @@ public class AjaxPremiereController {
 		
 		return result;
 	}
-	
-	@PostMapping("")	// /premiere
-	public AjaxBoardResult writeOk(PremiereDTO dto) 
-	//		, @RequestParam("files") MultipartFile file) throws Exception 
-	{
-		int count = 0;
-		
-		StringBuffer message = new StringBuffer();
-		String status = "FAIL";
-		
-		try {
-			count = ajaxpremiereService.write(dto);
-			if(count == 0) {
-				message.append("트랜잭션 실패");
-			}else {
-				status = "OK";
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			message.append("error : " + e.getMessage());
-		}
-		
-		AjaxBoardResult result = new AjaxBoardResult();
-		result.setStatus(status);
-		result.setMessage(message.toString());
-		result.setCount(count);
-//		
-//		String rootPath = FileSystemView.getFileSystemView().getHomeDirectory().toString();
-//	    String basePath = rootPath + "/";
-//	    String filePath = basePath + "/" + file.getOriginalFilename();
-//	    File dest = new File(filePath);
-//	    file.transferTo(dest); // 파일 업로드 작업 수행
-		
-		return result;
-	}
-	
-	@PutMapping("")	// /premiere
-	public AjaxBoardResult updateOk(PremiereDTO dto) {
-		int count = 0;
-		
-		StringBuffer message = new StringBuffer();
-		String status = "FAIL";
-		
-		try {
-			count = ajaxpremiereService.update(dto);
-			if(count == 0) {
-				message.append("트랜잭션 실패");
-			}else {
-				status = "OK";
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			message.append("error : " + e.getMessage());
-		}
-		AjaxBoardResult result = new AjaxBoardResult();
-		result.setCount(count);
-		result.setMessage(message.toString());
-		result.setStatus(status);
-		
-		return result;
-	}
-	
+
 	@DeleteMapping("")	// /premiere
-	public AjaxBoardResult deleteOk(int [] uid) {
+	public AjaxBoardResult deleteOk(HttpServletRequest request,
+			HttpServletResponse response, 
+			int [] uid) {
+		
 		int count = 0;
 		
 		StringBuffer message = new StringBuffer();
 		String status = "FAIL";
 		
 		try {
+			List<String> filenames = null;
 			
 			if(uid != null) {
+				filenames = ajaxpremiereService.getFileName(uid);
 				count = ajaxpremiereService.deleteByUid(uid);
 				status = "OK";
+			}
+			
+			// 이미지를 업로드할 디렉토리(배포 디렉토리로 설정)
+			ServletContext context = request.getServletContext();
+			String saveDirectory = context.getRealPath("/file/premiere"); // 무조건 여기 폴더에 저장
+			
+			for(int i = 0; i < filenames.size(); i++) {
+				System.out.println(filenames.get(i));
+				// 원래 파일 삭제하기
+				File oldFile = new File(saveDirectory + File.separator + filenames.get(i));
+				System.out.println(oldFile.getPath());
+				oldFile.delete();
 			}
 			
 		}catch(Exception e) {

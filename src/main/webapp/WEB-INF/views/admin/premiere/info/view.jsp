@@ -24,7 +24,9 @@
 <body>
 	<h2 class="con">시사회 정보</h2>
 	<br>
+	<form action="./deleteOk" id="frmDelete" name="frmDelete" method="post">
 	<div id="result"></div>
+	</form>
 	<hr>
 	<br>
 	<div id="btn_group">

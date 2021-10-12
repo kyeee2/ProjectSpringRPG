@@ -16,10 +16,8 @@ public class CustomerDTO {
 	private String nickname;// 회원 닉네임
 	private String name;	// 회원 이름
 	private Integer birthday;	// 회원 생년월일
-	private byte[] profile;
-	private int enable;
-	 // 회원 프로필 사진
-	
-	 
+	private String profile;	// 회원 프로필 사진
+	private String profile_origin;	// 회원 프로필 사진
+	private int enable;	// 계정 활성화 여부
 }
 

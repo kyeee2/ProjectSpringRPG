@@ -17,7 +17,7 @@ public interface PremiereDAO {
 	// 새글작성 <-- DTO
 	public abstract int insert(PremiereDTO dto);
 	
-	// 특정 uid 글 내용 읽기,
+	// 특정 uid 글 내용 읽기
 	public abstract List<PremiereDTO> selectByUid(int uid);
 	
 	// 특정 uid 글 수정 ( 제목, 내용 )
@@ -25,4 +25,11 @@ public interface PremiereDAO {
 	
 	// 특정 uid 글 삭제하기
 	public abstract int deleteByUid(int [] uids);
+
+	// 특정 uid 의 파일명들 가져오기
+	public abstract List<String> getFileName(int[] uids);
+	
+	// 메인페이지용
+	// 시사회 최근 글 3개
+	public abstract List<PremiereDTO> getThreeRecently();
 }

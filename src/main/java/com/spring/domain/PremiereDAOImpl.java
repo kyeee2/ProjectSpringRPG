@@ -45,6 +45,16 @@ public class PremiereDAOImpl implements PremiereDAO {
 		return mapper.deleteByUid(uids);
 	}
 
+	@Override
+	public List<String> getFileName(int[] uids) {
+		return mapper.getFileName(uids);
+	}
+
+	@Override
+	public List<PremiereDTO> getThreeRecently() {
+		return mapper.getThreeRecently();
+	}
+
 }
 
 
