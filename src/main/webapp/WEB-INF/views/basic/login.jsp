@@ -15,13 +15,13 @@
 
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.request.contextPath }/CSS/login.css" rel="stylesheet" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- fontawesome 적용 -->
 <script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
 <!-- JS 적용 -->
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
 
 <!-- JQuery 적용 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <jsp:include page="/WEB-INF/views/global/header.jsp"/>
 </head>
 <body>
@@ -71,8 +71,8 @@
 	<hr>
 	<div id=kakaologin class="apilogin-2" onclick="kakaoLogin()">
 		<img height="38px" width="160px" src="../img/kakao_login_medium_narrow.png" /></div>
-		<div class="login-3"><form action="joinagree"><input type="submit" value="회원가입"></form><br></div>
-		<div class="login-4"><a href="find">ID/PW 찾기</a>
+		<div class="login-3"><form action="joinAgree"><input type="submit" value="회원가입"></form><br></div>
+		<div class="login-4"><a href="findIDPW">ID/PW 찾기</a>
 	</div></div>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
   <script>

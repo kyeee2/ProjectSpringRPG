@@ -16,8 +16,11 @@ public interface CustomerDAO {
 		int addAuth(String auth, String id);
 		
 		// 사용자 삭제
-		int deleteUser(CustomerDTO user);
+		int deleteUser(int enable, String id);
 		
+		int updatePw(String pw, int uid);
+		
+		int changePw(String pw, String id, String name, String phonenum);
 		// 특정 사용자 권한 삭제
 		int deleteAuth(String id, String auth);
 		
@@ -25,7 +28,7 @@ public interface CustomerDAO {
 		int deleteAuths(String id);
 		
 		//유저정보 수정
-		int updateUser(CustomerDTO user);
+		int updateUser(String phonenum, String nickname, int uid);
 		
 		//유저 정보 가져오기(uid)
 		List<CustomerDTO> selectByUid(int uid);
@@ -35,12 +38,18 @@ public interface CustomerDAO {
 		
 		// 특정 id (username) 의 권한(들) 뽑기
 		List<String> selectAuthoritiesById(String id);
+		public int count();
 		
 		public List<String> idChk(String id) throws Exception;
 		
-		
+		public List<CustomerDTO> selectByUidAll(int from, int pageRows);
 		public List<String> nickChk(String nickname) throws Exception;
+		
+		public String findNameByPhonenum(String phonenum); 
+		
+		public String findID(String name, String phonenum) throws Exception;
 //		int insert(int uid, List<String> originalFileNames, List<String> fileSystemNames);
+		public List<CustomerDTO> findPW(String pw,String name, String phonenum, String id) throws Exception;
 //		
 //		int deleteFileByUid(int uid,HttpServletRequest request);
 //		

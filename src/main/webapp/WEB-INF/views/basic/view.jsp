@@ -9,8 +9,10 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- CSS 적용 -->
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/freeboard/view.css" rel="stylesheet" type="text/css">
 
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -26,7 +28,7 @@
 	
 	<%-- 메인 컨텐츠 --%>
 	<section>
-		<h2>글읽기</h2>
+		<h2>자유게시판</h2>
 		<br>
 		<button id="btn_good">좋아요</button>
 		<div id="result"></div>

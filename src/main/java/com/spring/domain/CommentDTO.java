@@ -25,7 +25,9 @@ public class CommentDTO {
 	@JsonProperty("dateTime")
 	private LocalDateTime datetime; // 댓글 작성일
 	
+	@JsonProperty("cusuid")		
 	private int cusuid; 			// 작성자 고유번호
+	@JsonProperty("boardType")
 	private String boardType;		// 게시판별 댓글(자유,리뷰)
 	
 	@JsonProperty("buid")

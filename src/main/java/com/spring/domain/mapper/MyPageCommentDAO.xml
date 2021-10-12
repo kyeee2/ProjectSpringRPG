@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.domain.MyPageCommentDAO">
+
+<!-- 특정 회원이 쓴 댓글 총 갯수 -->
+		<!-- 특정 회원이 쓴 게시글 총 개수 -->
+	<select id="countMyComment" resultType="int">
+		SELECT 
+			sum(comment.commentCnt) allCnt
+		FROM 
+			(
+				SELECT 
+					count(*) commentCnt
+				FROM 
+					fb_comment 
+				WHERE 
+					cus_uid = #{uid}
+				UNION ALL 
+				SELECT 
+					count(*) commentCnt
+				FROM 
+					mb_comment 
+				WHERE 
+					cus_uid = #{uid}
+			) comment
+	</select>
+	<!-- 특정 회원이 쓴 댓글 전체 목록 -->
+	<select id="listMyCo" resultType="com.spring.domain.CommentDTO">
+	SELECT
+			f.fb_co_uid uid,
+			f.fb_co_content content,
+			f.fb_co_datetime datetime,
+			f.cus_uid cusuid,
+			f.fb_uid buid,
+			(select fb_boardtype 
+			from freeboard 
+			where cus_uid = #{uid}
+			and fb_uid = buid) boardType
+		FROM
+			fb_comment f	
+		WHERE
+			cus_uid = #{uid}
+		UNION ALL
+		SELECT
+			m.mb_co_uid uid,
+			m.mb_co_content content,
+			m.mb_co_datetime datetime,
+			m.cus_uid cusuid,
+			m.mb_uid buid,
+			(select mb_boardtype 
+			from movieboard 
+			where cus_uid = #{uid}
+			and mb_uid = buid) boardType 
+		FROM
+			mb_comment m
+		WHERE
+			cus_uid = #{uid}
+		ORDER BY
+			datetime DESC
+		LIMIT
+			#{from}, #{pageRows};
+	</select>
+	
+</mapper>

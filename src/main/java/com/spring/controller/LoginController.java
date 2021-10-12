@@ -25,6 +25,7 @@ import javax.validation.Valid;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -337,7 +338,7 @@ public class LoginController {
 					throw new RuntimeException();
 				}
 
-				return "/admin/premiere/info/writeOk";
+				return "redirect:/login";
 		    }
 			// 파일을 올렸다면
 		    
@@ -573,6 +574,24 @@ public class LoginController {
 		 int result = loginService.nickChk(nickname);
 	 	return result;
 	 }
+	 @GetMapping("/findIDPW")
+	 public String findIDPW() {
+		
+	       
+		 return "/basic/findIDPW";
+	 }
+	 
+	 @PostMapping("/findIDOk")
+	 public String findID( String name, String phonenum, Model model) throws Exception {	       
+		 model.addAttribute("id",loginService.findID(name, phonenum));
+		 return "/basic/findIDOk";
+	 }
+	 @PostMapping("/findPWOk")
+	 public String findPW(String pw, String id, String name, String phonenum, Model model) throws Exception {
+		
+		 model.addAttribute("result",loginService.changePw(pw, id, name, phonenum));
+		 return "/basic/findPWOk";
+	 }
 		//에러 출력 도우미 메소드
 		public void showErrors(Errors errors) {
 			if(errors.hasErrors()) {
@@ -590,7 +609,7 @@ public class LoginController {
 		// 이 컨트롤러 클래스가 handler 에서 폼 데이터를 바인딩할때 검증하는 Validator를 결정해준다.
 		@InitBinder
 		public void initBinder(WebDataBinder binder) {
-			binder.setValidator(new CustomerValidator());; 
+			binder.setValidator(new CustomerValidator(loginService));
 		}
 
 

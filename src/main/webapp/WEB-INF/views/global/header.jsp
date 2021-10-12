@@ -1,9 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!-- header -->
   <header class="header">
     <div class="header-container">
+
       <!-- 대한항공 로고 -->
       <a href="/main"><div class="header-logo"></div></a>
 
@@ -19,7 +20,7 @@
       <ul class="header-icons">
         <li>
       		<sec:authorize access="isAuthenticated()">
-      			<a href="/myPage" id="myPage"><i class="far fa-smile"></i></a>
+      			<a href="user/myInfo" id="myPage"><i class="far fa-smile"></i></a>
       			<a href="/logout" id="header-logout">로그아웃</a>
       		</sec:authorize>
       		<sec:authorize access="!isAuthenticated()">

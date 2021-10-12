@@ -1,5 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
+   
+    <c:choose>
+	<c:when test="${empty list || fn:length(list) == 0 }">
+		<script>
+			alert("해당 정보가 삭제되거나 없습니다");
+			history.back();
+		</script>
+	</c:when>
+	
+	<c:otherwise>
+    
+    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -25,7 +39,7 @@
 <li>쪽지</li>
 </ul>
 <form action="updateOk" method="POST">
-<input type="hidden" name="uid" value="${list[0].uid }"/>
+
 <div>아이디 ${list[0].id }</div>
 <div>*핸드폰 번호 <input type="text" name="phonenum" value="${list[0].phonenum }"/></div>
 <div>이름 ${list[0].name }</div>
@@ -36,3 +50,6 @@
 </form>
 </body>
 </html>
+
+</c:otherwise>
+</c:choose>

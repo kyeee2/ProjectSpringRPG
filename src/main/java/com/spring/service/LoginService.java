@@ -48,15 +48,22 @@ public class LoginService {
 	}
 	
 	// 회원삭제
-	@Transactional
-	public int deleteMember(CustomerDTO user) {
-		dao.deleteAuths(user.getId());  // 권한(들) 먼저 삭제
-		int cnt = dao.deleteUser(user);
+	
+	public int deleteMember(int enable, String id) {
+		dao.deleteAuths(id);  // 권한(들) 먼저 삭제
+		int cnt = dao.deleteUser(enable, id);
 		return cnt;
 	}
-	public int updateUser(CustomerDTO user) throws Exception{
-		int cnt = dao.updateUser(user);
-		return cnt;
+	public int updateUser(String phonenum, String nickname, int uid) throws Exception{
+		System.out.println("업데이트서비스에 걸렸니?");
+		return dao.updateUser(phonenum, nickname, uid);
+	}
+	
+	public int updatePw(String pw, int uid) throws Exception{
+		return dao.updatePw(pw, uid);
+	}
+	public int changePw(String pw, String id, String name, String phonenum) {
+		return dao.changePw(pw, id, name, phonenum);
 	}
 	
 	// 특정 id(username) 의 정보 가져오기
@@ -64,6 +71,7 @@ public class LoginService {
 		return dao.findById(id);
 	}
 	public List<CustomerDTO> selectByUid(int uid) {
+		System.out.println("서비스에 걸렸니?");
 		return dao.selectByUid(uid);
 	}
 	// 특정 id 의 권한(들) 정보 가져오기
@@ -86,6 +94,24 @@ public class LoginService {
 		else
 			return 1;
 	}
+	
+	public String findNameByPhonenum(String phonenum) {
+		return dao.findNameByPhonenum(phonenum);
+	}
+	
+	public String findID(String name, String phonenum) throws Exception {
+		 return dao.findID(name, phonenum);
+		
+	}
+	public int findPW(String pw, String name, String phonenum, String id) throws Exception {
+		List<CustomerDTO> findaccount = dao.findPW(pw, name, phonenum, id);
+		
+		if(findaccount == null || findaccount.size() ==0)
+			return 0;
+		else
+			return 1;
+	}
+	
 	
 	 public void certifiedPhoneNumber(String phonenum, String cerNum) {
 		 	
