@@ -71,8 +71,8 @@
 	<hr>
 	<div id=kakaologin class="apilogin-2" onclick="kakaoLogin()">
 		<img height="38px" width="160px" src="../img/kakao_login_medium_narrow.png" /></div>
-		<div class="login-3"><form action="joinagree"><input type="submit" value="회원가입"></form><br></div>
-		<div class="login-4"><a href="find">ID/PW 찾기</a>
+		<div class="login-3"><form action="joinAgree"><input type="submit" value="회원가입"></form><br></div>
+		<div class="login-4"><a href="findIDPW">ID/PW 찾기</a>
 	</div></div>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
   <script>

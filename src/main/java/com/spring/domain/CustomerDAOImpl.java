@@ -94,6 +94,46 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 
+	@Override
+	public String findID(String name, String phonenum) throws Exception {
+		return mapper.findID(name, phonenum);
+	}
+
+
+	@Override
+	public List<CustomerDTO> findPW(String pw, String name, String phonenum, String id) throws Exception {
+		// TODO Auto-generated method stub
+		return mapper.findPW(pw, name, phonenum, id);
+	}
+
+
+	@Override
+	public List<CustomerDTO> selectByUidAll(int from, int pageRows) {
+		// TODO Auto-generated method stub
+		return mapper.selectByUidAll(from, pageRows);
+	}
+
+	@Override
+	public int count() {
+		return mapper.count();
+	}
+
+
+	@Override
+	public String findNameByPhonenum(String phonenum) {
+	
+		return mapper.findNameByPhonenum(phonenum);
+	}
+
+
+	@Override
+	public int changePw(String pw, String id, String name, String phonenum) {
+		
+		return mapper.changePw(pw, id, name, phonenum);
+	}
+	
+
+
 	
 	
 	

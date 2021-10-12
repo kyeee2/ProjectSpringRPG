@@ -3,7 +3,6 @@
     <%-- CORE --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%-- 위에서 필요한 트랜잭션이 마무리 되면 페이지 만들어주기 --%>
 <c:choose>
 	<c:when test="${result == 0 }">
 		<script>

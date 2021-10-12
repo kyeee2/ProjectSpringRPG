@@ -45,6 +45,51 @@ public class PremiereDAOImpl implements PremiereDAO {
 		return mapper.deleteByUid(uids);
 	}
 
+	@Override
+	public int findUidById(String id) {
+		return mapper.findUidById(id);
+	}
+
+	@Override
+	public int apply(int prUid, int cusUid, String email) {
+		return mapper.apply(prUid, cusUid, email);
+	}
+
+	@Override
+	public int chkId(int prUid, String id) {
+		return mapper.chkId(prUid, id);
+	}
+
+	@Override
+	public List<PremiereWinDTO> selectWin(int prUid, int count) {
+		return mapper.selectWin(prUid, count);
+	}
+
+	@Override
+	public int findUidByTitle(String title) {
+		return mapper.findUidByTitle(title);
+	}
+	
+	@Override
+	public List<PremiereDTO> getTitle() {
+		return mapper.getTitle();
+	}
+
+	@Override
+	public int updateBool(int prUid, String email) {
+		return mapper.updateBool(prUid, email);
+	}
+	
+	
+	public List<String> getFileName(int[] uids) {
+		return mapper.getFileName(uids);
+	}
+
+	@Override
+	public List<PremiereDTO> getThreeRecently() {
+		return mapper.getThreeRecently();
+	}
+
 }
 
 

@@ -54,11 +54,22 @@
 		WHERE cus_id = #{id}
 	</select>
 	
+	<select id="findNameByPhonenum" resultType="String">
+	SELECT cus_name
+	FROM customer
+	WHERE cus_phonenum= #{phonenum}
+	</select>
+
+	
 	<select id="idChk" resultType="String">	<!-- lit 형태로 반환 -> 없으면 null 반환 -->
 		SELECT cus_id FROM customer
 		WHERE cus_id = #{id}
-	
+		</select>
+	<select id="findID" resultType="String">
+			SELECT cus_id id FROM customer
+		WHERE cus_name = #{name} and cus_phonenum=#{phonenum}
 	</select>
+	
 	<select id="nickChk" resultType="String">
 		SELECT cus_nickname FROM customer
 		WHERE cus_nickname = #{nickname}
@@ -74,6 +85,12 @@
 		SET cus_pw =#{pw}
 		WHERE cus_uid=#{uid}
 	</update>
+	<update id="changePw">
+		UPDATE customer
+		SET cus_pw =#{pw}
+		WHERE cus_id= #{id} and cus_name = #{name} and cus_phonenum = #{phonenum}
+	
+	</update>
 	<select id="selectByUid" resultType="com.spring.domain.CustomerDTO">
 		SELECT
 			cus_uid uid,
@@ -88,6 +105,27 @@
 		FROM customer
 		WHERE cus_uid = #{uid}	
 	</select>
-	
-	
+	<select id="selectByUidAll" resultType="com.spring.domain.CustomerDTO">
+		SELECT
+			cus_uid uid,
+			cus_id id,
+			cus_pw pw,
+			cus_name name, 
+			cus_nickname nickname, 
+			cus_birthday birthday, 
+			cus_phonenum phonenum 
+			
+			
+		FROM customer	
+		ORDER BY 
+			cus_uid DESC
+		LIMIT 
+			#{from}, #{pageRows}
+	</select>
+	<select id="count" resultType="int">
+	SELECT
+		count(*)
+	FROM
+		customer
+	</select>
 </mapper>

@@ -62,6 +62,9 @@ public class LoginService {
 	public int updatePw(String pw, int uid) throws Exception{
 		return dao.updatePw(pw, uid);
 	}
+	public int changePw(String pw, String id, String name, String phonenum) {
+		return dao.changePw(pw, id, name, phonenum);
+	}
 	
 	// 특정 id(username) 의 정보 가져오기
 	public CustomerDTO findById(String id) {
@@ -91,6 +94,24 @@ public class LoginService {
 		else
 			return 1;
 	}
+	
+	public String findNameByPhonenum(String phonenum) {
+		return dao.findNameByPhonenum(phonenum);
+	}
+	
+	public String findID(String name, String phonenum) throws Exception {
+		 return dao.findID(name, phonenum);
+		
+	}
+	public int findPW(String pw, String name, String phonenum, String id) throws Exception {
+		List<CustomerDTO> findaccount = dao.findPW(pw, name, phonenum, id);
+		
+		if(findaccount == null || findaccount.size() ==0)
+			return 0;
+		else
+			return 1;
+	}
+	
 	
 	 public void certifiedPhoneNumber(String phonenum, String cerNum) {
 		 	

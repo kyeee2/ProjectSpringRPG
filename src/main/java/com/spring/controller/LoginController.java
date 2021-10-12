@@ -1,17 +1,23 @@
 	package com.spring.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -19,6 +25,7 @@ import javax.validation.Valid;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +41,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -45,6 +53,7 @@ import com.spring.CustomerValidator;
 import com.spring.config.PrincipalDetails;
 import com.spring.domain.CustomerDTO;
 import com.spring.service.AjaxBoardService;
+import com.spring.service.AjaxPremiereService;
 import com.spring.service.LoginService;
 import com.spring.service.MovieCrawlingService;
 
@@ -62,6 +71,7 @@ public class LoginController {
 	// 메인페이지용
 	MovieCrawlingService movieInfoService;
 	AjaxBoardService ajaxBoardService;
+	AjaxPremiereService ajaxPremiereService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -80,7 +90,12 @@ public class LoginController {
 	public void setAjaxBoardService(AjaxBoardService ajaxBoardService) {
 		this.ajaxBoardService = ajaxBoardService;
 	}
-	
+
+	@Autowired
+	public void setAjaxPremiereService(AjaxPremiereService ajaxPremiereService) {
+		this.ajaxPremiereService = ajaxPremiereService;
+	}
+
 	public void naverlogin() {	}
 	//아이디 로그인
 	@GetMapping("/login")
@@ -276,7 +291,12 @@ public class LoginController {
 }	
 		
 	@PostMapping("/joinOk")
-	public String joinOk(HttpServletRequest request, HttpServletResponse response,@ModelAttribute @Valid CustomerDTO user,BindingResult result) throws Exception {
+	public String joinOk(HttpServletRequest request, 
+			HttpServletResponse response,
+			@ModelAttribute @Valid CustomerDTO user,
+			@RequestParam("file") MultipartFile file,
+			BindingResult bindresult, 
+			Model model) throws Exception {
 //		String fileUrl = FileHelper.upload("/uploads", file, request);
 //		user.setProfile(fileUrl);
 //		joinOk(user);
@@ -285,25 +305,95 @@ public class LoginController {
 		String encPassword = passwordEncoder.encode(rawPassword);
 		user.setPw(encPassword);
 		
-		if(result.hasErrors()) {   // 에러 있으면
-			return "/join";  // 원래 폼으로 돌아가기
+		if(bindresult.hasErrors()) {   // 에러 있으면
+			return "/basic/join";  // 원래 폼으로 돌아가기
 		}
+		
 		String id = user.getId();
 		int checkid = loginService.idChk(id);
 		String nickname = user.getNickname();
 		int checknick = loginService.nickChk(nickname);
+		
+		int result = 0;
+		
 		try {
-			if(checkid == 1 || checknick == 1) {
-				return "/join";
-			}else if(checkid == 0 || checknick == 0) {
-				loginService.addMember(user);
-			}
-			// 요기에서~ 입력된 아이디가 존재한다면 -> 다시 회원가입 페이지로 돌아가기 
-			// 존재하지 않는다면 -> register
-		} catch (Exception e) {
-			throw new RuntimeException();
-		}
+		    // 진짜 파일 이름
+		    String filename = file.getOriginalFilename();
+		    
+		    if(filename.equals("")) {
+		    	// 파일을 안올렸다면
+		    	System.out.println("파일 안올림");
+		    	
+			    user.setProfile("");
+			    user.setProfile_origin("");
+				try {
+					if(checkid == 1 || checknick == 1) {
+						return "/basic/join";
+					}else if(checkid == 0 || checknick == 0) {
+						result = loginService.addMember(user);
+					}
+					// 요기에서~ 입력된 아이디가 존재한다면 -> 다시 회원가입 페이지로 돌아가기 
+					// 존재하지 않는다면 -> register
+				} catch (Exception e) {
+					throw new RuntimeException();
+				}
 
+				return "redirect:/login";
+		    }
+			// 파일을 올렸다면
+		    
+	        // 랜덤문자생성
+	        UUID uid = UUID.randomUUID();
+	        
+	        //업로드된 파일 이름
+	        String cfilename = uid + "_" + filename;
+	 
+	        //이미지를 업로드할 디렉토리(배포 디렉토리로 설정)
+	        ServletContext context = request.getServletContext();
+	     	String saveDirectory = context.getRealPath("/file/customer");	// 무조건 여기 폴더에 저장
+		    
+		    File uploadFile = new File(saveDirectory);
+		    // 디렉터리가 존재하지 않을 경우
+            if(!uploadFile.exists()) {
+                boolean wasSuccessful = uploadFile.mkdirs();
+  
+	            // 디렉터리 생성에 실패했을 경우
+	            if(!wasSuccessful)
+	                System.out.println("file: was not successful");
+            }
+            
+		    user.setProfile(cfilename);
+		    user.setProfile_origin(filename);
+		    // DB에 데이터 저장하기
+
+			try {
+				if(checkid == 1 || checknick == 1) {
+					return "/basic/join";
+				}else if(checkid == 0 || checknick == 0) {
+					result = loginService.addMember(user);
+				}
+				// 요기에서~ 입력된 아이디가 존재한다면 -> 다시 회원가입 페이지로 돌아가기 
+				// 존재하지 않는다면 -> register
+			} catch (Exception e) {
+				throw new RuntimeException();
+			}
+			
+		    // 성공적으로 DB에 들어갔다면
+		    if(result != 0) {
+		     	String filepath = Paths.get(saveDirectory, cfilename).toString();
+		     	
+	            // premiere 폴더에 파일 업로드
+	            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
+	            stream.write(file.getBytes());
+	            stream.close();
+		    }
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+		model.addAttribute("result", result);
+		
 		return "redirect:/login";
 	}
 	
@@ -462,6 +552,9 @@ public class LoginController {
 		// 전체 게시판의 인기글 10개
 		model.addAttribute("vogueList", ajaxBoardService.allVogueList());
 		
+		// 시사회 최근 3개
+		model.addAttribute("premiereList", ajaxPremiereService.getThreeRecently());
+		
 		return "basic/main";
 	}
 	 @PostMapping("/upload")
@@ -481,6 +574,24 @@ public class LoginController {
 		 int result = loginService.nickChk(nickname);
 	 	return result;
 	 }
+	 @GetMapping("/findIDPW")
+	 public String findIDPW() {
+		
+	       
+		 return "/basic/findIDPW";
+	 }
+	 
+	 @PostMapping("/findIDOk")
+	 public String findID( String name, String phonenum, Model model) throws Exception {	       
+		 model.addAttribute("id",loginService.findID(name, phonenum));
+		 return "/basic/findIDOk";
+	 }
+	 @PostMapping("/findPWOk")
+	 public String findPW(String pw, String id, String name, String phonenum, Model model) throws Exception {
+		
+		 model.addAttribute("result",loginService.changePw(pw, id, name, phonenum));
+		 return "/basic/findPWOk";
+	 }
 		//에러 출력 도우미 메소드
 		public void showErrors(Errors errors) {
 			if(errors.hasErrors()) {
@@ -498,7 +609,7 @@ public class LoginController {
 		// 이 컨트롤러 클래스가 handler 에서 폼 데이터를 바인딩할때 검증하는 Validator를 결정해준다.
 		@InitBinder
 		public void initBinder(WebDataBinder binder) {
-			binder.setValidator(new CustomerValidator());; 
+			binder.setValidator(new CustomerValidator(loginService));
 		}
 
 
