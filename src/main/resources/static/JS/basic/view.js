@@ -1,6 +1,6 @@
 var boardType = "";	// boardType 세팅
 var uid = "";	//게시글 고유번호
-
+var head = ""; // 게시판 head용
 $(document).ready(function() {
 	
 	const url = new URL(window.location.href);	// 현재 URL 받기
@@ -28,6 +28,16 @@ $(document).ready(function() {
 		chkDelete();
 	});
 	
+	//boardtype이 freeboard일 때
+	if(boardType=="freeboard") {
+		 head="자유게시판";
+		
+		$("#headtitle").html(head);
+	} else {
+		 head="리뷰게시판"
+		$("#headtitle").html(head);
+	}
+	
 	//댓글 읽어오기
 	commentList(boardType, uid);
 	
@@ -41,7 +51,7 @@ $(document).ready(function() {
 		}
 		
 	});
-
+	
 });
 
 	function chkCosubmit() {
@@ -89,21 +99,21 @@ function writeData(jsonObj) {
 	
 	result = "";	// 결과값 초기화
 
-	result += "작성자 : " + jsonObj.nickname + "<br>\n";
-	result += "등록일 : " + jsonObj.datetime + "<br>\n";
-	result += "조회수 : " + jsonObj.viewcnt + "<br>\n";
-	if(jsonObj.boardtype != "noticeboard") {
-		// 좋아요수와 댓글수는 공지사항에서는 보이지 않는다
-		result += "좋아요수 : <span id='goodCnt' data-cnt=' + +'>" + jsonObj.goodcnt + "</span><br>\n";
-		result += "댓글수 : " + jsonObj.commentcnt + "<br>\n";
-	}
+	result += "<div id='head'><div class='item'>작성자:" + jsonObj.nickname + "</div>\n";
+	result += "<div class='item'>날짜:" + jsonObj.datetime + "</div>\n";
+	result += "<div class='item'>조회수:" + jsonObj.viewcnt + "</div>\n";
 	if(jsonObj.boardtype == "movieboard"){	
 		// 주제는 영화 리뷰에서만 보임
-		result += "주제 : " + jsonObj.subject + "<br>\n";
+		result += "<div class='item'>주제 : " + jsonObj.subject + "</div>\n";
 	}
-	result += "제목 : " + jsonObj.title + "<br>\n";
-	result += "내용 : " + jsonObj.content + "<br>\n";
-	
+	if(jsonObj.boardtype != "noticeboard") {
+		// 좋아요수와 댓글수는 공지사항에서는 보이지 않는다
+		
+		result += "<div class='item' id='goodCnt'>추천수:" + jsonObj.goodcnt + "</div>";
+		result += "<div class='item'>댓글수: " + jsonObj.commentcnt +"</div></div>";
+	} 
+	result += "<br><div id='title'<div class='item'>제목 : " + jsonObj.title +"</div></div>\n";
+	result += "<br><div id='content'><div class='item'>내용 : " + jsonObj.content +"<button id='btn_good' onclick='doGood()'><i class='far fa-grin-alt'></i></button></div></div>\n";
 	$("#result").html(result);	// 정보 업데이트
 	
 }	// end writeResult()
@@ -144,7 +154,7 @@ function doGood() {
 			if(status == "success") {
 				if(data.count == 1) {
 					var goodCnt = data.message;	// 성공했으면 메세지에 좋아요 수 담겨져있음
-					$("#goodCnt").text(goodCnt);
+					$("#goodCnt").text("추천수: " + goodCnt);
 				}
 			} else {
 				alert(data.message);
@@ -209,15 +219,16 @@ function doGood() {
 			
 		comment += "<form name='frm'>\n"
 		comment += "<input type='hidden' name='uid' value='" + jsonObj[i].uid + "'>";
-		comment += "닉네임 : " + jsonObj[i].nickName + "<br>\n"; 
 		comment += "댓글내용 : <span>" + jsonObj[i].content + "</span><br>\n"; 
-		comment += "작성시간 : " + jsonObj[i].dateTime + "<br>\n"; 
+		comment += "<div class='CoContain'><div class='item'>닉네임 : " + jsonObj[i].nickName + "</div>"; 
+		comment += "<div class='item'>작성시간 : " + jsonObj[i].dateTime + "</div></div><br>\n"; 
 		comment += "<div class= 'exam'>\n";
 		comment += "<button type='button' name='btn_update' onclick='clickUpdate(event)'>댓글수정</button>";
 		comment += "<button type='button' name='btn_delete' onclick='clickDelete(event)'>댓글삭제</button>";
 		comment += "<button type='button' name='btn_updateOk' style='display : none;' onclick='clickUpdateOk(event)'>수정완료</button>";
 		comment += "</div>\n"
 		comment += "</form>\n"
+		comment += "<br><br><br><br>"
 
 		
 		$("#comment").html(comment);	// 정보 업데이트

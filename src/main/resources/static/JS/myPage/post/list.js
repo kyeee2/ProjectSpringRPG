@@ -2,7 +2,6 @@ var page = 1;	// 현재 페이지
 var pageRows = 5;	// 페이징당 글의 개수
 var type = "post";	// 게시글(post)인지 댓글(comment)인지
 var uid = "";
-
 $(document).ready(function() {
 	
 	// 파라미터 값 받아오기
@@ -13,7 +12,6 @@ $(document).ready(function() {
 	
 	// URLSearchParams.get('parameter') : 파라미터명이 'parameter'인 것 중 첫번째 value 값 리턴
 	uid = urlParams.get('uid'); // 파라미터명이 uid인 value 값 받기 	
-	
 	// 페이지 최초 로딩되면 1페이지 내용을 로딩
 	loadPage(page);
 	
@@ -65,6 +63,16 @@ function loadPage(page) {
 		$("#list thead").html(th);
 			
 		// 테이블 데이터 가져오기
+		$.ajax({ 
+			url: "/comment/list/myPage/" + page + "/" + pageRows,
+			type: "GET",
+			cache: false,
+			success: function(data, status) {
+				if(status == "success") {
+					updateCoList(data);
+				}
+			}
+		})
 	}// end if-elseif
 }	// end loadPage()
 
@@ -124,6 +132,53 @@ function updateList(jsonObj) {
 	
 	return true;
 }	// end updateList()
+
+//댓글 목록 업데이트
+
+function updateCoList(jsonObj) {
+		var result = "";	// 최종 결과
+	if(jsonObj.status == "OK") {
+		var count = jsonObj.count;
+		
+		window.page = jsonObj.page;
+		window.pageRows = jsonObj.pagerows;
+		
+		var items = jsonObj.data;	// 배열
+		for(var i = 0; i < count; i++) {
+			result += "<tr>\n";
+			result += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
+			result += "<td>" + items[i].uid + "</td>\n";
+			result += "<td><a href='../view?boardType=" + items[i].boardType + "&uid=" + items[i].buid + "'>" + items[i].content + "</td>\n";
+			result += "<td>" + items[i].dateTime + "</td>\n";
+			result += "</tr>\n";
+		}
+		
+		$("#list tbody").html(result);	// 테이블 업데이트
+		
+		// 페이지 정보 업데이트
+		$("#pageinfo").text(jsonObj.page + "/" + jsonObj.totalpage + "페이지, " + jsonObj.totalcnt + "개의 글");
+		
+		// pageRows
+		var txt = "<select id='rows' onchange='changePageRows()'>\n";
+		txt += "<option " + ((window.pageRows == 1)?"selected":"")  + " value='1'>1개씩</option>\n";
+		txt += "<option " + ((window.pageRows == 2)?"selected":"")  + " value='2'>2개씩</option>\n";
+		txt += "<option " + ((window.pageRows == 5)?"selected":"")  + " value='5'>5개씩</option>\n";
+		txt += "<option " + ((window.pageRows == 10)?"selected":"")  + " value='10'>10개씩</option>\n";
+		txt += "</select>\n";
+		$("#pageRows").html(txt);	// pageRows 업데이트
+		
+		// [페이징] 정보 업데이트
+		var pagination = buildPagination(jsonObj.writepages, jsonObj.totalpage, jsonObj.page, jsonObj.pagerows);
+		$("#pagination").html(pagination);
+		
+	} else {
+		alert("내용이 없습니다.");
+		return false;
+	}
+	
+	return true;
+}	// end updateList()
+
 
 // [페이징] 생성
 // 한 [페이징]에 표시될 페이지수 --> writePages

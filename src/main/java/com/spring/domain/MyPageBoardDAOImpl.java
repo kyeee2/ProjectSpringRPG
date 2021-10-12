@@ -24,4 +24,6 @@ public class MyPageBoardDAOImpl implements MyPageBoardDAO {
 		return mapper.listMyPage(uid, from, pageRows);
 	}
 
+
+
 }

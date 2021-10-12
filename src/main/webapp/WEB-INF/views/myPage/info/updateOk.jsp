@@ -12,7 +12,7 @@
 	<c:otherwise>
 		<script>
 			alert("수정 성공");
-			location.href = "myInfo?uid=${param.uid}"; <%-- myInfo를 적어야하나 ?--%>
+			location.href = "../myInfo"; <%-- myInfo를 적어야하나 ?--%>
 		</script>
 	</c:otherwise>
 </c:choose>

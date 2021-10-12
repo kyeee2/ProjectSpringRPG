@@ -16,8 +16,9 @@ public interface CustomerDAO {
 		int addAuth(String auth, String id);
 		
 		// 사용자 삭제
-		int deleteUser(CustomerDTO user);
+		int deleteUser(int enable, String id);
 		
+		int updatePw(String pw, int uid);
 		// 특정 사용자 권한 삭제
 		int deleteAuth(String id, String auth);
 		
@@ -25,7 +26,7 @@ public interface CustomerDAO {
 		int deleteAuths(String id);
 		
 		//유저정보 수정
-		int updateUser(CustomerDTO user);
+		int updateUser(String phonenum, String nickname, int uid);
 		
 		//유저 정보 가져오기(uid)
 		List<CustomerDTO> selectByUid(int uid);

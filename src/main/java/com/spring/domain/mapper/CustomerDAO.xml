@@ -11,16 +11,16 @@
 		VALUES
 			(#{id}, #{pw}, #{name}, #{nickname}, #{birthday}, #{profile}, #{phonenum})	
 	</insert>
-
+	
 <insert id="addAuth">
 		INSERT INTO authority
 		VALUES(#{param2}, #{param1})
 	</insert>
 
-	<delete id="deleteUser" parameterType="com.spring.domain.CustomerDTO">
-		DELETE FROM customer
+	<update id="deleteUser">
+		UPDATE customer SET cus_enable=#{enable}
 		WHERE cus_id = #{id}
-	</delete>	
+	</update>	
 	
 	<delete id="deleteAuth">
 		DELETE FROM authority
@@ -65,7 +65,14 @@
 	
 	</select>
 	<update id="updateUser">
-		UPDATE customer SET cus_phonenum= #{phonenum} , cus_nickname=#{nickname} WHERE cus_uid=#{uid} 
+		UPDATE customer 
+		SET cus_phonenum= #{phonenum} , cus_nickname=#{nickname} 
+		WHERE cus_uid=#{uid} 
+	</update>
+	<update id="updatePw">
+		UPDATE customer
+		SET cus_pw =#{pw}
+		WHERE cus_uid=#{uid}
 	</update>
 	<select id="selectByUid" resultType="com.spring.domain.CustomerDTO">
 		SELECT
@@ -81,5 +88,6 @@
 		FROM customer
 		WHERE cus_uid = #{uid}	
 	</select>
-
+	
+	
 </mapper>

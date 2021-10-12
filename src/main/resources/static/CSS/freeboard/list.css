@@ -17,18 +17,7 @@ table {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-@media screen and (min-width: 1024px) { /* pc버전 */
+@media screen and (min-width: 1024px) {
 .clear { /* float 사용 후 반드시 사용해줄것*/
 	clear: both;
 }
@@ -57,12 +46,12 @@ th {
 }
 
 table,th,td {
-	font-size: 10px;
 	font-family: system-ui;
 	padding: 10px 40px;
 }
 
 td {
+	font-size:17px;
 	border-bottom: 0.5px solid black;
 }
 

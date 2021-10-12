@@ -12,7 +12,7 @@
 	<c:otherwise>
 		<script>
 			alert("변경 성공");
-			location.href = "redirect:/login"; 
+			location.href = "../myInfo"; //redirect:/login
 		</script>
 	</c:otherwise>
 </c:choose>

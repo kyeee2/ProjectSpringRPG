@@ -55,16 +55,15 @@ function loadPage(page) {
 // 인기글 목록
 function addvogueList(jsonObj) {
 	var vogue = "";
-	
 	if(jsonObj.status == "OK") {
 		var count = jsonObj.count;
-		
+			
 		var items = jsonObj.data;	// 배열
 		for(var i = 0; i < count; i++) {
 			vogue += "<tr>\n";
 			vogue += "<td class='num'>" + items[i].uid + "</td>\n";
 			vogue += "<td class='num'>" + items[i].goodcnt + "</td>\n";
-			vogue += "<td><a href='view?boardType=freeboard&uid=" + items[i].uid + "'> (인기글)" + items[i].title + "(" + items[i].commentcnt + ")"+ "</td>\n";
+			vogue += "<td class='text'><a href='view?boardType=freeboard&uid=" + items[i].uid + "'> (인기글)" + items[i].title + "(" + items[i].commentcnt + ")"+ "</td>\n";
 			vogue += "<td class='num1'>" + items[i].nickname + "</td>\n";
 			vogue += "<td class='num1'>" + items[i].datetime + "</td>\n";
 			vogue += "<td class='num1'><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
@@ -75,9 +74,10 @@ function addvogueList(jsonObj) {
 		}
 	} else {
 		return false;
-	}
+	
+	} 
 }
-
+		
 // 성공하면 true, 실패하면 false 리턴
 function updateList(jsonObj) {
 	var result = "";	// 최종 결과

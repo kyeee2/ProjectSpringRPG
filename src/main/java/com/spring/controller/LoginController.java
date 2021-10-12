@@ -286,7 +286,7 @@ public class LoginController {
 		user.setPw(encPassword);
 		
 		if(result.hasErrors()) {   // 에러 있으면
-			return "/basic/join";  // 원래 폼으로 돌아가기
+			return "/join";  // 원래 폼으로 돌아가기
 		}
 		String id = user.getId();
 		int checkid = loginService.idChk(id);
@@ -294,7 +294,7 @@ public class LoginController {
 		int checknick = loginService.nickChk(nickname);
 		try {
 			if(checkid == 1 || checknick == 1) {
-				return "/basic/join";
+				return "/join";
 			}else if(checkid == 0 || checknick == 0) {
 				loginService.addMember(user);
 			}
@@ -304,7 +304,7 @@ public class LoginController {
 			throw new RuntimeException();
 		}
 
-		return "redirect:/basic/login";
+		return "redirect:/login";
 	}
 	
 	@RequestMapping("/logout")
