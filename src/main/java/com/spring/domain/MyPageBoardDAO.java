@@ -10,4 +10,5 @@ public interface MyPageBoardDAO {
 	
 	// 특정 회원이 쓴 전체 게시글 목록
 	public abstract List<BoardDTO> listMyPage(int uid, int from, int pageRows);
+	
 }

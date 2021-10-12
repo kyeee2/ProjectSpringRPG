@@ -11,6 +11,7 @@ import com.spring.domain.CustomerDAO;
 import com.spring.domain.CustomerDTO;
 import com.spring.domain.FbCommentDAO;
 import com.spring.domain.MbCommentDAO;
+import com.spring.domain.MyPageCommentDAO;
 
 @Service
 public class CommentService {
@@ -93,4 +94,24 @@ public class CommentService {
 		
 		return uid;
 	}	
+	
+	//마이페이지용
+	
+	MyPageCommentDAO myPageCommentDAO;
+	
+	@Autowired
+	public void setMyPageCommentDAO(MyPageCommentDAO myPageCommentDAO) {
+		this.myPageCommentDAO = myPageCommentDAO;
+	}
+		
+		//마이페이지에서 특정 회원이 쓴 댓글 총 개수		
+	
+	public int countMyComment(int uid) {
+		return myPageCommentDAO.countMyComment(uid);
+	}
+		//마이페이지에서 특정 회원이 쓴 댓글 전체 목록(free,movie)
+	@Transactional
+	public List<CommentDTO> listMyCo(int uid, int from, int pageRows) {
+		return myPageCommentDAO.listMyCo(uid, from, pageRows);
+	}
 }
