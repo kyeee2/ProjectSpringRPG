@@ -103,7 +103,7 @@ public class MyPageController {
 
 				// 이미지를 업로드할 디렉토리(배포 디렉토리로 설정)
 				ServletContext context = request.getServletContext();
-				String saveDirectory = context.getRealPath("/file/premiere"); // 무조건 여기 폴더에 저장
+				String saveDirectory = context.getRealPath("/file/customer"); // 무조건 여기 폴더에 저장
 
 				File uploadFile = new File(saveDirectory);
 				// 디렉터리가 존재하지 않을 경우
