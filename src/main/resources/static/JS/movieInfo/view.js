@@ -41,17 +41,17 @@ function writeData(jsonObj) {
 	$(document).find("title").text(jsonObj.moviename);
 	
 	// body에 영화 정보들 넣어주기
-	$("#moviename").text(jsonObj.moviename);
+	$("#moviename").text("영화제목:" + jsonObj.moviename);
 	$("#poster").html("<img src='" + jsonObj.poster + "'/>"	);
-	$("#info #star").text(jsonObj.star);
-	$("#info #genre").text(jsonObj.genre);
-	$("#info #nation").text(jsonObj.nation);
-	$("#info #running-time").text(jsonObj.runningtime);
-	$("#info #open-date").text(jsonObj.opendate);
+	$("#info #star").text("평점:" + jsonObj.star);
+	$("#info #genre").text("개요:" + jsonObj.genre);
+	$("#info #nation").text("국가:" + jsonObj.nation);
+	$("#info #running-time").text("러닝타임:" + jsonObj.runningtime);
+	$("#info #open-date").text("개봉일:" + jsonObj.opendate);
 	if(jsonObj.viewingPage != undefined){
 		$("#info #viewing-page").text("시청연령 : " + jsonObj.viewingPage);
 	}
-	$("#info #summary").html(jsonObj.summary);
+	$("#summary").html(jsonObj.summary);
 	
 	var directorActor = "";
 	var lists = jsonObj.directorAndActor;

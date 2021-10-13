@@ -89,7 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM mb_comment WHERE mb_uid in (
 		 <foreach collection="array" item="item" index="index" separator=", ">
  	 			${item}
- 	 		</foreach>
+ 	 		</foreach>)
 	</delete>
 	
 	<!-- 회원의 uid 찾기 -->

@@ -2,7 +2,7 @@
 
 section{	/* 전체 section의 범위 조정*/
 	max-width:1280px;
-	width:900px;
+	width:1280px;
 	margin: auto;
 	
 }
@@ -19,6 +19,8 @@ section{	/* 전체 section의 범위 조정*/
     justify-content: center;
 }
 
+
+
 /*개개 이미지*/
 .movielink img {
 	width: 200px;
@@ -32,30 +34,85 @@ section{	/* 전체 section의 범위 조정*/
   margin:0 auto;
 }
 
+
+
 /*post slider*/
 .post-slider{
-  width:1200px;
-  height:400px;
+  width:1280px;
+  height:500px;
   margin:0px auto;
   align-items:center;
   position:relative;
 }
 
+.post-slider h3 {
+	text-align: center;
+}
+
 .post-slider .prev{
   position:absolute;
-  top:50%;
+  top:45%;
   left:30px;
   font-size:2em;
   color:gray;
-    cursor: pointer;
+  cursor: pointer;
+  z-index: 2;
 }
 
 
 .post-slider .next{
   position:absolute;
-  top:50%;
+  top: 45%;
   right:30px;
   font-size:2em;
   color:gray;
-    cursor: pointer;
+  cursor: pointer;
+  z-index: 2;
 }
+
+/*인기글 */
+
+#vogue-list h3, li {
+	margin-top: 0px;
+	text-align: center;
+}
+
+li {
+	list-style: none;
+}
+
+#flex-container {
+	display:inline-flex;
+	flex-direction: column;
+	text-align: left;
+	border: 1px solid black;
+	border-radius: 10px;
+	width: 1000px;
+	margin-left: 100px;
+}
+
+.flex-wrap {
+	display:inline-flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	margin: auto;
+	width:1000px;
+	padding: 10px;
+	
+}
+.flex-wrap .text {
+	color: black;
+}
+.no {
+	width:25px;
+	height:25px;
+	border:1px solid black;
+	border-radius: 7px;
+	text-align: center;
+}
+
+#flex-container .text {
+	margin-left: 20px;
+	
+}
+

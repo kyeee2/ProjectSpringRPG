@@ -27,13 +27,10 @@
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <jsp:include page="/WEB-INF/views/global/header.jsp"/>
-<<<<<<< HEAD
 <jsp:include page="/WEB-INF/views/myPage/info/side_menu.jsp"/>
 
-=======
 <!-- JS 적용 -->
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
->>>>>>> branch 'master' of https://github.com/kyeee2/ProjectSpringRPG.git
 
 </head>
 <body>

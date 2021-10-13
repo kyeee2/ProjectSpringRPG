@@ -28,6 +28,7 @@ table, th, td {
 <!-- JS 적용 -->
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/myPage/post/list.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
+
 </head>
 <body>
 	<%-- 헤더 삽입 --%>
@@ -35,6 +36,7 @@ table, th, td {
 	
 	<%-- 메인 컨텐츠 --%>
 	<section>
+	
 		<span id="post">게시글</span><span id="comment">댓글</span>
 		<div id="pageinfo"></div>
 		<div id="pageRows"></div>

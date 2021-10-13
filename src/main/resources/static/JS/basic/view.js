@@ -35,8 +35,11 @@ $(document).ready(function() {
 		 head="자유게시판";
 		
 		$("#headtitle").html(head);
+	} else if(boardType=="movieboard"){
+		 head="영화리뷰"
+		$("#headtitle").html(head);
 	} else {
-		 head="리뷰게시판"
+		head="공지사항"
 		$("#headtitle").html(head);
 	}
 	
@@ -115,7 +118,11 @@ function writeData(jsonObj) {
 		result += "<div class='item'>댓글수: " + jsonObj.commentcnt +"</div></div>";
 	} 
 	result += "<br><div id='title'<div class='item'>제목 : " + jsonObj.title +"</div></div>\n";
-	result += "<br><div id='content'><div class='item'>내용 : " + jsonObj.content +"<button id='btn_good' onclick='doGood()'><i class='far fa-grin-alt'></i></button></div></div>\n";
+	result += "<br><div id='content'><div class='item'>내용 : " + jsonObj.content;
+	if(boardType !="noticeboard") {		
+	result += "<button id='btn_good' onclick='doGood()'><i class='far fa-grin-alt'></i></button>";
+	}
+	result += "</div></div>\n";
 	$("#result").html(result);	// 정보 업데이트
 	
 	nickName = jsonObj.nickname;
