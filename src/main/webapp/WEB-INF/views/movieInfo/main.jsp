@@ -47,7 +47,7 @@
 				
 				responsive: [ // 반응형 웹 구현 옵션
 					{  
-						breakpoint: 960, //화면 사이즈 960px
+						breakpoint: 960, //화면 사이즈 1280px
 						settings: {
 							//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
 							slidesToShow:3 
@@ -91,7 +91,7 @@
 			<div class="post-slider">
 			<h3 class="mainheader">개봉예정작</h3>
 			<i class="fas fa-chevron-left prev"></i>  <!--왼쪽 방향 버튼-->
-        <i class="fas fa-chevron-right next"></i>   <!--오른쪽 방향 버튼-->
+       	 <i class="fas fa-chevron-right next"></i>   <!--오른쪽 방향 버튼-->
 			<div class="post-wrapper">
 			<c:set var="cnt" value="${ fn:length(titleUpcomming) }" />
 			<c:if test="${ cnt > 0 }">
@@ -110,7 +110,7 @@
 		<!-- 영화 검색 -->
 		<div id="searchContainer">
 		<span id="findMovie">찾는 영화가 없으신가요? 그렇다면 click!</span>
-		<form id="searchForm" name="searchForm" method="get">
+		<form id="searchForm" name="searchForm" method="get" style='display:none'>
 			<input type="search" placeholder="검색하세요" id="searchMovie" name="movieName" value="" >
 			<button type="button" id="search">검색</button>
 		</form>

@@ -94,7 +94,7 @@ function updateList(jsonObj) {
 			result += "<td class='num'>" + items[i].subject + "</td>\n";
 			result += "<td class='text'><a href='view?boardType=movieboard&uid=" + items[i].uid + "'>" + items[i].title + "(" + items[i].commentcnt + ")" + "</td>\n";
 			result += "<td class='num1'>" + items[i].nickname + "</td>\n";
-			result += "<td class='num1>" + items[i].datetime + "</td>\n";
+			result += "<td class='num1'>" + items[i].datetime + "</td>\n";
 			result += "<td class='num1><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";
 			result += "</tr>\n";
 		}
