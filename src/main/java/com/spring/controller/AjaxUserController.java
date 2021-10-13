@@ -4,18 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring.CustomerValidator;
 import com.spring.config.PrincipalDetails;
+import com.spring.domain.AjaxBoardResult;
 import com.spring.domain.AjaxUserList;
 import com.spring.domain.CustomerDTO;
 import com.spring.service.AjaxUserService;
@@ -30,7 +29,8 @@ public class AjaxUserController {
 	AjaxUserService ajaxUserService;
 	
 	@Autowired
-	LoginService loginService;	
+	LoginService loginService;
+	
 	
 	@Autowired
 	public void setAjaxUserService(AjaxUserService ajaxUserService) {
@@ -99,20 +99,30 @@ public class AjaxUserController {
 		return result;
 		
 	}
-	
-	@PostMapping("/user/deleteOk")
-	public String userdeleteOk(Authentication authentication, Model model) {
-		PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
-		CustomerDTO user= userDetails.getUser();
-		String id = user.getId();
-		System.out.println("탈퇴아이디:" + id);
-		int enable= user.getEnable();
-		System.out.println("user넣기전enable" +enable);
-		user.setEnable(0);
-		enable = user.getEnable();
-		System.out.println("user넣은후 enable" +enable);
-		model.addAttribute("result", loginService.deleteMember(enable, id));
-		return "/admin/user/deleteOk";
+	@DeleteMapping("/user")
+	public AjaxBoardResult deleteUser(String id) {
+		
+		// message
+		StringBuffer message = new StringBuffer();
+		String status = "FAIL";
+		
+		int cnt = 0;
+		try {
+			cnt= loginService.deleteMember(id);
+			if(cnt==0) {
+				message.append("[트랜잭션 실패 : 0 delete ");
+			}else {
+				status= "OK";
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			message.append("[트랜잭션 에러 : " + e.getMessage() + "]");
+		}
+		AjaxBoardResult result = new AjaxBoardResult();
+		result.setCount(cnt);
+		result.setMessage(message.toString());
+		result.setStatus(status);
+		return result;
 	}
 	
 	

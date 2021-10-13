@@ -22,6 +22,7 @@
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/myPage/info/side_menu.css" rel="stylesheet" type="text/css">
 <!-- fontawesome 적용 -->
 <script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
 <!-- JS 적용 -->
@@ -30,15 +31,13 @@
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <jsp:include page="/WEB-INF/views/global/header.jsp"/>
+<jsp:include page="/WEB-INF/views/myPage/info/side_menu.jsp"/>
+
 
 </head>
 <body>
 <h3>마이페이지</h3>
-<ul class="list">
-<li>회원정보</li>
-<li>내가 쓴 글,댓글</li>
-<li>쪽지</li>
-</ul>
+
 아이디 ${list[0].id }
 <br>
 핸드폰 번호 ${list[0].phonenum }

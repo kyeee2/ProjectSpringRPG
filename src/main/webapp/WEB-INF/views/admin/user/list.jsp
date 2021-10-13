@@ -15,9 +15,9 @@ table, th, td {
 
 </style>
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/admin/user/list.css" rel="stylesheet" type="text/css">
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- Bootstrap -->
 <!-- fontawesome 적용 -->
 <script src="https://kit.fontawesome.com/41ddd3d635.js"></script> 
 
@@ -32,10 +32,10 @@ table, th, td {
 		<div class="head-wrap">
 		<h2 id="head">회원 정보</h2>
 		</div>
-		<div class="clear"></div>
+		<div class="clear"><br><br></div>
 		<table id="list">
 			<thead>
-				<tr>
+				<tr id="list-height">
 				<th class="num">회원번호</th>
 				<th class="num">아이디</th>
 				<th class="num1">닉네임</th>
@@ -50,9 +50,11 @@ table, th, td {
 
 		</table>
 		<div class="paging-div">
-		 <ul class="pagination" id="pagination"></ul>
+		 <ul class="pagination" id="pagination">
+		 </ul>
 		  </div>
 		<br>
 		</section>
+		
 </body>
 </html>

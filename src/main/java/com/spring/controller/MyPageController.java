@@ -58,7 +58,7 @@ public class MyPageController {
 		user.setEnable(0);
 		enable = user.getEnable();
 		System.out.println("user넣은후 enable" +enable);
-		model.addAttribute("result", loginService.deleteMember(enable, id));
+		model.addAttribute("result", loginService.deleteMember(id));
 		//userDetails.isEnabled();
 		return "/myPage/info/deleteOk";
 	}

@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+
+.head-wrap{
+	text-align:center;
+	font-size:22px;
+}
+
+ul{
+	list-style: none;
+}
+.pagination {
+  display: flex;
+  justify-content:center;
+  align-items: flex-end;
+  
+}
+
+
+.pagination > li > a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination  > li > a.active {
+  background-color: #12bda6;
+  color: white;
+}
+
+.pagination > li > a:hover:not(.active) {background-color: #ddd;}
+
+
+#list{
+	width:80%;
+	margin:auto 10%;
+	
+	text-align:center;
+}
+#list-height{
+	height:50px;
+}

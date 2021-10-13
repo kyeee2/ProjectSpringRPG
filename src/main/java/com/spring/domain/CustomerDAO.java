@@ -16,11 +16,12 @@ public interface CustomerDAO {
 		int addAuth(String auth, String id);
 		
 		// 사용자 삭제
-		int deleteUser(int enable, String id);
+		int deleteUser(String id);
 		
 		int updatePw(String pw, int uid);
 		
-		int changePw(String pw, String id, String name, String phonenum);
+		List<String> selectPw(String id, String name, String phonenum);
+		int setPw(String pw,String id);
 		// 특정 사용자 권한 삭제
 		int deleteAuth(String id, String auth);
 		
