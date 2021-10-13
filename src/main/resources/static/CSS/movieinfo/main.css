@@ -1,0 +1,134 @@
+@charset "UTF-8";
+
+
+
+
+	
+/* 헤드 글자*/
+.mainheader {
+	text-align: center;
+	font-size: 30px;
+}
+
+
+
+/*박스오피스 개개별 칸 */
+.movielink {
+	display:flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    text-align: center;
+    flex-direction:column;
+	width: 200px; 
+    height: 300px; 
+    padding: 30px;
+}
+.post a {
+	margin: 0 auto;
+}
+
+.movielink img {
+	width: 200px;
+	height: 300px;
+}
+
+#searchContainer {
+    align-items: center;
+    text-align: center;
+    font-size: 10px;
+    padding: 10px 10px;
+    margin: 50px;
+}
+
+.post-slider .post-wrapper{
+  width:1200px;
+  height:400px;
+  margin:0px auto;
+  align-items: center;	
+  position: relative;
+}
+
+.post-slider .post-wrapper1{
+  width:1200px;
+  height:400px;
+  margin:0px auto;
+  position: relative;
+}
+.post-slider .post-wrapper .post{
+  width:900px;
+  height:350px;
+  display:inline-block;
+}
+.post-slider .post-wrapper1 .post{
+  width:900px;
+  height:350px;
+  display:inline-block;
+}
+
+.page-wrapper {
+    position:relative;
+    top: -20px;
+    widht:1200px;
+    height:500px;
+}
+
+/*post slider*/
+.post-slider{
+  width:60%;
+  height:33%;
+  margin:0px auto;
+  position:relative;
+}
+.post-slider .silder-title{
+  text-align:center;
+  margin:30px auto;
+}
+.post-slider .next{
+  position:absolute;
+  top:50%;
+  right:30px;
+  font-size:2em;
+  color:gray;
+  cursor: pointer;
+}
+.post-slider .prev{
+  position:absolute;
+  top:50%;
+  left:30px;
+  font-size:2em;
+  color:gray;
+    cursor: pointer;
+}
+.post-slider .post-wrapper{
+
+  width:84%;
+  height:400px;
+  margin:0px auto;
+  overflow: hidden;
+  padding:10px 0px 10px 0px;
+}
+.post-slider .post-wrapper .post{
+  width:400px;
+  height:400px;
+  margin:0px 10px;
+  display:inline-block;
+  background:white;
+  border-radius: 5px;
+}
+.post-slider .post-wrapper .post .post-info{
+  font-size:15px;
+  height:30%;
+  padding-left:10px;
+}
+.post-slider .post-wrapper .post .slider-image{
+  width:100%;
+  height:175px;
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
+}
+
+.movielink h5 {
+	font-size: 20px;
+	color:black;
+}

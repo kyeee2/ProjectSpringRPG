@@ -12,7 +12,20 @@ $(document).ready(function() {
 	$("#findMovie").click(function(){
 		$("#searchForm").slideToggle();
 	});
-
+	$('.post-wrapper').slick({
+  slidesToShow: 5,
+  slidesToScroll: 3,
+  autoplay: false,
+  autoplaySpeed: 4000,
+	nextArrow:$('.next'),
+  	prevArrow:$('.prev'),
+});
+	$('.post-wrapper1').slick({
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 4000,
+});
 });
 
 function searchNaver(movieName) {
@@ -54,3 +67,5 @@ function writeList(jsonObj) {
 	$("#searchResult").html(result);
 	
 } // end writeList(jsonObj)
+
+
