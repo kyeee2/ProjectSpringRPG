@@ -126,7 +126,7 @@
 		SELECT 
 			fb_uid uid, 
 			fb_title title, 
-			fb_boardtype boardtType, 
+			fb_boardtype boardType, 
 			fb_viewcnt viewcnt 
 		FROM 
 			freeboard 

@@ -28,6 +28,7 @@ table, th, td {
 <!-- JS 적용 -->
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/myPage/post/list.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
+
 </head>
 <body>
 	<%-- 헤더 삽입 --%>

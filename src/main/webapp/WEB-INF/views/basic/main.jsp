@@ -12,8 +12,9 @@
 <title>Insert title here</title>
 <title>MOVIEMANIA</title>
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
-<link href="${ pageContext.request.contextPath }/CSS/movieinfo/slick.css" rel="stylesheet" type="text/css">
-<link href="${ pageContext.request.contextPath }/CSS/movieinfo/slick-theme.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/main/main.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/main/slick.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/main/slick-theme.css" rel="stylesheet" type="text/css">
 
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -72,7 +73,7 @@
 		<i class="fas fa-chevron-left prev"></i>  <!--왼쪽 방향 버튼-->
        	 <i class="fas fa-chevron-right next"></i>   <!--오른쪽 방향 버튼-->
 			<h3>박스오피스 순위</h3>
-			<div class="post-wrapper">
+			<div class="post-wrapper1">
 			<c:set var="cnt" value="${ fn:length(titleShowing) }" />
 			<c:if test="${ cnt > 0 }">
 				<c:forEach var="i" begin="0" end = "${ cnt - 1 }" varStatus="status">
@@ -92,20 +93,15 @@
 			<h3>인기글</h3>
 			<c:set var="cnt" value="${ fn:length(vogueList) }" />
 			<c:if test="${ cnt > 0 }">
-				<table>
-					<thead>
-						<th>NO</th>
-						<th>제목</th>
-					</thead>
-					<tbody>
+				<ul id="flex-container">
+					
 						<c:forEach var="i" begin="0" end = "${ cnt - 1 }" varStatus="status">
-							<tr>
-								<td>${ status.index + 1 }</td>
-								<td><a href="/view?boardType=${ vogueList[status.index].boardType }&uid=${ vogueList[status.index].uid }">${ vogueList[status.index].title }</a></td>
-							</tr>
+								<div class="flex-wrap">
+								<li class="no">${ status.index + 1 }</li>
+								<li class="text"><a href="/view?boardType=${ vogueList[status.index].boardType }&uid=${ vogueList[status.index].uid }">${ vogueList[status.index].title }</a></li>
+								</div>
 						</c:forEach>
-					</tbody>
-				</table>
+				</ul>
 			</c:if>
 		</div>
 		<!-- 시사회 3개 -->

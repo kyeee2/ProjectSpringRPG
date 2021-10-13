@@ -22,6 +22,7 @@ table, th, td {
 </style>
 <!-- CSS 적용 -->
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/noticeboard/list.css" rel="stylesheet" type="text/css">
 
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -38,8 +39,10 @@ table, th, td {
 	<%-- 메인 컨텐츠 --%>
 	<section>
 		<h2>공지사항</h2>
+		<div class="page-wrap">
 		<div id="pageinfo"></div>
 		<div id="pageRows"></div>
+		</div>
 		<form id="frm" name="frm">
 			<table id="list">
 				<thead>
