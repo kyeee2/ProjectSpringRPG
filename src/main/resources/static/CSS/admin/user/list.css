@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+section{
+	width:1280px;
+	margin:0 auto;
+}
 
 .head-wrap{
 	text-align:center;
@@ -33,9 +37,9 @@ ul{
 
 
 #list{
-	width:80%;
-	margin:auto 10%;
 	
+	width:80%;
+	margin:0 auto;
 	text-align:center;
 }
 #list-height{

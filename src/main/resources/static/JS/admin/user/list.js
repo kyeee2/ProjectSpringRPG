@@ -19,24 +19,10 @@ function loadPage(page) {
 				}
 			}
 		});
-		/*
-	$.ajax({
-			url: "/admin/user",	
-			type: "GET",
-			cache: false,
-			success: function(data, status) {
-				if(status == "success") {
-					// response가 application/json 이면 이미 parse된 결과가 data에 담겨있다.
-					userList(data)
-				}
-			}
 		
-	});
-	*/
 }
 function userList(jsonObj) {
 	var result ="";
-		var list = "";
 	
 	if(jsonObj.status =="OK") {
 		var count = jsonObj.count;
@@ -45,16 +31,22 @@ function userList(jsonObj) {
 		window.pageRows= jsonObj.pagerows;
 		var users = jsonObj.data;
 		
+		
+		
 		for(var i = 0; i < count; i++) {
+			var userid =  users[i].id;
 			result += "<tr id='list-height'>\n";
 			result += "<td class='num'>" + users[i].uid + "</td>\n";
 			result += "<td class='num'>" + users[i].id + "</td>\n";
 			result += "<td class='num1'>" + users[i].nickname + "</td>\n";
-			result += "<td class='num1'><button id='delete' onclick='deleteUser(" + users[i].id + ")'>비활성화</button></td>\n";
+			result += "<td class='num1'><button class='delete' data-uid='" + userid + "'>비활성화</button></td>\n";
 			result += "</tr>\n";
 			/*document.getElementById("delete").onclick = function() {deleteUser(users[i].id)};*/
 	}
 	$("#list #user_list").html(result);
+	$("button.delete").click(function(){
+		deleteUser($(this).attr('data-uid'));
+	});
 	
 	// [페이징] 정보 업데이트
 		var pagination = buildPagination(jsonObj.writepages, jsonObj.totalpage, jsonObj.page, jsonObj.pagerows);

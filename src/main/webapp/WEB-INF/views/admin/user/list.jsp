@@ -49,6 +49,7 @@ table, th, td {
 			
 
 		</table>
+		<br><br>
 		<div class="paging-div">
 		 <ul class="pagination" id="pagination">
 		 </ul>

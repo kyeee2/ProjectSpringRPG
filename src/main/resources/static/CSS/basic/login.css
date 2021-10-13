@@ -7,8 +7,8 @@
 @media only screen and (min-width:1024px){
 h2{
 	position: absolute;
-    
-    transform: translate(-40%, -30%);
+    font-size:25px;
+    transform: translate(-25%, -30%);
 }
 body{
 	width:100%;
@@ -27,12 +27,10 @@ body{
 	height:38px;
 	width:160px;
 	
-	background-color:#000080;
-	border-radius:6%
 }
 #loginfrm{
 	position:absolute;
-	width:190px; 
+	width:150px; 
 	min-height:200px;
 	border-right:1px solid #c0c0c0;
 	padding-right:30px;
@@ -49,25 +47,16 @@ body{
 }
 .login-3{
 	position: absolute;
-    transform: translate(250px, 10%);
+    transform: translate(230px, 100px);
 }
 .login-4{
 	position: absolute;
-    transform: translate(250px, 50%);
+    transform: translate(340px, 107px);
 }
 
 .apilogin-1{
-	transform:translate(80%, 10%);
-	max-width:300px;
-}
-hr{
-	padding-left:130px;
-	max-width:200px;
-}
-.apilogin-2{
-	transform:translate(80%, 50px);
-	margin-right:0px;
-	
+	transform:translate(230px, 20px);
+	position: absolute;
 }
 
 .idandpw{
@@ -79,33 +68,27 @@ hr{
 	padding-right:12px;
 	text-align:justify;
 }
-}
+}/*모바일 화면*/
 	.totallogin{
-	position: absolute;
-	top: 35%;
-    left: 35%;
-    width:600px;
-    height:350px;
+	width:80%;
+	margin:auto 10%;
+    
+    text-align:center;
 }
-	.login {
-  	display: flex;
-  	justify-content: center;
-  	align-items: center;
-  	width: 100%;
-    height: auto;
-  
-	}
-	.apilogin{
-	display: flex;
-  	justify-content: center;
-  	align-items: center;
-  	width: 100%;
-    height: auto;
+
+.apilogin-1{
+	
+	padding-top: 1rem;
+	margin-top: 6px;
+}	
+input[type=image]{
+	 box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  cursor: pointer;
+
+  transition: 0.5s;
 }
-	hr{
-		max-width: 200px;
-	transform:translate(-100%, 10%);
-	}
+	
 input[type=text],input[type=password] {
 
     width: 200px; /*가로크기*/
@@ -143,7 +126,7 @@ input[type=text]:focus,input[type=password]:focus{
 input[type=submit] {
   /* 생략 */
   margin: 0;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.0rem;
 
   font-family: "Noto Sans KR", sans-serif;
   font-size: 1rem;
@@ -163,7 +146,7 @@ input[type=submit] {
 
   cursor: pointer;
 
-  transition: 0.5s;
+  
 }
 input[type=submit]:active,
 input[type=submit]:hover,

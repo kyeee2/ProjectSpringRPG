@@ -57,7 +57,7 @@
 	<div class="apilogin-1">
 	<form id="naver_login" action="${ apiURL }" method="POST"><input type="image" height="38px" width="160px" src="../img/naver.png"/></form>
 		<br></div>
-	<hr>
+	
 
 		<div class="login-3"><form action="joinAgree"><input type="submit" value="회원가입"></form><br></div>
 		<div class="login-4"><a href="findIDPW">ID/PW 찾기</a>

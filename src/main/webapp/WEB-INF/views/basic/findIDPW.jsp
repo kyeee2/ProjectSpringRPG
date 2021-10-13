@@ -14,15 +14,16 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/basic/findIDPW.css" rel="stylesheet" type="text/css">
+
 <!-- 만든 JS -->
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/basic/findIDPW.js"></script>
 <!-- 헤더 적용 -->
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
 <!-- JQuery 적용 -->
-<jsp:include page="/WEB-INF/views/global/header.jsp"/>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/myPage/info/side_menu.jsp"/>
+<jsp:include page="/WEB-INF/views/global/header.jsp"/>
 <h3>ID 찾기</h3>
 <form method="post" class="form-signin" action="findIDOk" name="findform">
 <div>이름: <input type="text" id="name1" name="name"></div>

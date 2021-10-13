@@ -17,7 +17,6 @@
 		VALUES(#{param2}, #{param1})
 	</insert>
 
-	
 	<delete id="deleteAuth">
 		DELETE FROM authority
 		WHERE cus_id = #{id}
@@ -160,6 +159,6 @@
 	<update id="deleteUser">
 		UPDATE customer SET cus_enable = 0
 		WHERE cus_id = #{id}
-	</update>	
+	</update>		
 	
 </mapper>
