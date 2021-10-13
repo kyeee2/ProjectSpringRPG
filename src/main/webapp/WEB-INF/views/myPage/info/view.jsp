@@ -64,8 +64,9 @@
 <br>
 <div class="account-content">
 프로필 사진 <span class="content"><img src="/file/customer/${ list[0].profile }" /></span>
-</div><hr>
-<br>
+</div>
+<br><br><br>
+<hr>
 <div class="button">
 <button onclick="location.href='myInfo/pwUpdate'">비밀번호 변경</button>
 <button onclick="location.href='myInfo/update'">회원 정보 수정</button>

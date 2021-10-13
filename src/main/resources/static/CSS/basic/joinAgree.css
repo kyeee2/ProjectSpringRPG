@@ -1,138 +1,81 @@
 @charset "UTF-8";
-	body{
-	max-width:400px;
-	}
-	h2{
-	max-width:400px;
-	font-size:80px;
-	
-	}
-	#first{
-	max-width:300px;
-	font-size:10px
-	}
-	
-	#form1{
-	position: absolute;
-	top: 15%;
-    left: 10%;
-    max-width:100%;
-    
-	}
-	#all{
-	zoom: 3.0;
-	}
-	#c1,#c2,#c3,#c4{
-	zoom: 3.0;
-	position: absolute;
-	left: 83%;
-	transform: translate(0, -3px);
-	}
 
-	textarea{
-	
-	width:800px;
-	
-	}
-	span{
-	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-	display: flex;
-	text-decoration: none;
-	border-radius: 4px;
-	padding: 20px 30px;
-	}
-	.button {
-	
-	padding: 2px ,0 ,0 ,0;
-  	align-items: center;
-	color: rgba(30, 22, 54, 0.6);
-	box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
-	zoom:4.0;
-	
-	}
 
-	.button:hover {
-	color: rgba(255, 255, 255, 0.85);
-	box-shadow: rgba(30, 22, 54, 0.7) 0 80px 0px 2px inset;
-	}
-	
-@media only screen and (min-width:1024px){
-	body{
-	width:100%;
-	}
-	h2{
-	
-	font-size:50px;
-	
-	}
-	#first{
-	max-width:200px;
-	font-size:7px
-	}
-	
-	#form1{
-	position: absolute;
-	top: 15%;
-    left: 10%;
-    width:100%;
-    zoom:0.8;
-	}
-	#all{
-	zoom:1.0;
-	}
-	#c1,#c2,#c3,#c4{
-	
-	position: absolute;
-	left: 83%;
-	transform: translate(0, -3px);
-	zoom:2.0;
-	}
-
-	textarea{
-	
-	width:800px;
-	
-	}
-	span{
-	
-	display: flex;
-	text-decoration: none;
-	border-radius: 4px;
-	padding: 20px 30px;
-	
-	height: 30vh;
-	}
-	
-
-	.button:hover {
-	color: rgba(255, 255, 255, 0.85);
-	box-shadow: rgba(30, 22, 54, 0.7) 0 10px 0px 2px inset;
-	}
-	
-.button {
-	
-	padding: 10px 30px;
-  font-size: 12px;
-  cursor: pointer;
-  
-	border-radius: 7px;
-	border-bottom-left-radius: 0;
-  
-	background-color: var(--feedback-secondary-color);
-	color: var(--feedback-primary-color);
-  
-	transition: all 0.3s;
+section{
+	width:1280px;
+	margin:0 auto ;
+}	
+h2{
+	font-size:40px;
 }
-	.button:hover {
-		border-radius: 0px;
-    
-		color: var(--feedback-primary-color);
-		background-color: var(--background-color);
-		animation: animatedBackground 5s linear infinite alternate;
+b{
+	font-size: 27px;	
 }
+
+textarea{
+	height:120px;
+	width:80%;
+	margin:30px 7%;
+	border:1px solid black;
+	font-size:18px;
 }
+span{
+	float:right;
+	position: relative;
+	right:12%;
+	text-align:left;
+	font-size:26px;
+}
+#event{
+	font-size:22px;
+}
+.check-content{
+	height:30px;
+}
+input[type=checkbox]{
+	margin-left:10px;
+	zoom:1.5;
+}
+#button{
+	float:right;
+	position: relative;
+	right:45%;
+}
+.button{
 	
+	
+	padding: 0.8rem 2.5rem;
+	margin-right:3px;
+  	
+  	font-size: 1.5rem;
+  	text-align: center;
+  	text-decoration: none;
+
+  	display: inline-block;
+  	width: auto;
+
+  	border: none;
+  	border-radius: 4px;
+  	
+  	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  	cursor: pointer;
+
+ 	background-color:#62564a;
+ 	
+ 	color:white;
+ 	
+}
+.button:active,
+.button:hover,
+.button:focus{
+	 background: white;
+  	outline: 0;
+  	color:black;
+}
+.button:disabled{
+	opacity: 0.5;
+	
+}
+
+

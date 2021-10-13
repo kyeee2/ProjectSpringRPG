@@ -15,32 +15,32 @@
 <script src="js/bootstrap.bundle.min.js"></script>
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.request.contextPath }/CSS/basic/findIDPW.css" rel="stylesheet" type="text/css">
-
 <!-- 만든 JS -->
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/basic/findIDPW.js"></script>
-<!-- 헤더 적용 -->
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
 <!-- JQuery 적용 -->
 </head>
 <body>
+<!-- 헤더 적용 -->
 <jsp:include page="/WEB-INF/views/global/header.jsp"/>
-<h3>ID 찾기</h3>
-<form method="post" class="form-signin" action="findIDOk" name="findform">
-<div>이름: <input type="text" id="name1" name="name"></div>
-<div>전화번호 :<input type="text" id="phonenum1" name="phonenum"></div>
+<div class="totalfind">
+<form method="post" class="form-findid" action="findIDOk" name="findform">
+<h3 class="findid">ID 찾기</h3>
+<div class="name-1">이름: <input type="text" style="font-size:25px;" id="name1" name="name"></div>
+<div class="phone-1">전화번호:<input type="text" style="font-size:25px;" id="phonenum1" name="phonenum"></div>
 
-<div><input type="submit" onclick="return findID();" value="확인"></div>
+<div><input class="findchk-1" type="submit" onclick="return findID();" value="확인"></div>
 
 </form>
-<h3>PW 찾기</h3>
-<form method="post" class="form-signin" action="changePw" name="findform2">
-<div>이름:<input type="text" id="name2" name="name"></div>
+<form method="post" class="form-findpw" action="changePw" name="findform2">
+<h3 class="findpw">PW 찾기</h3>
+<div class="name-2">이름:<input type="text" style="font-size:25px;" id="name2" name="name"></div>
 
-<div>아이디:<input type="text" id="id2" name="id"></div>
+<div class="id">아이디:<input type="text" style="font-size:25px;" id="id2" name="id"></div>
 
-<div>전화번호:<input type="text" id="phonenum2" name="phonenum"></div>
+<div class="phone-2">전화번호:<input type="text" style="font-size:25px;" id="phonenum2" name="phonenum"></div>
 
-<div><input class="btn btn-lg btn-secondary btn-block text-uppercase" type="submit" name="findPW" onclick="return findPW();" value="check"></div>
+<div><input class="findchk-2" type="submit" name="findPW" onclick="return findPW();" value="확인"></div>
 <br>
 <br>
 
@@ -48,7 +48,7 @@
 
 </form>
 
-
+</div>
 
 
 

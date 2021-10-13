@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-@media only screen and (min-width:1024px){
 div.side_menu {
     width:15%;
     float:left;
@@ -14,7 +13,6 @@ div.side_menu ul {
     font-weight: bold;
     width: 160px;
     height: 900px;
-    background-color: #ffffff;
     
 }
 
@@ -34,4 +32,4 @@ div.side_menu li a:hover:not(.active) {
     background-color: rgb(168, 168, 168);
     color: white;
 }
-}
+

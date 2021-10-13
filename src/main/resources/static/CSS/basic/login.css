@@ -1,77 +1,11 @@
 @charset "UTF-8";
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 
-* {
-    font-family: 'Rubik', sans-serif;
-}
-@media only screen and (min-width:1024px){
-h2{
-	position: absolute;
-    font-size:25px;
-    transform: translate(-25%, -30%);
-}
-body{
-	width:100%;
-	min-height:100%;
-}
-.totallogin{
-	position: absolute;
-	top: 35%;
-    left: 35%;
-    width:600px;
-    height:350px;
-}
-#loginbtn{
-	position:absolute;
-	transform: translate(-40%, 90px);
-	height:38px;
-	width:160px;
-	
-}
-#loginfrm{
-	position:absolute;
-	width:150px; 
-	min-height:200px;
-	border-right:1px solid #c0c0c0;
-	padding-right:30px;
-	text-align:justify;
-}
 
-.login-1 {
-	position: absolute;
-    transform: translate(-40%, 50px);
-}
-.login-2{
-	position: absolute;
-    transform: translate(-40%, 70px);
-}
-.login-3{
-	position: absolute;
-    transform: translate(230px, 100px);
-}
-.login-4{
-	position: absolute;
-    transform: translate(340px, 107px);
-}
+/*모바일 화면*/
 
-.apilogin-1{
-	transform:translate(230px, 20px);
-	position: absolute;
-}
-
-.idandpw{
-	width:150px;
-}
-.line {
-	width:190px; 
-	border-right:1px solid #c0c0c0;
-	padding-right:12px;
-	text-align:justify;
-}
-}/*모바일 화면*/
 	.totallogin{
 	width:80%;
-	margin:auto 10%;
+	margin:0 auto;
     
     text-align:center;
 }
@@ -81,6 +15,7 @@ body{
 	padding-top: 1rem;
 	margin-top: 6px;
 }	
+
 input[type=image]{
 	 box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
@@ -91,9 +26,9 @@ input[type=image]{
 	
 input[type=text],input[type=password] {
 
-    width: 200px; /*가로크기*/
+    width: 180px; /*가로크기*/
 
-    /*height: 50px; 세로크기*/
+    height: 30px; 
 
     background-color: #fafafa; /*배경색*/
 
@@ -128,32 +63,110 @@ input[type=submit] {
   margin: 0;
   padding: 0.5rem 1.0rem;
 
-  font-family: "Noto Sans KR", sans-serif;
+  
   font-size: 1rem;
-  font-weight: 400;
+  
   text-align: center;
   text-decoration: none;
 
   display: inline-block;
   width: auto;
-
+	
   border: none;
   border-radius: 4px;
 }
 input[type=submit] {
   /* 생략 */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
-  cursor: pointer;
-
+  	cursor: pointer;
+	background-color:#62564a;
   
 }
 input[type=submit]:active,
 input[type=submit]:hover,
 input[type=submit]:focus {
-  background: var(--button-hover-bg-color);
+  background: white;
   outline: 0;
 }
 input[type=submit]:disabled {
   opacity: 0.5;
+}
+
+@media only screen and (min-width:1024px){
+	h2{
+		position: absolute;
+	    font-size:40px;
+	    transform: translate(-15%, -70%);
+	    
+	}
+	section{
+		max-width:1280px;
+		margin:0 auto;
+	}
+	
+	.totallogin{
+		position: absolute;
+		top: 35%;
+	    left: 30%;
+	 	width:auto;
+	 	height:auto;
+	}
+	#loginbtn{
+		position:absolute;
+		transform: translate(-30%, 100px);
+		height:38px;
+		width:160px;
+		
+	}
+	#loginfrm{
+		position:absolute;
+		width:150px; 
+		min-height:200px;
+		border-right:1.5px solid black;
+		padding-right:30px;
+		text-align:justify;
+	}
+	
+	.login-1 {
+		position: absolute;
+	    transform: translate(-40%, 50px);
+	    width:150px;
+	    height:30px;
+	}
+	.login-2{
+		position: absolute;
+	    transform: translate(-40%, 70px);
+	    width:150px;
+	    height:30px;
+	}
+	.login-3{
+		position: absolute;
+	    transform: translate(235px, 125px);
+	}
+	.login-4{
+		position: absolute;
+	    transform: translate(345px, 125px);
+	}
+	
+	.apilogin-1{
+		transform:translate(235px, 45px);
+		position: absolute;
+	}
+	
+	.idandpw{
+		width:150px;
+	}
+	.line {
+		width:190px; 
+		border-right:1px solid black;
+		padding-right:12px;
+		text-align:justify;
+	}
+	a{
+	color:black;
+	}
+	a:hover{
+	color:white;
+	}
 }

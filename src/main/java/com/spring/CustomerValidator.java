@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.Errors;
 
 import com.spring.domain.CustomerDTO;
@@ -14,6 +15,9 @@ import com.spring.service.LoginService;
 public class CustomerValidator implements Validator{
 	
 	LoginService loginService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	public CustomerValidator() {}
 	public CustomerValidator(LoginService loginService) {
@@ -81,6 +85,11 @@ public class CustomerValidator implements Validator{
 				errors.rejectValue("id", "id 오류 : 반드시 한 글자라도 입력해야 합니다");
 			}
 			String pw = user.getPw();
+
+//			String rawPassword = pw;
+//			String encPassword = passwordEncoder.encode(rawPassword);
+//			
+//			pw= encPassword;
 			if(pw == null || pw.trim().isEmpty()) {
 				System.out.println("비밀번호 오류 : 반드시 한 글자라도 입력해야 합니다");
 				errors.rejectValue("pw", "비밀번호 오류 : 반드시 한 글자라도 입력해야 합니다");
