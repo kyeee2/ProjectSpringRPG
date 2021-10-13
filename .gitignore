@@ -33,4 +33,4 @@ build/
 .vscode/
 /ERD/test.sql
 /.dbeaver
-/src\main\webapp\file\board
+/src\main\webapp\file
