@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+section{
+	width:1280px;
+	margin:0 auto;
+}
+hr{
+	margin-right:32%;
+}	
+h3{
+	font-size: 50px;
+	font-weight:bold;
+}
+div{
+	margin:10px 0 10px 0;
+}
+.total-content{
+	width:100%;
+	height:100%;
+	
+}
+.account-content{
+	font-size:15px;
+	font-weight:bold;	
+}
+span{
+	float:right;
+	position: relative;
+	right:16%;
+	font-size:13px;
+}
+input[type=password]{
+	float:right;
+	position: relative;
+	right:55%;
+	
+	  width: 150px; /*가로크기*/
+
+    /*height: 50px; 세로크기*/
+
+    background-color: #fafafa; /*배경색*/
+
+    border:1.5px solid #000000; /*테두리 두께, 선스타일, 색상*/
+
+    border-radius:4px; /*테두리 둥글게*/
+
+    outline:none; /*기본테두리안보이게*/
+
+    padding:3px 3px 2px 7px; /*안쪽여백*/
+
+    box-sizing:border-box; /*테두리를 기준으로 박스크기 설정*/
+
+    transition:.3s; /*서서히 나타내기*/
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	
+}
+input[type=password]:focus{
+
+
+  border:2px solid #4285f4;
+
+  box-shadow:0 0 8px 0 #4285f4;
+
+  background-color: #ffffff;
+}
+input[type=submit] {
+  /* 생략 */
+  margin: 0;
+  padding: 0.5rem 1.0rem;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+  color:white;
+	background-color:#62564a;
+  display: inline-block;
+  width: auto;
+
+  border: none;
+  border-radius: 4px;
+}
+input[type=submit] {
+  /* 생략 */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  cursor: pointer;
+
+  
+}
+input[type=submit]:active,
+input[type=submit]:hover,
+input[type=submit]:focus {
+  background: var(--button-hover-bg-color);
+  outline: 0;
+  color:black;
+}
+input[type=submit]:disabled {
+  opacity: 0.5;
+}

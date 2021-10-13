@@ -63,8 +63,11 @@ public class LoginService {
 	public int updatePw(String pw, int uid) throws Exception{
 		return dao.updatePw(pw, uid);
 	}
-	public int changePw(String pw, String id, String name, String phonenum) {
-		return dao.changePw(pw, id, name, phonenum);
+	public List<String> selectPw(String id, String name, String phonenum) {
+		return dao.selectPw(id, name, phonenum);
+	}
+	public int setPw(String pw,String id) {
+		return dao.setPw(pw,id);
 	}
 	
 	// 특정 id(username) 의 정보 가져오기

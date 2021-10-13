@@ -5,17 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-  <script>
-  $(function() {
-    $( "#accordion" ).accordion();
-    $('#accordion input[type="checkbox"]').click(function(e) {
-        e.stopPropagation();
-    });
-  });
-  </script>
-  <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
-<link href="${ pageContext.request.contextPath }/CSS/basic/joinAgree.css" rel="stylesheet" type="text/css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+ 
+<link href="${ pageContext.request.contextPath }/CSS/basic/joinAgree.css" rel="stylesheet" type="text/css">
+  <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
 <!-- fontawesome 적용 -->
 <script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
 <!-- JS 적용 -->
@@ -27,15 +21,15 @@
 <form action="join" method="get" id="form1">
 <div id="d1">
 
- <h2 align="center">회원가입을 환영합니다.</h2><br/><br/>
+ <h2 align="center">약관 동의</h2><br/><br/>
   <tr>
-   <td align="left"><font size="2">이용약관, 개인정보 수집 및 이용, 위치정보 이용약관(선택), 프로모션 안내 메일 수신(선택)에 모두 동의합니다.</font></td>
+   <td id="first"align="left"><font size="6">이용약관, 개인정보 수집 및 이용, 위치정보 이용약관(선택), 프로모션 안내 메일 수신(선택)에 모두 동의합니다.</font></td>
  
    <td><input type="checkbox" name="all" id="all"></td><hr/>
   </tr>
  <div id="accordion">
   
-   <h3><a href="#"><font size="2">무비마니아 이용약관 동의(필수)</font><input type="checkbox" name="c1" id="c1"/></a></h3>
+   <h3><a href="#"><font size="6">무비마니아 이용약관 동의(필수)</font><input type="checkbox" name="c1" id="c1"/></a></h3>
    <td><textarea readonly="readonly" rows="5" cols="66">
 제 1 조 (목적)
 
@@ -53,7 +47,7 @@
 ⑥"포인트"라 함은 서비스의 효율적 이용을 위해 회사가 임의로 책정 또는 지급, 조정할 수 있는 재산적 가치가 없는 "서비스" 상의 가상 데이터를 의미합니다. 
 ⑦"게시물"이라 함은 "회원"이 "서비스"를 이용함에 있어 "서비스상"에 게시한 부호ㆍ문자ㆍ음성ㆍ음향ㆍ화상ㆍ동영상 등의 정보 형태의 글, 사진, 동영상 및 각종 파일과 링크 등을 의미합니다.  
    </textarea>
-   <h3><a href="#"><font size="2">개인정보 수집 및 이용에 대한 안내(필수)</font><input type="checkbox" name="c2" id="c2"/></a></h3>
+   <h3><a href="#"><font size="6">개인정보 수집 및 이용에 대한 안내(필수)</font><input type="checkbox" name="c2" id="c2"/></a></h3>
    <div>
      <textarea readonly="readonly" rows="5" cols="66">
 
@@ -66,7 +60,7 @@
  
    </textarea>
    </div>
-   <h3><a href="#"><font size="2">위치정보 이용약관 동의(선택)</font><input type="checkbox" name="c3" id="c3"/></a></h3>
+   <h3><a href="#"><font size="6">위치정보 이용약관 동의(선택)</font><input type="checkbox" name="c3" id="c3"/></a></h3>
    <div>
      <textarea readonly="readonly" rows="5" cols="66">
 
@@ -92,7 +86,7 @@
    </div>
  </div>
   <tr>
-   <td align="left"><font size="2">이벤트 등 프로모션 알림 메일 수신(선택)</font></td>
+   <td align="right"><font size="5">이벤트 등 프로모션 알림 메일 수신(선택)</font></td>
    <td><input type="checkbox" name="c4" id="c4"></td><hr/>
   </tr>
  
@@ -106,6 +100,7 @@
 </div>
 </form>
 <!-- check Box 이벤트처리를 위한 Script -->
+
 <script>
 var doc = document;  
   var form1 = doc.getElementById('form1');  

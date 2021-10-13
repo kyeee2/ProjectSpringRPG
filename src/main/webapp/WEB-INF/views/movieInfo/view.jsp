@@ -23,6 +23,7 @@
 		
 	<%-- 메인 컨텐츠 --%>
 	<section>
+	<div class="grid-container"></div>
 		<h2 id="moviename"></h2>
 		<div id="poster"></div>
 		<div id="info">
