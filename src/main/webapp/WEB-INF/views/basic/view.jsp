@@ -28,32 +28,31 @@
 	
 	<%-- 메인 컨텐츠 --%>
 	<section>
-		<h2>자유게시판</h2>
+		<h2 id="headtitle"></h2>
 		<br>
-		<button id="btn_good">좋아요</button>
 		<div id="result"></div>
-		<hr>
 		<br>
-		<div id="btn_group">
-			<button onclick="location.href='/user/update?boardType=${ param.boardType }&uid=${ param.uid }'">수정하기</button>
-			<button onclick="location.href='${ param.boardType }'">목록보기</button>
-			<button id="doDelete">삭제하기</button>
-			<button onclick="location.href='/user/write?boardType=${ param.boardType }'">신규등록</button>
+		<div class="btn_group">
+			<button id="btn_list" onclick="location.href='${ param.boardType }'">목록</button>
+			<button id="btn_update" onclick="location.href='/user/update?boardType=${ param.boardType }&uid=${ param.uid }'">수정</button>
+			<button id="doDelete">삭제</button>
+			<button id="btn_write" onclick="location.href='/user/write?boardType=${ param.boardType }'">글쓰기</button>
+			<div class="clear"></div>
 		</div>
 		<br><br>
-		<h5>댓글목록</h5>
-		<br>
+		<h3>댓글작성</h3>
 		<form id="commentFrm" name="commentFrm" method="get">
 		<input type="hidden" name="buid" value="${param.uid }"/>
 		<input type="hidden" name="boardType" value="${param.boardType }"/>
-		<input type="text" id = "content" name="content" placeholder="내용을 입력하세요"/>
-		<span>
+		<input type="text" id = "contents" name="content" placeholder="내용을 입력하세요"/>
+		<span class="exam">
 			<button type="button" name="commentInsertBtn">댓글등록</button>
 		</span>
 		</form>
-		<br>
+		<br><br><br>
 		<div id="comment">
 		</div>
+		<div class="clear"></div>
 	</section>
 	
 </body>

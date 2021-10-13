@@ -62,6 +62,29 @@
 				</table>
 			</c:if>
 		</div>
+		<!-- 시사회 3개 -->
+		<div id="premiere">
+			<h3>시사회</h3>
+			<c:set var="cnt" value="${ fn:length(premiereList) }" />
+			<c:if test="${ cnt > 0 }">
+				<c:forEach var="i" begin="0" end = "${ cnt - 1 }" varStatus="status">
+					<div class='card' style='width:100px'>
+						<input type='checkbox' name='uid' value='" + items[i].uid + "'>
+						<c:if test="${ premiereList[status.index].photo == '' }">
+							<img class='card-img-top' src="/file/premiere/no_img.png" alt="빈이미지" style="width:100px">
+						</c:if>
+						<c:if test="${ premiereList[status.index].photo != '' }">
+							<img class='card-img-top' src="/file/premiere/${ premiereList[status.index].photo }" alt="빈이미지" style="width:100px">
+						</c:if>
+						<div class='card-body'>
+							<h4 class='card-title'>${ premiereList[status.index].title }</h4>
+							<p class='card-text'>${ premiereList[status.index].content }</p>
+							<a href='view?uid=${ premiereList[status.index].uid }' class='btn btn-primary'>추첨하기</a>
+						</div>
+					</div>
+				</c:forEach>
+			</c:if>
+		</div>
 	</section>
 </body>
 </html>

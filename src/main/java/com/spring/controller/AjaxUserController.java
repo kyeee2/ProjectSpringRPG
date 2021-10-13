@@ -125,5 +125,21 @@ public class AjaxUserController {
 		return result;
 	}
 	
+	@PostMapping("/user/deleteOk")
+	public String userdeleteOk(Authentication authentication, Model model) {
+		PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
+		CustomerDTO user= userDetails.getUser();
+		String id = user.getId();
+		System.out.println("탈퇴아이디:" + id);
+//		int enable= user.getEnable();
+//		System.out.println("user넣기전enable" +enable);
+//		user.setEnable(0);
+//		enable = user.getEnable();
+//		System.out.println("user넣은후 enable" +enable);
+		model.addAttribute("result", loginService.deleteMember(id));
+		return "/admin/user/deleteOk";
+
+	}
+	
 	
 }

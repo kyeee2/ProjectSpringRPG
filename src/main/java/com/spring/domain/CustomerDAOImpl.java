@@ -133,6 +133,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 
+
 	@Override
 	public int setPw(String pw,String id) {
 		return mapper.setPw(pw,id);
@@ -141,7 +142,20 @@ public class CustomerDAOImpl implements CustomerDAO {
 	
 
 
-	
+
+
+	@Override
+	public int update(CustomerDTO dto) {
+		return mapper.update(dto);
+	}
+
+
+	@Override
+	public int updateNoFile(CustomerDTO dto) {
+		return mapper.updateNoFile(dto);
+	}
+
+
 	
 	
 

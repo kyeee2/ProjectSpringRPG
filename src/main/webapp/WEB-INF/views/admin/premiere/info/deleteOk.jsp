@@ -17,7 +17,7 @@
 	<c:otherwise>
 		<script>
 			alert("삭제 성공");
-			location.href = "premiere";
+			location.href = "./list";
 		</script>
 	</c:otherwise>
 </c:choose>

@@ -395,9 +395,56 @@ public class AjaxBoardController {
 		
 	} // end updateOk()
 	
+	// 게시글 하나 삭제
+	@PostMapping("/deleteOne")	// URI :  /board/delete
+	public AjaxBoardResult deleteOneOk(String boardType
+			, int buid
+			, String nickName
+			, Authentication authentication) {
+		
+		int count = 0;
+		
+		// message
+		StringBuffer message = new StringBuffer();
+		String status = "FAIL";
+		
+		try {
+
+			// 로그인 정보에서 아이디 가져오기
+			PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
+	        System.out.println("여기오니 : " + userDetails.getNickName() + ", " + nickName);
+			
+	        // 아이디로 특정 회원의 고유번호 찾기
+	        if(nickName != null && nickName.equals(userDetails.getNickName())) {
+	        	int [] uids = { buid };
+	        	System.out.println(uids[0]);
+	        	count = ajaxBoardService.delete(boardType, uids);
+	        }
+			
+			if(count == 0) {
+				message.append("[트랜잭션 실패 : 0 DELETE]");
+			} else {
+				status = "OK";
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			message.append("[트랜잭션 에러 : " + e.getMessage() + "]");
+		}
+
+		AjaxBoardResult result = new AjaxBoardResult();
+		
+		result.setStatus(status);
+		result.setMessage(message.toString());
+		result.setCount(count);
+		
+		return result;
+		
+	} // end deleteOk(boardType, uid[])
+	
 	// 게시글 삭제
 	@PostMapping("/delete")	// URI :  /board/delete
-	public AjaxBoardResult deleteOk(String boardType, int [] uid) {
+	public AjaxBoardResult deleteOk(String boardType
+			, int [] uid) {
 		
 		int count = 0;
 		

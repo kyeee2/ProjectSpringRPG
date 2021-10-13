@@ -26,8 +26,10 @@
 		<div class="head-wrap">
 		<h2 id="head">자유게시판</h2>
 		</div>
+		<div class="page-wrap">
 		<a id="pageinfo"> </a>
 		<a id="pageRows"></a>
+		</div>
 		<div class="clear"></div>
 		<table id="list">
 			<thead>
@@ -54,9 +56,6 @@
 		<%-- 자유게시판 안에서 검색 기능 - 제목과 내용으로 검색 가능 --%>
 			<button id="btn-search">검색</button>
 			<input type="text" id="input-search" name="search" placeholder="제목이나 내용으로 검색">
-		<sec:authorize access="hasRole('ROLE_ADMIN')">	<!-- 로그인된 사용자의 권한이 ADMIN인 경우에만 보이도록 -->
-			<button onclick="deleteData()">삭제하기</button>
-		</sec:authorize>
 		<sec:authorize access="isAuthenticated()">	<!-- 로그인되어있는 경우에만 버튼 보이도록 -->
 			<button onclick="location.href = '/user/write?boardType=freeboard'" id="new-regi">신규등록</button>
 		</sec:authorize>

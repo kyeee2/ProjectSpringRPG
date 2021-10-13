@@ -2,18 +2,110 @@
 
 @media screen and (min-width: 1024px) {
 
-/* 작성자 좋아요 조회수 좋아요수 댓글수 순서대로 container12345*/
-.flexcon {
-	display: flex;
-	}
+.clear { /* float 사용 후 반드시 사용해줄것*/
+	clear: both;
+}
+section{	/* 전체 section의 범위 조정*/
+	max-width:1280px;
+	width:900px;
+	margin: auto;
+	
+}
 
-.gridcon {
+
+.item {
+	font-size: 14px;
 	display: grid;
 }
+
+#title {
+	border: 1px solid black;
+	border-radius: 8px;
+	padding: 10px 0px;
+}
+
+#head {
+	display:grid;
+	border: 1px solid black;
+	border-radius:8px;
+	grid-template-rows: repeat(1, minmax(20px, auto));
+	grid-template-columns: repeat(6, minmax(20px, auto));
+	padding: 10px 0px;
+	 justify-content: space-evenly;
+}
+
+#content {
+	border: 1px solid black;
+	border-radius: 8px;
+}
+
+
+
+h2 #headtitle {
+	text-align: left;
+}
+
+#btn_list {
+	float: left;
+	padding: 8px 20px;
+	margin: 0px 10px;
+}
+
+#btn_good {
+	width:40px;
+	height:40px;
+	background-color: white;
+	border:none;
+	margin: auto;
+}
+
+#btn_good:hover {
+	cursor: pointer;
+}
+
+section i {
+	 color: #0a0f75;
+     font-weight: bold;
+     font-size: 20px;
+}
+
+#btn_update, #doDelete, #btn_write {
+	float: right;
+	padding: 8px 20px;
+	margin: 0px 10px;
+}
+/* 이하 댓글*/
+
+#contents {
+	width:894px;
+  height:50px;
+  font-size:17px;
+  margin: auto;
+}
+
+.comContent {
+	width:894px;
+  height:50px;
+  font-size:17px;
+}
+
+.CoContain {
+	display:flex;
+  	flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0;
+        width: auto;
+}
+
+.exam {
+	float:right;
+}
 	
-	
-	
-	
+#comment form {
+	border:0.5px solid black;
+	border-radius: 8px;
+}
 
 	
 	

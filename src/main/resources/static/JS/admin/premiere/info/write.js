@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	
+	/*
 	$("#btn-submit").click(function(event){
 		if(chkSubmit()){
 			writeData();
@@ -7,6 +8,7 @@ $(document).ready(function(){
 			event.preventDefault();
 		}
 	});
+	*/
 });
 
 function chkSubmit(){
@@ -25,12 +27,20 @@ function chkSubmit(){
 
 function writeData(){
 	
-	var formData = $("#frm").serialize();
+	alert($("#photo").val());
+	var f = document.getElementById('frm');
+	var formData = new FormData(f);
+	alert(formData);
+	alert(formData.title);
 	
 	$.ajax({
 		url : "/premiere",
 		type : "POST",
-		data : formData,
+		enctype: 'multipart/form-data',	// 필수
+		data: formData, // 필수 
+		processData: false, // 필수 
+		contentType: false, // 필수
+
 		cache : false,
 		success : function(data, status){
 			if(status == "success"){

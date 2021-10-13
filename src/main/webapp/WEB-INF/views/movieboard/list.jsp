@@ -22,6 +22,7 @@ table, th, td {
 </style>
 <!-- CSS 적용 -->
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/freeboard/list.css" rel="stylesheet" type="text/css">
 
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -44,14 +45,13 @@ table, th, td {
 		<form id="frm" name="frm">
 			<table id="list">
 				<thead>
-					<th></th>
-					<th>NO</th>
-					<th>추천수</th>
-					<th>주제</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
-					<th>조회수</th>
+					<th class="num">NO</th>
+					<th class="num">추천수</th>
+					<th class="num">주제</th>
+					<th class="title">제목</th>
+					<th class="num1">작성자</th>
+					<th class="num1">작성일</th>
+					<th class="num1">조회수</th>
 				</thead>
 				<tbody id="vogue_list">
 				<%-- 인기글 목록 JS로 테이블 생성 --%>
@@ -68,22 +68,21 @@ table, th, td {
 		
 		<%-- [페이징] --%>
 		<div class="center">
-			<ul class="pagination" id="pagination"></ul>
-		</div>
-			
+		<a id="search">
 		<%-- 영화 리뷰 안에서 검색 기능 - 제목과 내용으로 검색 가능 --%>
-		<div id="search">
-			<input type="text" id="input-search" name="search" placeholder="검색하세요">
 			<button id="btn-search">검색</button>
-		</div>
+			<input type="text" id="input-search" name="search" placeholder="검색하세요">
 		
-		<br>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">	<!-- 로그인된 사용자의 권한이 ADMIN인 경우에만 보이도록 -->
-			<button onclick="deleteData()">삭제하기</button>
-		</sec:authorize>
 		<sec:authorize access="isAuthenticated()">	<!-- 로그인되어있는 경우에만 버튼 보이도록 -->
 			<button onclick="location.href = '/user/write?boardType=freeboard'">신규등록</button>
 		</sec:authorize>
+		</a>
+			<ul class="pagination" id="pagination"></ul>
+			
+			
+		</div>
+		
+		<br>
 	</section>
 
 </body>

@@ -33,7 +33,7 @@
         
 <section class="signup-wrap">
            
-        <form action="joinOk" method="post" name="userInfo" enctype="Multipart/form-data">
+        <form action="/joinOk" method="post" name="userInfo" enctype="Multipart/form-data">
             <table>
                 <tr>
                     <td class="title">아이디</td>

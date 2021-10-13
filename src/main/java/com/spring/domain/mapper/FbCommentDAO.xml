@@ -88,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteByUid" flushCache="true"
  	 	parameterType="java.util.ArrayList">
 		DELETE FROM fb_comment 
-		WHERE fb_uid 
+		WHERE fb_co_uid 
 		IN (
 		 <foreach collection="array" item="item" separator=", ">
  	 			${item}
