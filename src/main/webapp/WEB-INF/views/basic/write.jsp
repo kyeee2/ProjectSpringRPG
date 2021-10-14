@@ -70,9 +70,22 @@
 								allowedContent: true, // HTML 태그 자동 삭제 방지 설정
 								width: '640px',
 								height : '400px',
-								filebrowserUploadUrl: '${pageContext.request.contextPath}/file/ckUpload'
+								filebrowserUploadUrl: '${pageContext.request.contextPath}/file/ckUpload',
+								toolbar : [
+							        ['Font', 'FontSize'],
+							        ['BGColor', 'TextColor' ],
+							        ['Bold', 'Italic', 'Strike', 'Superscript', 'Subscript', 'Underline', 'RemoveFormat'],   
+							        ['BidiLtr', 'BidiRtl'],
+							        '/',
+							        ['Image', 'SpecialChar', 'Smiley'],
+							        ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+							        ['Blockquote', 'NumberedList', 'BulletedList'],
+							        ['Link', 'Unlink'],
+							        ['Source'],
+							        ['Undo', 'Redo']
+								]
 							});
-						</script>
+							</script>
 						<span id="content-message" class="warning" style="color:red;"></span>
 					</td>
 				</tr>

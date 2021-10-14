@@ -17,7 +17,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			WHERE 
 				mbc.cus_uid = cus.cus_uid
 			AND
-				mbc.mb_uid = uid
+				mbc.mb_uid = buid
+			AND
+				mbc.mb_co_uid = uid
 			) nickName, 
 			mb_co_datetime dateTime, 
 			(select 
@@ -26,9 +28,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				movieboard mb, mb_comment com 
 			where 
 				mb.mb_uid = com.mb_uid 
-				and 
+			AND 
 				mb.mb_uid  = buid 
-				and 
+			AND 
 				com.mb_co_uid = uid 
 			) boardType 
 		FROM 
@@ -38,21 +40,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY 
 			mb_co_uid ASC		
 	</select>
+	<!--사용자 -->
+	<select id="findCusUid" resultType="int">
+		SELECT 
+			cus_uid 
+		FROM 
+			customer 
+		WHERE 
+			cus_nickname = #{nickName}
+	</select>
 	<!-- 댓글작성 -->
 	<insert id="insert" flushCache="true"
-		parameterType="com.spring.domain.CommentDTO"
-		keyProperty="uid" useGeneratedKeys="true" keyColumn="mb_uid">	
-		INSERT INTO fb_comment 
-			(cus_uid, mb_co_datetime, mb_co_content)
+		parameterType="com.spring.domain.CommentDTO">
+		INSERT INTO mb_comment 
+			(mb_co_content, cus_uid, mb_uid)
 		VALUES
-			(#{nickName}, #{dateTime}, #{content})
+			(#{content}, #{cusuid}, #{buid})
 	</insert>
 	<!--특정 회원 uid 댓글 조회.마이페이지용  -->
 	<select id="selectByUid" resultType="com.spring.domain.CommentDTO">
 		SELECT 
-			mb_co_uid uid, mb_co_content content, cus_uid nickName, mb_co_datetime dateTime 
-		FROM mb_comment 
-		WHERE mb_co_uid=#{uid}
+			mb_co_uid uid, mb_co_content content, (SELECT
+					cus.cus_nickname
+				FROM
+					mb_comment mbc, customer cus
+				WHERE
+					mbc.cus_uid = cus.cus_uid
+				AND
+					mbc.mb_uid = uid
+				) nickName, mb_co_datetime dateTime 
+				FROM mb_comment 
+				WHERE mb_co_uid=#{uid}
 	</select>
 	
 	<!--  댓글 수정 -->
@@ -71,9 +89,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM mb_comment WHERE mb_uid in (
 		 <foreach collection="array" item="item" index="index" separator=", ">
  	 			${item}
- 	 		</foreach>
+ 	 		</foreach>)
 	</delete>
 	
+	<!-- 회원의 uid 찾기 -->
+	<select id="findByUid" parameterType="String" resultType="int">
+		SELECT 
+			cus_uid
+		FROM
+			customer
+		WHERE
+			cus_id = #{id}
+	</select>
 
 
 </mapper>

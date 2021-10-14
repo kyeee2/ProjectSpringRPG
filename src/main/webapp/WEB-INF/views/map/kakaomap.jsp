@@ -22,7 +22,7 @@
 	<jsp:include page="/WEB-INF/views/global/header.jsp"/>	
 <div><h3>영화관 지도By.KaKaO</h3></div>
 <div class="map_wrap">
-    <div id="map" style="width:100%;height:760px;position:relative;overflow:hidden;"></div>
+    <div id="map" style="width:70%;height:760px;position:relative;overflow:hidden;"></div>
 
     <div id="menu_wrap" class="bg_white">
         <div class="option">

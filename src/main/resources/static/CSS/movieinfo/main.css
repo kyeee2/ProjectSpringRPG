@@ -1,0 +1,181 @@
+@charset "UTF-8";
+
+body {
+	background-color: #fcbe84;
+}
+
+.clear { /* float 사용 후 반드시 사용해줄것*/
+	clear: both;
+}
+
+section{	/* 전체 section의 범위 조정*/
+	max-width:1280px;
+	width:1280px;
+	margin:20px auto;
+	background-color: #f6f6f6;
+	border-radius: 20px;
+	padding: 20px 0px;
+	
+}
+
+	
+/* 헤드 글자*/
+.mainheader {
+	text-align: center;
+	font-size: 30px;
+	margin-bottom: 10px;
+}
+
+a.movielink {
+	margin: 0px;
+	background-color: #f6f6f6;
+}
+
+/*박스오피스 개개별 칸 */
+.movielink {
+	display:flex;
+    padding: 5px;
+    text-align: center;
+    flex-direction:column;
+	width: 70%; 
+    height: 90%; 
+    margin: 0px;
+    justify-content: center;
+}
+.post a {
+	margin: 0 auto;
+}
+
+/*개개 이미지*/
+.movielink img {
+	width: 200px;
+	height: 350px;
+	margin: 0 auto;
+}
+/*검색창 */
+#searchContainer {
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+    padding: 10px 10px;
+    margin: 50px;
+}
+/* */
+
+
+.post-slider .post-wrapper{
+  width:90%;
+  height: 300px;
+  margin:0 auto;
+  background-color: #f6f6f6;
+}
+
+.post-slider .post-wrapper1{
+  width:100%;
+  height: 300px;
+  margin:0 auto;
+}
+.post-slider .post-wrapper .post{
+  width:350px;
+  height:350px;
+  display:inline-block;
+}
+.post-slider .post-wrapper1 .post{
+  width:auto;
+  height:350px;
+  display:inline-block;
+  text-align: center;
+}
+
+
+/*post slider*/
+.post-slider{
+  width:1200px;
+  height:400px;
+  margin:0px auto;
+  align-items:center;
+  position:relative;
+}
+
+
+.post-slider .prev{
+  position:absolute;
+  top:50%;
+  left:30px;
+  font-size:2em;
+  color:gray;
+    cursor: pointer;
+}
+
+
+.post-slider .next{
+  position:absolute;
+  top:50%;
+  right:30px;
+  font-size:2em;
+  color:gray;
+    cursor: pointer;
+}
+.post-slider .post-wrapper{
+
+  width:84%;
+  height:400px;
+  margin:0px auto;
+  overflow: hidden;
+  padding:10px 0px 10px 0px;
+}
+.post-slider .post-wrapper .post{
+  width:400px;
+  height:400px;
+  margin:0px 10px;
+  display:inline-block;
+  background:#f6f6f6;
+  border-radius: 5px;
+}
+.post-slider .post-wrapper .post .post-info{
+  font-size:15px;
+  height:30%;
+  padding-left:10px;
+}
+.post-slider .post-wrapper .post .slider-image{
+  width:100%;
+  height:175px;
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
+}
+
+.movielink h5 {
+	margin-top: 5px;
+	font-size: 20px;
+	color:black;
+}
+
+
+
+.search-container a {
+	float: left;
+	width: 220px;
+	text-align: center;
+	
+}
+
+.search-container a h5 {
+	margin-top: 10px;
+	font-size: 15px;
+	color:black;
+	text-align: center;
+}
+
+.searchimg {
+	width:200px;
+}
+
+#searchMovie {
+	height:30px;
+	width: 300px;
+	margin-top: 10px;
+}
+
+#searchForm {
+	margin-bottom: 10px;
+}

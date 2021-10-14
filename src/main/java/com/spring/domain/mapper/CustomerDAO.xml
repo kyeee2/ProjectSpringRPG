@@ -17,16 +17,11 @@
 		VALUES(#{param2}, #{param1})
 	</insert>
 
-	<update id="deleteUser">
-		UPDATE customer SET cus_enable=#{enable}
-		WHERE cus_id = #{id}
-	</update>	
-	
 	<delete id="deleteAuth">
 		DELETE FROM authority
-		WHERE cus_id = #{param1} AND cus_auth = #{param2}
+		WHERE cus_id = #{id}
 	</delete>
-
+	
 	<delete id="deleteAuths">
 		DELETE FROM authority
 		WHERE cus_id = #{param1}
@@ -75,20 +70,23 @@
 		WHERE cus_nickname = #{nickname}
 	
 	</select>
-	<update id="updateUser">
-		UPDATE customer 
-		SET cus_phonenum= #{phonenum} , cus_nickname=#{nickname} 
-		WHERE cus_uid=#{uid} 
-	</update>
 	<update id="updatePw">
 		UPDATE customer
 		SET cus_pw =#{pw}
 		WHERE cus_uid=#{uid}
 	</update>
-	<update id="changePw">
-		UPDATE customer
-		SET cus_pw =#{pw}
+	
+	<select id="selectPw" resultType="com.spring.domain.CustomerDTO">
+		SELECT
+		cus_pw pw, cus_id id, cus_name name, cus_phonenum phonenum
+		FROM customer
 		WHERE cus_id= #{id} and cus_name = #{name} and cus_phonenum = #{phonenum}
+	
+	</select>
+	<update id="setPw" flushCache="true">
+		UPDATE customer
+		SET cus_pw = #{pw}
+		WHERE cus_id= #{id}
 	
 	</update>
 	<select id="selectByUid" resultType="com.spring.domain.CustomerDTO">
@@ -99,8 +97,8 @@
 			cus_name name, 
 			cus_nickname nickname, 
 			cus_birthday birthday, 
-			cus_phonenum phonenum 
-			
+			cus_phonenum phonenum,
+			cus_profile profile		
 			
 		FROM customer
 		WHERE cus_uid = #{uid}	
@@ -116,7 +114,8 @@
 			cus_phonenum phonenum 
 			
 			
-		FROM customer	
+		FROM customer
+		WHERE cus_enable = 1	
 		ORDER BY 
 			cus_uid DESC
 		LIMIT 
@@ -128,4 +127,38 @@
 	FROM
 		customer
 	</select>
+	
+	<!-- 마이페이지 -->
+	<!-- 회원정보 수정 -->
+	<update id="update" flushCache="true"
+		parameterType="com.spring.domain.CustomerDTO">
+		UPDATE customer 
+		SET cus_phonenum= #{phonenum} , cus_nickname=#{nickname}, cus_profile=#{profile}, cus_profile_origin=#{profile_origin}
+		WHERE cus_uid=#{uid} 
+	</update>
+	
+	<!-- 프로필 사진 수정하지 않은 회원정보 수정 -->
+	<update id="updateNoFile" flushCache="true"
+		parameterType="com.spring.domain.CustomerDTO">
+		UPDATE customer 
+		SET cus_phonenum= #{phonenum} , cus_nickname=#{nickname} 
+		WHERE cus_uid=#{uid} 
+	</update>
+	
+	<!-- 글 삭제하기 전에 해당 글의 첨부파일 가져오기 -->
+	<select id="getFileName" flushCache="true" resultType="String">
+		SELECT 
+			cus_profile 
+		FROM 
+			customer
+		WHERE 
+			cus_id = #{id}
+	</select>
+	
+	<!-- 회원 탈퇴 => 비활성화 시키기 -->
+	<update id="deleteUser">
+		UPDATE customer SET cus_enable = 0
+		WHERE cus_id = #{id}
+	</update>		
+	
 </mapper>

@@ -2,17 +2,16 @@
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -20,12 +19,14 @@ import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,15 +43,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.FlashMap;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.spring.CustomerValidator;
-import com.spring.config.PrincipalDetails;
 import com.spring.domain.CustomerDTO;
 import com.spring.service.AjaxBoardService;
 import com.spring.service.AjaxPremiereService;
@@ -91,6 +85,9 @@ public class LoginController {
 		this.ajaxBoardService = ajaxBoardService;
 	}
 
+	
+
+
 	@Autowired
 	public void setAjaxPremiereService(AjaxPremiereService ajaxPremiereService) {
 		this.ajaxPremiereService = ajaxPremiereService;
@@ -99,170 +96,22 @@ public class LoginController {
 	public void naverlogin() {	}
 	//아이디 로그인
 	@GetMapping("/login")
-	public String login() {	
+	public String login(HttpSession session, HttpServletRequest request, HttpServletResponse response, Model model) throws UnsupportedEncodingException {	
+		// 네이버 로그인
+		String clientId = "MdDnprhEU_V4J7WsPkRu";//애플리케이션 클라이언트 아이디값";
+	    String redirectURI = URLEncoder.encode("http://localhost:8090/callback", "UTF-8");
+	    SecureRandom random = new SecureRandom();
+	    String state = new BigInteger(130, random).toString();
+	    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+	    apiURL += "&client_id=" + clientId;
+	    apiURL += "&redirect_uri=" + redirectURI;
+	    apiURL += "&state=" + state;
+	    session.setAttribute("state", state);
+	    model.addAttribute("apiURL", apiURL);
 	return "/basic/login";	
 	}
-	@GetMapping(value = "/getKakaoAuthUrl")
-	public @ResponseBody String getKakaoAuthUrl(
-			HttpServletRequest request) throws Exception {
-	
-	    
-	    
-		String reqUrl = 
-					"https://kauth.kakao.com/oauth/authorize"
-					+ "?client_id=d11a12ee85c98662914e0bac1931a617"
-					+ "&redirect_uri=" + URLEncoder.encode("http://localhost:8090/kakaoinfo", "UTF-8")
-					+ "&response_type=code";
-		
-		
-		return reqUrl;
-	}
-	//카카오 연동정보 조회
-	@RequestMapping("/kakaoinfo")
-	public String oauthKakao(
-			@RequestParam(value = "code", required = false) String code
-			, Model model) throws Exception {
-
-		System.out.println("#########" + code);
-        String access_Token = getAccessToken(code);
-        System.out.println("###access_Token#### : " + access_Token);
-        
-       
-        
-        String userInfo = getUserInfo(access_Token);
-        System.out.println("###access_Token#### : " + access_Token);
-        
-       
-        
-        
-        return "/basic/main"; //본인 원하는 경로 설정
-	}
-	
-
 	
 	
-	
-    //토큰발급
-	public String getAccessToken (String authorize_code) {
-        String access_Token = "";
-        String refresh_Token = "";
-        String reqURL = "https://kauth.kakao.com/oauth/token";
-
-        try {
-            URL url = new URL(reqURL);
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            //  URL연결은 입출력에 사용 될 수 있고, POST 혹은 PUT 요청을 하려면 setDoOutput을 true로 설정해야함.
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-
-            //	POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-            StringBuilder sb = new StringBuilder();
-            sb.append("grant_type=authorization_code");
-            sb.append("&client_id=d11a12ee85c98662914e0bac1931a617");  //본인이 발급받은 key
-            sb.append("&redirect_uri=http://localhost:8090/kakaoinfo");     // 본인이 설정해 놓은 경로
-            sb.append("&code=" + authorize_code);
-            bw.write(sb.toString());
-            bw.flush();
-
-            //    결과 코드가 200이라면 성공
-            int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
-
-            //    요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line = "";
-            String result = "";
-
-            while ((line = br.readLine()) != null) {
-                result += line;
-            }
-            System.out.println("response body : " + result);
-
-            //    Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(result);
-
-            access_Token = element.getAsJsonObject().get("access_token").getAsString();
-            refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
-
-            System.out.println("access_token : " + access_Token);
-            System.out.println("refresh_token : " + refresh_Token);
-
-            br.close();
-            bw.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return access_Token;
-    }
-	
-    //유저정보조회
-    public String getUserInfo (String access_Token ) throws Exception{
-
-        //    요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
-        
-    	CustomerDTO user= new CustomerDTO();
-        String reqURL = "https://kapi.kakao.com/v2/user/me";
-        try {
-            URL url = new URL(reqURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            //    요청에 필요한 Header에 포함될 내용
-            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
-
-            int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
-
-            BufferedReader br;
-            if(responseCode==200) { // 정상 호출
-    	        br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-    	      } else {  // 에러 발생
-    	        br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-    	      }
-    	      String inputLine;
-    	      StringBuffer res = new StringBuffer();
-    	      while ((inputLine = br.readLine()) != null) {
-    	        res.append(inputLine);
-    	      }
-    	      br.close();
-            
-
-            JSONParser parsing = new JSONParser();
-            Object obj = parsing.parse(res.toString());
-			JSONObject jsonObj = (JSONObject)obj;
-			JSONObject properties = (JSONObject)jsonObj.get("properties");
-			JSONObject kakao_account = (JSONObject)jsonObj.get("kakao_account");
-			JSONObject response2 = (JSONObject)jsonObj.get("response");
-
-            String nickname = (String)properties.get("nickname");
-            String id = (String)response2.get("user_id");
-           
-            String birthday= (String)kakao_account.get("birthday");
-           
-            user.setNickname(nickname);
-            user.setId(id);
-            user.setBirthday(Integer.parseInt(birthday));
-            
-           
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    
-        System.out.println("controller : " + user.getId());
-		if(user.getId() != null) {
-			loginService.addMember(user);	// 로그인한 정보를 DB에 생성
-		}
-        return "redirect:/loginOk";
-    }
- 
 	
 	@RequestMapping("/joinAgree")
 	public String joinAgree() {
@@ -401,7 +250,7 @@ public class LoginController {
 	public String logout() {
 		return "/basic/logout";
 	}
-	@RequestMapping(value ="/callback", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping("/callback")
 	public String naver_callback(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		//, RedirectAttributes redirectAtt
 	    String clientId = "MdDnprhEU_V4J7WsPkRu";//애플리케이션 클라이언트 아이디값";
@@ -424,7 +273,7 @@ public class LoginController {
 	    try {
 	      URL url = new URL(apiURL);
 	      HttpURLConnection con = (HttpURLConnection)url.openConnection();
-	      con.setRequestMethod("GET");
+	      con.setRequestMethod("POST");
 	      int responseCode = con.getResponseCode();
 	      BufferedReader br;
 	      System.out.print("responseCode="+responseCode);
@@ -457,7 +306,7 @@ public class LoginController {
 				String apiurl = "https://openapi.naver.com/v1/nid/me";
 				URL url = new URL(apiurl);
 				HttpURLConnection con = (HttpURLConnection)url.openConnection();
-				con.setRequestMethod("GET");
+				con.setRequestMethod("POST");
 				con.setRequestProperty("Authorization", header);
 				
 				int responseCode = con.getResponseCode();
@@ -535,7 +384,11 @@ public class LoginController {
 		model.addAttribute("id", user.getId());
 		model.addAttribute("pw", "movie@@33");
 		
-		return "/basic/naver_callback";
+		UsernamePasswordAuthenticationToken authReq
+	      = new UsernamePasswordAuthenticationToken(user.getId(), "movie@@33");
+	    SecurityContextHolder.getContext().setAuthentication(authReq);
+	    
+		return "redirect:/main";
 		
 	}
 	@RequestMapping("/main")
@@ -583,13 +436,24 @@ public class LoginController {
 	 
 	 @PostMapping("/findIDOk")
 	 public String findID( String name, String phonenum, Model model) throws Exception {	       
-		 model.addAttribute("id",loginService.findID(name, phonenum));
+		model.addAttribute("id",loginService.findID(name, phonenum));
 		 return "/basic/findIDOk";
 	 }
-	 @PostMapping("/findPWOk")
-	 public String findPW(String pw, String id, String name, String phonenum, Model model) throws Exception {
-		
-		 model.addAttribute("result",loginService.changePw(pw, id, name, phonenum));
+	 @PostMapping("/changePw")// 비교하고 select id name phonenum 만
+	 public String changePw(String id, String name, String phonenum, Model model){
+		 model.addAttribute("id", id);
+		 model.addAttribute("pw",loginService.selectPw(id, name, phonenum));
+		 return "/basic/changePw";
+	 }
+	 @PostMapping("/findPWOk")// pw만 바꾸고 update
+	 public String findPW(String pw, String id, Model model) throws Exception {
+		 
+	        
+	        String rawPassword = pw;
+			String encPassword = passwordEncoder.encode(rawPassword);
+			
+			pw= encPassword;
+	        model.addAttribute("result", loginService.setPw(pw, id));
 		 return "/basic/findPWOk";
 	 }
 		//에러 출력 도우미 메소드

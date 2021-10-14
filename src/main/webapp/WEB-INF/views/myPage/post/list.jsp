@@ -4,7 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- Functions --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -20,6 +19,7 @@ table, th, td {
 </style>
 <!-- CSS 적용 -->
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/myPage/info/side_menu.css" rel="stylesheet" type="text/css">
 
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -28,6 +28,7 @@ table, th, td {
 <!-- JS 적용 -->
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/myPage/post/list.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
+
 </head>
 <body>
 	<%-- 헤더 삽입 --%>
@@ -35,6 +36,7 @@ table, th, td {
 	
 	<%-- 메인 컨텐츠 --%>
 	<section>
+	<jsp:include page="/WEB-INF/views/myPage/info/side_menu.jsp"/>
 		<span id="post">게시글</span><span id="comment">댓글</span>
 		<div id="pageinfo"></div>
 		<div id="pageRows"></div>

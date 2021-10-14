@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+div.side_menu {
+    width:15%;
+    float:left;
+    margin-right:50px;
+}
+div.side_menu ul {
+    list-style-type: none;
+    margin: 15px 0px 10px 0px;
+    padding: 0;
+    font-size: 15px;
+    font-weight: bold;
+    width: 160px;
+    height: 900px;
+    
+}
+
+div.side_menu li a {
+    display: block;
+    color:rgb(255, 255, 255);
+    
+    padding: 8px 16px;
+    text-decoration: none;
+    
+    background-color: #62564a;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.5);
+    
+}
+
+div.side_menu li a:hover:not(.active) {
+    background-color: rgb(168, 168, 168);
+    color: white;
+}
+

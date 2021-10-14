@@ -19,20 +19,7 @@ function loadPage(page) {
 				}
 			}
 		});
-		/*
-	$.ajax({
-			url: "/admin/user",	
-			type: "GET",
-			cache: false,
-			success: function(data, status) {
-				if(status == "success") {
-					// response가 application/json 이면 이미 parse된 결과가 data에 담겨있다.
-					userList(data)
-				}
-			}
 		
-	});
-	*/
 }
 function userList(jsonObj) {
 	var result ="";
@@ -42,20 +29,24 @@ function userList(jsonObj) {
 		
 		window.page= jsonObj.page;
 		window.pageRows= jsonObj.pagerows;
-		
 		var users = jsonObj.data;
 		
+		
+		
 		for(var i = 0; i < count; i++) {
-			result += "<tr>\n";
+			var userid =  users[i].id;
+			result += "<tr id='list-height'>\n";
 			result += "<td class='num'>" + users[i].uid + "</td>\n";
 			result += "<td class='num'>" + users[i].id + "</td>\n";
 			result += "<td class='num1'>" + users[i].nickname + "</td>\n";
-			result += "<td class='num1'></td>\n";
+			result += "<td class='num1'><button class='delete' data-uid='" + userid + "'>비활성화</button></td>\n";
 			result += "</tr>\n";
-	
+			/*document.getElementById("delete").onclick = function() {deleteUser(users[i].id)};*/
 	}
 	$("#list #user_list").html(result);
-	
+	$("button.delete").click(function(){
+		deleteUser($(this).attr('data-uid'));
+	});
 	
 	// [페이징] 정보 업데이트
 		var pagination = buildPagination(jsonObj.writepages, jsonObj.totalpage, jsonObj.page, jsonObj.pagerows);
@@ -68,6 +59,26 @@ function userList(jsonObj) {
 	
 	return true;
 }
+ function deleteUser(id) {
+        if (!confirm("정말 회원정보를 삭제하시겠습니까?")) { 
+	
+        } else {
+           $.ajax({
+				url: "/admin/user",	
+				type: "DELETE",
+				cache: false,
+				data: {"id" : id},
+				success: function(data, status) {
+					if(status == "success") {
+						// response가 application/json 이면 이미 parse된 결과가 data에 담겨있다.
+						loadPage(page);
+					}
+				}
+		
+			});
+        }
+    }
+
 function buildPagination(writePages, totalPage, curPage, pageRows) {
 	var str = "";   // 최종적으로 페이징에 나타날 HTML 문자열 <li> 태그로 구성
 	
@@ -112,11 +123,3 @@ function buildPagination(writePages, totalPage, curPage, pageRows) {
 
 }
 
- function deleteUser() {
-        if (!confirm("정말 회원정보를 삭제하시겠습니까?")) {
-            history.back();
-        } else {
-            alert("강제 회원 탈퇴되었습니다.");
-            location.href='admin/user/deleteOk';
-        }
-    }

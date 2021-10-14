@@ -63,6 +63,7 @@ public class PrincipalDetails implements UserDetails{
 	public void setPassword(String pw) {
 		user.setPw(pw);
 	}
+	
 	public CustomerDTO getUser(){
 		
 		return user;
@@ -70,6 +71,10 @@ public class PrincipalDetails implements UserDetails{
 	
 	public int getUid() {
 		return user.getUid();
+	}
+	
+	public String getNickName() {
+		return user.getNickname();
 	}
 
 	// 계정이 만료된건 아닌지?

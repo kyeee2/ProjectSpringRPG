@@ -48,12 +48,13 @@ public class LoginService {
 	}
 	
 	// 회원삭제
-	
-	public int deleteMember(int enable, String id) {
+	@Transactional
+	public int deleteMember(String id) {
+		System.out.println("삭제 다 될까?");
 		dao.deleteAuths(id);  // 권한(들) 먼저 삭제
-		int cnt = dao.deleteUser(enable, id);
-		return cnt;
+		return dao.deleteUser(id);
 	}
+	
 	public int updateUser(String phonenum, String nickname, int uid) throws Exception{
 		System.out.println("업데이트서비스에 걸렸니?");
 		return dao.updateUser(phonenum, nickname, uid);
@@ -62,8 +63,11 @@ public class LoginService {
 	public int updatePw(String pw, int uid) throws Exception{
 		return dao.updatePw(pw, uid);
 	}
-	public int changePw(String pw, String id, String name, String phonenum) {
-		return dao.changePw(pw, id, name, phonenum);
+	public List<String> selectPw(String id, String name, String phonenum) {
+		return dao.selectPw(id, name, phonenum);
+	}
+	public int setPw(String pw,String id) {
+		return dao.setPw(pw,id);
 	}
 	
 	// 특정 id(username) 의 정보 가져오기
@@ -137,6 +141,17 @@ public class LoginService {
 	        }
 
 	    }
+
+	// 마이페이지 수정
+	// 프로필 사진도 수정한 경우
+	public int update(CustomerDTO dto) {		
+		return dao.update(dto);
+	}
+	
+	// 프로필사진은 수정하지 않은 경우
+	public int updateNoFile(CustomerDTO dto) {
+		return dao.updateNoFile(dto);
+	}
 }
 
 

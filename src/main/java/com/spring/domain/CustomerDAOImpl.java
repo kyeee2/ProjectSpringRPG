@@ -37,8 +37,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public int deleteUser(int enable, String id) {
-		return mapper.deleteUser(enable, id);
+	public int deleteUser(String id) {
+		return mapper.deleteUser(id);
 	}
 
 	@Override
@@ -127,14 +127,35 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
 	@Override
-	public int changePw(String pw, String id, String name, String phonenum) {
+	public List<String> selectPw(String id, String name, String phonenum) {
 		
-		return mapper.changePw(pw, id, name, phonenum);
+		return mapper.selectPw(id, name, phonenum);
+	}
+
+
+
+	@Override
+	public int setPw(String pw,String id) {
+		return mapper.setPw(pw,id);
 	}
 	
-
-
 	
+
+
+
+
+	@Override
+	public int update(CustomerDTO dto) {
+		return mapper.update(dto);
+	}
+
+
+	@Override
+	public int updateNoFile(CustomerDTO dto) {
+		return mapper.updateNoFile(dto);
+	}
+
+
 	
 	
 

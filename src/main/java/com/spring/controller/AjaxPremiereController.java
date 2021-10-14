@@ -214,6 +214,7 @@ public class AjaxPremiereController {
 		return result;
 		
 	}
+
 	
 	// 시사회 당첨자 추첨 
 	@GetMapping("/win/{prUid}/{count}")
@@ -252,7 +253,6 @@ public class AjaxPremiereController {
 		return result;
 		
 	}
-	
 	// 시사회 당첨자 리스트 
 	@GetMapping("/premiereWin/{page}/{pageRows}")	// /premiere/list/page/pageRows
 	public AjaxPremiereWinnerList winList(

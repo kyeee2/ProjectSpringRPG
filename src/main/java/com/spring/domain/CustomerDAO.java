@@ -16,11 +16,12 @@ public interface CustomerDAO {
 		int addAuth(String auth, String id);
 		
 		// 사용자 삭제
-		int deleteUser(int enable, String id);
+		int deleteUser(String id);
 		
 		int updatePw(String pw, int uid);
 		
-		int changePw(String pw, String id, String name, String phonenum);
+		List<String> selectPw(String id, String name, String phonenum);
+		int setPw(String pw,String id);
 		// 특정 사용자 권한 삭제
 		int deleteAuth(String id, String auth);
 		
@@ -54,6 +55,13 @@ public interface CustomerDAO {
 //		int deleteFileByUid(int uid,HttpServletRequest request);
 //		
 //		List<FileDTO> selectFileByUid(int uid);
+
+		// 마이페이지 수정
+		// 프로필 사진도 수정한 경우
+		int update(CustomerDTO dto);
+
+		// 프로필사진은 수정하지 않은 경우
+		int updateNoFile(CustomerDTO dto);
 		
 		
 		

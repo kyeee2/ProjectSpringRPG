@@ -20,6 +20,9 @@ public interface PremiereDAO {
 	
 	// 특정 uid 글 수정 ( 제목, 내용 )
 	public abstract int update(PremiereDTO dto);
+
+	// 파일은 수정하지 않고 수정
+	public abstract int updateNoFile(PremiereDTO dto);
 	
 	// 특정 uid 글 삭제하기
 	public abstract int deleteByUid(int [] uids);
@@ -62,8 +65,6 @@ public interface PremiereDAO {
 
 	// 당첨자 특정 글 조회
 	public abstract List<PremiereWinListDTO> selectWinView(int uid); 
-	
-	
 }
 
 

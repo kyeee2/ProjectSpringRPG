@@ -46,6 +46,10 @@ public class AjaxPremiereService {
 		return dao.deleteByUid(uids);
 	}
 
+	public int updateNoFile(PremiereDTO dto) {
+		return dao.updateNoFile(dto);
+	}
+
 	// 응모정보 넣기 
 	@Transactional
 	public int apply(int prUid, String id, String email) {
@@ -121,8 +125,6 @@ public class AjaxPremiereService {
 	public List<PremiereWinListDTO> selectWinView(int uid){
 		return dao.selectWinView(uid);
 	}
-
-	
 }
 
 

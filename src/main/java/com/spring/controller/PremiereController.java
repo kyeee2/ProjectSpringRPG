@@ -43,7 +43,7 @@ public class PremiereController{
 		return "/admin/premiere/info/write";
 	}
 	
-	@PostMapping("/admin/premiere/writeOk")
+	@RequestMapping("/admin/premiere/writeOk")
 	public String premiereWriteOk(HttpServletRequest request,
 			HttpServletResponse response, 
 			@RequestParam("file") MultipartFile file,
@@ -120,7 +120,7 @@ public class PremiereController{
 		return "/admin/premiere/info/update";
 	}
 	
-	@PostMapping("/admin/premiere/updateOk")
+	@RequestMapping("/admin/premiere/updateOk")
 	public String premiereUpdateOk(HttpServletRequest request,
 			HttpServletResponse response, 
 			@RequestParam("file") MultipartFile file,
@@ -137,12 +137,17 @@ public class PremiereController{
 			String cfilename = "";
 
 			if (filename.equals("")) {
-				// 파일을 안올렸다면
-				System.out.println("파일 안올림");
-
-				dto.setPhoto("");
-				dto.setPhoto_origin("");
-				result = premiereService.update(dto);
+				if(dto.getPhoto() != null) {
+					// 파일을 안올렸다면
+					System.out.println("파일 안올림");
+	
+					dto.setPhoto("");
+					dto.setPhoto_origin("");
+					result = premiereService.update(dto);
+				} else {
+					// 파일은 변경하지 않았다면 title과 content만 수정
+					result = premiereService.updateNoFile(dto);
+				}
 			} else {
 				// 파일을 올렸다면
 
@@ -199,7 +204,7 @@ public class PremiereController{
 		return "/admin/premiere/info/updateOk";
 	}
 	
-	@PostMapping("premiere/deleteOk")
+	@RequestMapping("/admin/premiere/deleteOk")
 	public String premiereDeleteOk(HttpServletRequest request,
 			HttpServletResponse response, 
 			int [] uid, 

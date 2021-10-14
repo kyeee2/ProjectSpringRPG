@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+ection{	/* 전체 section의 범위 조정*/
+	max-width:1280px;
+	width:1280px;
+	margin:20px auto;
+	background-color: #f6f6f6;
+	border-radius: 20px;
+	padding: 20px 0px;
+	
+}
+
+
+
+.flex-container {
+	display: flex;
+	flex-direction:row;
+}
+
+#poster img {
+	width:400px;
+	margin-top: 50px;
+}
+
+#poster {
+	width:500px;
+	margin-left: 50px;
+}
+
+#info {
+	border: 1px solid black;
+	border-radius: 8px;
+	margin-top: 50px;
+}
+
+#directorActor {
+	align-items: center;
+	margin-left: 40px;
+}
+
+#caster {
+	text-align: left;
+	margin-top: 40px;
+	margin-left: 45px;
+}
+
+h2, #title_area {
+	font-size: 30px;
+	
+}
+
+.h2con {
+	margin-left: 50px;
+	margin-top: 70px;
+}
