@@ -5,6 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -20,6 +21,8 @@
 <script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
 <!-- JS 적용 -->
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
+<script type="text/javascript" src="${ pageContext.request.contextPath }/JS/basic/login.js"></script>
+
 
 </head>
 <body>
@@ -39,7 +42,7 @@
 	<div class="totallogin">
 	<sec:authorize access="!isAuthenticated()">	
 		
-		<form id="loginfrm" action="loginOk" method="POST">
+		<form id="loginfrm" action="/loginOk" method="POST">
 		<h2>로그인 </h2>
 		<br>
 			<div class="login-1">
@@ -47,6 +50,10 @@
 			<div class="login-2"><input type="password" class="idandpw" id="pw" name="pw" placeholder="비밀번호">
 			</div><br>
 			<input type="submit" id="loginbtn" value="로그인">
+			<div id="message">
+			<c:if test="${loginFailMsg!=null}">
+			<p> Error : <c:out value="${loginFailMsg}"/> </p>
+		</c:if></div>
 			<br>
 			
 		</form>
