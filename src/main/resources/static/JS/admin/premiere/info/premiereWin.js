@@ -29,6 +29,7 @@ function updateList(jsonObj) {
 			result += "<tr>\n";
 			result += "<td>" + items[i].nickname + "</td>\n";
 			result += "<td>" + items[i].email + "</td>\n";
+			result += "<input type='hidden' name='nickname' value='" + items[i].nickname + "'></td>\n";
 			result += "<input type='hidden' name='email' value='" + items[i].email + "'></td>\n";
 			result += "</tr>\n";
 		}

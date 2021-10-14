@@ -95,6 +95,26 @@ public class PremiereDAOImpl implements PremiereDAO {
 		return mapper.getThreeRecently();
 	}
 
+	@Override
+	public int applyList(String title, String content) {
+		return mapper.applyList(title, content);
+	}
+
+	@Override
+	public String applyTitle(int prUid) {
+		return mapper.applyTitle(prUid);
+	}
+
+	@Override
+	public List<PremiereWinListDTO> winList(int from, int pageRows) {
+		return mapper.winList(from, pageRows);
+	}
+
+	@Override
+	public List<PremiereWinListDTO> selectWinView(int uid) {
+		return mapper.selectWinView(uid);
+	}
+
 }
 
 

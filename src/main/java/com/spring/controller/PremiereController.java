@@ -49,6 +49,8 @@ public class PremiereController{
 			@RequestParam("file") MultipartFile file,
 			PremiereDTO dto, 
 			Model model) {
+		
+		System.out.println(dto.toString());
 		try {
 		    // 진짜 파일 이름
 		    String filename = file.getOriginalFilename();
@@ -124,6 +126,8 @@ public class PremiereController{
 			@RequestParam("file") MultipartFile file,
 			PremiereDTO dto, 
 			Model model) {
+		
+		System.out.println("file: " + dto.getPhoto());
 		
 		int result = 0;
 
@@ -239,7 +243,7 @@ public class PremiereController{
 	
 	// 시사회 당첨 추첨 완료 클릭하면 
 	@PostMapping("/admin/premiere/winOk")
-	public String premiereWinOk(int prUid, int count, String [] email, Model model) {
+	public String premiereWinOk(int prUid, int count, String [] email, String [] nickname, Model model) {
 		System.out.println("prUid : " + prUid);
 		System.out.println("count: " + count);
 		System.out.println("email : ");
@@ -252,8 +256,13 @@ public class PremiereController{
 			email_arr += email[i];
 			email_arr += "'";
 		}
+		String nicknames = "";
+		for(int i = 0; i < nickname.length; i++) {
+			nicknames += nickname[i] + "<br>";
+		}
 		System.out.println(email_arr);
-		model.addAttribute("updateBool", premiereService.updateBool(prUid, email_arr));
+		System.out.println(nicknames);
+		model.addAttribute("updateBool", premiereService.updateBool(prUid, email_arr, nicknames));
 		return "/admin/premiere/info/winOk";
 	}
 	

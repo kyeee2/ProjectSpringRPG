@@ -53,5 +53,35 @@ public interface PremiereDAO {
 	// 메인페이지용
 	// 시사회 최근 글 3개
 	public abstract List<PremiereDTO> getThreeRecently();
+	
+	// 당첨자 premiereWinBoard 에 insert
+	public abstract int applyList(String title, String content);
 
+	// applyList의 해당 시사회 타이틀 (pr_title) 불러오기
+	public abstract String applyTitle(int prUid);
+
+	// 당첨자 리스트 불러오기
+	public abstract List<PremiereWinListDTO> winList(int from, int pageRows);
+
+	// 당첨자 특정 글 조회
+	public abstract List<PremiereWinListDTO> selectWinView(int uid); 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -13,12 +13,12 @@
       <a href="/main"><div class="header-logo"></div></a>
 
       <ul class="header-nav">
-        <li><a href="../freeboard">자유게시판</a></li>
-        <li><a href="../movieboard">영화 리뷰</a></li>
-        <li><a href="../movieInfo">영화 정보</a></li>
-        <li><a href="./map">영화관 위치</a></li>
-        <li><a href="../noticeboard">공지사항</a></li>
-      	<li><a href="../premiere/list">시사회</a>
+        <li><a href="/freeboard">자유게시판</a></li>
+        <li><a href="/movieboard">영화 리뷰</a></li>
+        <li><a href="/movieInfo">영화 정보</a></li>
+        <li><a href="/map">영화관 위치</a></li>
+        <li><a href="/noticeboard">공지사항</a></li>
+      	<li><a href="/premiere/list">시사회</a>
       	<sec:authorize access="hasRole('ROLE_ADMIN')">
       	<li><a href="../admin/user">회원 정보</a>
       	</sec:authorize>
@@ -27,7 +27,7 @@
       <ul class="header-icons">
         <li>
       		<sec:authorize access="isAuthenticated()">
-      			<a href="user/myInfo" id="myPage"><i class="far fa-smile"></i></a>
+      			<a href="/user/myInfo" id="myPage"><i class="far fa-smile"></i></a>
       			<a href="/logout" id="header-logout">로그아웃</a>
       		</sec:authorize>
       		<sec:authorize access="!isAuthenticated()">

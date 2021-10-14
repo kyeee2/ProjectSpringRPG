@@ -44,7 +44,7 @@ button {
 
 #btn-submit {
 	background-color: #4CAF50;
-	margin: left;
+	margin: auto;
 }
 
 #btn_list {
@@ -55,15 +55,32 @@ button {
 	background-color : #D5D5D5;
 }
 
+#btn-update {
+	background-color: #4CAF50;
+}
+
 #frm {
 	margin: auto;
 }
+#head {
+	margin: auto;
+	line-height: 130px;
+	text-align: center;
+}
+#img {
+	float: center;
+}
 
-
+#frmUpdate {
+	width: 80%;
+	margin: auto;
+	justify-content: center;
+	text-align: center;
+}
 
 </style>
 <body>
-<h2>시사회 수정</h2>
+<h2 id="head">시사회 수정</h2>
 <form action="./updateOk" id="frmUpdate" name="frmUpdate" method="post" enctype="multipart/form-data">
 <input type="hidden" name="uid" value="">
 <div id="file-delete"><%-- 현재 이미지를 삭제한다면 여기 담아서 보내기 --%></div>
@@ -79,8 +96,10 @@ button {
 <br><br>
 <button id="btn-submit" type="submit">수정완료</button>
 </form>
-<button onclick="history.back()">이전으로</button>
-<button onclick="location.href='list'">목록보기</button>
+<button id="btn_list" onclick="location.href='list'">목록보기</button>
+<button id="btn_back" onclick="history.back()">이전으로</button>
 <br>
 </body>
 </html>
+
+

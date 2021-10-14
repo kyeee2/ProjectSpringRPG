@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- CSS 적용 -->
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
-<link href="${ pageContext.request.contextPath }/CSS/freeboard/view.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/basic/view.css" rel="stylesheet" type="text/css">
 
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -40,6 +40,7 @@
 			<div class="clear"></div>
 		</div>
 		<br><br>
+		<c:if test="${ param.boardType != 'noticeboard' }">
 		<h3>댓글작성</h3>
 		<form id="commentFrm" name="commentFrm" method="get">
 		<input type="hidden" name="buid" value="${param.uid }"/>
@@ -53,6 +54,7 @@
 		<div id="comment">
 		</div>
 		<div class="clear"></div>
+		</c:if>
 	</section>
 	
 </body>

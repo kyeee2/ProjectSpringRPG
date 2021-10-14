@@ -5,6 +5,8 @@
 <%-- Functions --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="/WEB-INF/views/global/header.jsp" %>
+<%-- sec tag 사용하기 위해서 --%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,19 +85,23 @@ p:hover {
 .head {
 	text-align : center;
 	position: relative;
-	width: 80%;
+	width: 60%;
 	margin: auto;
+}
+
+.head1{
+	margin-left: 73px;
 }
 
 </style>
 </head>
 <body>
 
-<h2>시사회 관리</h2>
+<h2 class="head1">시사회 관리</h2>
 	<div class="menu">
 		<p><a href="/premiere/list">시사회 정보</a>
 		<p><a href="/premiereWin">시사회 당첨자 발표</a>
-		<p><a href="../premiere/win">시사회 추첨하기</a>
+		<p><a href="../premiere/win">시사회 추첨하기</a></p>
 	</div>
 
 <h2 class="head">추첨</h2>
@@ -111,9 +117,11 @@ p:hover {
 				</c:forEach>
 	</select>
 	</c:if>
+	
+	
 	당첨자 수 : <input type="number" name="count"/>
 	<button type="button" id="btn_win" onclick="selectWin()">추첨하기</button>
-
+	
 		<table id="list">
 			<thead>
 				<th>닉네임</th>
@@ -124,6 +132,7 @@ p:hover {
 		</table>
 	<button type="submit" id="submit"> 완료 </button>
 </form>
+
 	
 </body>
 </html>

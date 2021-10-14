@@ -5,6 +5,8 @@
 <%-- Functions --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="/WEB-INF/views/global/header.jsp" %>
+<%-- sec tag 사용하기 위해서 --%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
    
 <!DOCTYPE html>
 <html lang="ko">
@@ -46,6 +48,7 @@ button:hover {
 
 #btn_list {
   background-color: #B0B0B0;
+  margin: 0, auto;
 }
 
 #btn_update {
@@ -57,16 +60,16 @@ button:hover {
 	width:15%;
 	height:120px;
 	background-color: #EAEAEA;
-	float:left;
-	margin:auto;
+	float: left;
+	margin: auto;
 	text-align: center;
 	border-radius: 20px;
 	margin-left: 20px;
 }
 
 #result {
-	background-color : #D5D5D5;
-	width : 40%;
+	height: 60%;
+	width : 60%;
 	margin: auto;
 	text-align: center;
 }
@@ -79,7 +82,9 @@ button:hover {
 
 #btn_apply {
 	float: right;
-	color: black;
+	color: white;
+	width: 100px;
+	background-color: #368AFF;	
 }
 
 #btn_group {
@@ -87,34 +92,71 @@ button:hover {
 	width: 40%;
 	margin: auto;
 }
+
+.head1 {
+	margin: auto;
+	line-height: 130px;
+	text-align: center;
+	font-size: 80px;
+}
+
+#content {
+	margin: 50 20 50 20;
+	font-size: 20px;
+	float: left;
+	
+}
+
+#image {
+	margin: 0, auto;
+	width: 100%;
+	height: 100%;
+}
+
+#title {
+	font-size: 40px;
+	border: 5px solid black;
+}
+
+
 </style>
 </head>
 <body>
 
-	<h2>시사회 관리</h2>
+	<h2 class="head1">시사회 내용</h2>
 	<div class="menu">
 		<p><a href="list">시사회 정보</a></p>
 		<p><a href="/premiereWin">시사회 당첨자 발표</a></p>
-		<p><a href="../admin/premiere/win">시사회 추첨하기</a>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">	<!-- 로그인된 사용자의 권한이 ADMIN인 경우에만 보이도록 -->
+		<p><a href="../admin/premiere/win">시사회 추첨하기</a></p>
+		</sec:authorize>
 	</div>
-
-	<h2 class="con"></h2>
+	
 	<br>
+	<form action="./deleteOk" id="frmDelete" name="frmDelete" method="post">
 	<div id="result"></div>
-	<br>
+	</form>
+	<br><br><br>
+	
 	<form id="apply" name="apply">
-		<input type="text" name="prUid" value="${param.uid }"/>
-		아이디: <input type="text" name="id"><br>
-		이메일: <input type="text" name="email"><br> 
+		<input type="hidden" name="prUid" value="${param.uid }"/>
+		아이디: <input type="text" name="id">
+		이메일: <input type="text" name="email"> 
 		<button type="button" id="btn_apply">응모하기</button>
 	</form>
 	<br>
+	<sec:authorize access="hasRole('ROLE_ADMIN')">	<!-- 로그인된 사용자의 권한이 ADMIN인 경우에만 보이도록 -->
 	<div id="btn_group">
 		<button id="btn_update" onclick="location.href='/admin/premiere/update?uid=${ param.uid }'">수정하기</button>
-		<button id="btn_list" onclick="location.href='list'">목록보기</button>
 		<button id="doDelete">삭제하기</button>
 	</div>
+	</sec:authorize>
+		<button id="btn_list" onclick="location.href='/premiere/list'">목록보기</button>
 </body>
+</html>
+
+
+
 
 
 

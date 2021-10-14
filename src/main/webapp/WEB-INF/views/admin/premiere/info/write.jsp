@@ -28,6 +28,7 @@ button {
 	float: left;
 	margin-left: 40px;
 	border-radius: 5px;
+	width: 100%;
 }
 
 button:hover{
@@ -36,10 +37,17 @@ button:hover{
 
 #btn_list {
 	background-color: #B0B0B0;
+	height: 40px;
+	width: 700px;
+	margin-left: 364px;
+	margin-bottom: 200px;
 }
 
 #btn-submit{
 	background-color: #4CAF50;
+	height: 40px;
+	width: 700px;
+	margin-left: 220px;
 }
 
 textarea {
@@ -48,79 +56,57 @@ textarea {
 	resize: none;
 }
 
+#head {
+	width:80%;
+	margin: auto;
+	height: 100px;
+	text-align: center;
+	line-height: 100px;
+}
+
+#frmWrite {
+	width: 80%;
+	margin: auto;
+	justify-content: center;
+	text-align: center;
+}
+
+input {
+	width: 700px;
+	height: 30px;
+}
+
+#file{
+	float: right;
+	width: 100%;
+}
+
+#photo {
+	margin: auto;
+	height: 20px;
+	float: right;
+}
+
+
+
+
 </style>
 <body>
-<h2>시사회 작성</h2>
+<h2 id="head">시사회 작성</h2>
 
-<form id="frm" name="frm" method="post" enctype="multipart/form-data">
-	제목:
-	<input type="text" name="title" placeholder="제목을 입력하세요"/><br>
-	내용:<br>
-	<textarea name="content" placeholder="내용을 입력하세요"></textarea>
-	<div>
-		첨부파일(이미지 파일만 가능):
-		<input type="file" name="photo" accept="image/png, image/jpeg"/><br>
+<form action="./writeOk" id="frmWrite" name="frmWrite" method="post" enctype="multipart/form-data">
+	<input type="text" name="title" placeholder="제목을 입력하세요"/><br><br>
+	<textarea name="content" placeholder="내용을 입력하세요"></textarea><br><br>
+	<div id="photo">
+		<input type="file" name="file" id="file" accept="*" multiple /><br>
 	</div>
 	
 	<br><br>
-	<button id="btn-submit" type="button">작성완료</button>
+	<button id="btn-submit" type="submit">작성완료</button>
 </form>
 <br>
-<button id="btn_list" type="button" onclick="location.href = 'list'">목록으로</button>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/global/header.jsp" %>
- <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>시사회 작성</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
-<script type="text/javascript" src="${ pageContext.request.contextPath }/JS/admin/premiere/info/write.js"></script>
-<!-- CSS 적용 -->
-<link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
-<!-- JQuery 적용 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- fontawesome 적용 -->
-<script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
-</head>
-<script>
-
-</script>
-<body>
-<h2>시사회 작성</h2>
-<form action="./writeOk" id="frmWrite" name="frmWrite" method="post" enctype="multipart/form-data">
-	제목:
-	<input type="text" name="title" placeholder="제목을 입력하세요"/><br>
-	내용:<br>
-	<textarea name="content" placeholder="내용을 입력하세요"></textarea>
-	<div>
-		첨부파일(이미지 파일만 가능):
-		<input type="file" name="file" id="file" accept="*" multiple /><br>
-	</div>
-	<br><br>
-	<button  id="btn-submit">작성완료</button>
-</form>
 <br>
-<button type="button" onclick="location.href = 'list'">목록으로</button>
+<br>
+<button id="btn_list" type="submit" onclick="location.href = 'list'">목록으로</button>
 </body>
 </html>
