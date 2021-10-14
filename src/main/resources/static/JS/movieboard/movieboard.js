@@ -263,7 +263,7 @@ function writeSearchList(jsonObj){
 				result += "<td>" + items[i].uid + "</td>\n";
 				result += "<td>" + items[i].goodcnt + "</td>\n";
 				result += "<td>" + items[i].subject + "</td>\n";
-				result += "<td><a href='view?boardType=freeboard&uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
+				result += "<td><a href='view?boardType=movieboard&uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
 				result += "<td>" + items[i].nickname + "</td>\n";
 				result += "<td>" + items[i].datetime + "</td>\n";
 				result += "<td><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";

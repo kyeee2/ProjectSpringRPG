@@ -219,7 +219,7 @@ function writeSearchList(jsonObj){
 				result += "<tr>\n";
 				result += "<td><input type='checkbox' name='uid' value='" + items[i].uid + "'></td>\n";
 				result += "<td>" + items[i].uid + "</td>\n";
-				result += "<td><a href='view?boardType=freeboard&uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
+				result += "<td><a href='view?boardType=noticeboard&uid=" + items[i].uid + "'>" + items[i].title + "</td>\n";
 				result += "<td>" + items[i].nickname + "</td>\n";
 				result += "<td>" + items[i].datetime + "</td>\n";
 				result += "<td><span data-viewcnt='" + items[i].uid +"'>" + items[i].viewcnt + "</span></td>\n";

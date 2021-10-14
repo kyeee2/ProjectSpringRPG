@@ -299,7 +299,7 @@ function doGood() {
 	function clickDelete(event) {
 		var $form =$(event.target).parent().parent();
 		var comUid = $form.children('input[type=hidden]').val();
-		var data = "boardType=" + boardType + "&uid=" + comUid + "&buid" +uid;
+		var data = "boardType=" + boardType + "&uid=" + comUid + "&buid=" +uid;
 		
 		$.ajax({ 
 			url : "/comment/deleteOk",
@@ -319,4 +319,5 @@ function doGood() {
 			}
 			
 		});
+		
 	}  //end deleteComment
