@@ -162,12 +162,9 @@ CREATE TABLE premiere
 CREATE TABLE premiereWinBoard
 (
 	pwb_uid int NOT NULL AUTO_INCREMENT,
-	pwb_title varchar(150) NOT NULL,
+	pwb_title varchar(150),
 	pwb_content text NOT NULL,
-	pwb_viewcnt int DEFAULT '0',
-	pwb_datetime datetime DEFAULT now(),
-	pwb_boardtype varchar(45),
-	pr_uid int NOT NULL,
+	pwb_dateTime datetime DEFAULT now(),
 	PRIMARY KEY (pwb_uid)
 );
 
@@ -323,7 +320,6 @@ ALTER TABLE apply
 
 ALTER TABLE primiereWinBoard
 	ADD FOREIGN KEY (pr_uid)
-	REFERENCES premiere (pr_uid)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;

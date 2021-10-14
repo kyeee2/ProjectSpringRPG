@@ -57,7 +57,7 @@ function writeValue(data){
 
 // 유효성 
 function chkSubmit(){
-	frm = document.forms['frm'];
+	frm = document.forms['frmUpdate'];
 	
 	var title = frm.title.value.trim();
 	
@@ -99,7 +99,7 @@ function changeButton(event){
 // 수
 function updateData(){
 	
-	var formData = $("#frm").serialize();
+	var formData = $("#frmUpdate").serialize();
 	
 	$.ajax({
 		url : "/premiere",

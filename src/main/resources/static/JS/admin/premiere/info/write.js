@@ -9,10 +9,11 @@ $(document).ready(function(){
 		}
 	});
 	*/
+	
 });
 
 function chkSubmit(){
-	frm = document.forms['frm'];
+	frm = document.forms['frmWrite'];
 	
 	var title = frm.title.value.trim();
 	
@@ -28,7 +29,7 @@ function chkSubmit(){
 function writeData(){
 	
 	alert($("#photo").val());
-	var f = document.getElementById('frm');
+	var f = document.getElementById('frmWrite');
 	var formData = new FormData(f);
 	alert(formData);
 	alert(formData.title);

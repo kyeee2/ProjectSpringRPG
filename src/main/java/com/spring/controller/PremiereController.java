@@ -43,14 +43,14 @@ public class PremiereController{
 		return "/admin/premiere/info/write";
 	}
 	
-	@RequestMapping("/admin/premiere/writeOk")
-	public String premiereWriteOk(PremiereDTO dto, Model model) {
-	@PostMapping("premiere/writeOk")
+	@PostMapping("/admin/premiere/writeOk")
 	public String premiereWriteOk(HttpServletRequest request,
 			HttpServletResponse response, 
 			@RequestParam("file") MultipartFile file,
 			PremiereDTO dto, 
 			Model model) {
+		
+		System.out.println(dto.toString());
 		try {
 		    // 진짜 파일 이름
 		    String filename = file.getOriginalFilename();
@@ -120,14 +120,14 @@ public class PremiereController{
 		return "/admin/premiere/info/update";
 	}
 	
-	@RequestMapping("/admin/premiere/updateOk")
-	public String premiereUpdateOk(PremiereDTO dto, Model model) {
-	@PostMapping("premiere/updateOk")
+	@PostMapping("/admin/premiere/updateOk")
 	public String premiereUpdateOk(HttpServletRequest request,
 			HttpServletResponse response, 
 			@RequestParam("file") MultipartFile file,
 			PremiereDTO dto, 
 			Model model) {
+		
+		System.out.println("file: " + dto.getPhoto());
 		
 		int result = 0;
 
@@ -199,8 +199,6 @@ public class PremiereController{
 		return "/admin/premiere/info/updateOk";
 	}
 	
-	@RequestMapping("/admin/premiere/deleteOk")
-	public String premiereDeleteOk(int [] uid, Model model) {
 	@PostMapping("premiere/deleteOk")
 	public String premiereDeleteOk(HttpServletRequest request,
 			HttpServletResponse response, 
@@ -240,7 +238,7 @@ public class PremiereController{
 	
 	// 시사회 당첨 추첨 완료 클릭하면 
 	@PostMapping("/admin/premiere/winOk")
-	public String premiereWinOk(int prUid, int count, String [] email, Model model) {
+	public String premiereWinOk(int prUid, int count, String [] email, String [] nickname, Model model) {
 		System.out.println("prUid : " + prUid);
 		System.out.println("count: " + count);
 		System.out.println("email : ");
@@ -253,8 +251,13 @@ public class PremiereController{
 			email_arr += email[i];
 			email_arr += "'";
 		}
+		String nicknames = "";
+		for(int i = 0; i < nickname.length; i++) {
+			nicknames += nickname[i] + "<br>";
+		}
 		System.out.println(email_arr);
-		model.addAttribute("updateBool", premiereService.updateBool(prUid, email_arr));
+		System.out.println(nicknames);
+		model.addAttribute("updateBool", premiereService.updateBool(prUid, email_arr, nicknames));
 		return "/admin/premiere/info/winOk";
 	}
 	

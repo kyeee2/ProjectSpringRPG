@@ -44,7 +44,7 @@ button {
 
 #btn-submit {
 	background-color: #4CAF50;
-	margin: left;
+	margin: auto;
 }
 
 #btn_list {
@@ -55,35 +55,54 @@ button {
 	background-color : #D5D5D5;
 }
 
+#btn-update {
+	background-color: #4CAF50;
+}
+
 #frm {
 	margin: auto;
 }
+#head {
+	margin: auto;
+	line-height: 130px;
+	text-align: center;
+}
+#img {
+	float: center;
+}
 
-
+#frmUpdate {
+	width: 80%;
+	margin: auto;
+	justify-content: center;
+	text-align: center;
+}
 
 </style>
 <body>
 <h2 id="head">시사회 수정</h2>
-<form id="frm" name="frm" method="post">
+<form action="./updateOk" id="frmUpdate" name="frmUpdate" method="post" enctype="multipart/form-data">
 <input type="hidden" name="uid" value="">
+<div id="file-delete"><%-- 현재 이미지를 삭제한다면 여기 담아서 보내기 --%></div>
+첨부파일 : <img id="img" src="" data-img="" /><br>
+<button type="button" id="btn-update" class="btn">사진수정</button>
+<button type="button" id="btn-cancel" class="btn" style="display: none;" onclick="">수정취소</button>
+<div id="file-change" style="display: none;"><input type="file" id="file-new" name="file" value=""></div>
+<br>
 제목 :
 <input type="text" name="title" value=""/><br>
-첨부파일 : 
-<input type="text" name="photo" value=""/><br>
 내용 : <br>
 <textarea name="content"></textarea>
 <br><br>
-<button id="btn-submit" type="button">수정완료</button>
+<button id="btn-submit" type="submit">수정완료</button>
 </form>
 <button id="btn_list" onclick="location.href='list'">목록보기</button>
 <button id="btn_back" onclick="history.back()">이전으로</button>
 <br>
 </body>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ include file="/WEB-INF/views/global/header.jsp" %>
+
+
+<%-- 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -103,7 +122,7 @@ button {
 <h2>시사회 수정</h2>
 <form action="./updateOk" id="frmUpdate" name="frmUpdate" method="post" enctype="multipart/form-data">
 <input type="hidden" name="uid" value="">
-<div id="file-delete"><%-- 현재 이미지를 삭제한다면 여기 담아서 보내기 --%></div>
+<div id="file-delete">현재 이미지를 삭제한다면 여기 담아서 보내기</div>
 첨부파일 : <img id="img" src="" data-img="" /><br>
 <button type="button" id="btn-update" class="btn">사진수정</button>
 <button type="button" id="btn-cancel" class="btn" style="display: none;" onclick="">수정취소</button>
@@ -121,3 +140,4 @@ button {
 <br>
 </body>
 </html>
+ --%>

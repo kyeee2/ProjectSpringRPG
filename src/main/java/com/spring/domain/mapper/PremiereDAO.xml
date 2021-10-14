@@ -26,14 +26,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 게시글 작성 writeOk -->
-	<insert id="insert" flushCache="true" 
-		parameterType="com.spring.domain.PremiereDTO"
-		keyProperty="uid" useGeneratedKeys="true" keyColumn="pr_uid">	
-	INSERT INTO premiere
-		(pr_title, pr_photo, pr_content)
-	VALUES
-		(#{title}, #{photo}, #{content})
-	</insert>
+   <insert id="insert" flushCache="true" 
+      parameterType="com.spring.domain.PremiereDTO"
+      keyProperty="uid" useGeneratedKeys="true" keyColumn="pr_uid">   
+   INSERT INTO premiere
+      (pr_title, pr_photo, pr_content, pr_photo_origin)
+   VALUES
+      (#{title}, #{photo}, #{content}, #{photo_origin})
+   </insert>
 	
 	<!-- 해당 글 조회 view -->
 	<select id="selectByUid" resultType="com.spring.domain.PremiereDTO">
@@ -50,6 +50,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET pr_title = #{title}, pr_photo = #{photo}, pr_content = #{content}
 		WHERE pr_uid = #{uid}
 	</update>
+	
+	<!-- 글 삭제하기 전에 해당 글의 첨부파일 가져오기 -->
+	<select id="getFileName" flushCache="true" parameterType="java.util.ArrayList" resultType="String">
+		SELECT 
+			pr_photo 
+		FROM 
+			premiere
+		WHERE 
+			pr_uid IN (
+				<foreach collection="array" item="item" separator=",">
+					${item}
+				</foreach>
+			)
+	</select>
 	
 	<!-- 글 삭제 -->
 	<delete id="deleteByUid" flushCache="true" parameterType="java.util.ArrayList">
@@ -113,21 +127,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			customer cus, apply ap
 		WHERE 
 			cus.cus_uid = ap.cus_uid 
-			and
-			cus.cus_uid in (
-				 select * 
-				from (
-					select 
-						cus_uid 
-					from 
-						apply 
-					where 
-						pr_uid = #{prUid}
-					order by 
-						rand() 
-					limit 
-						#{count} )
-				a ) 
+			AND
+			ap.pr_uid = #{prUid}
+			AND
+			cus.cus_uid in 
+			( select * 
+			from 
+				( select 
+					cus_uid 
+				from 
+					apply 
+				where 
+					pr_uid = #{prUid}
+				order by 
+					rand() 
+				limit 
+					#{count} )
+			a ) ;
 	</select>
 	
 	<!-- select box 시사회 제목, uid 불러오기 -->
@@ -171,99 +187,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					and 
 						pr_uid = #{prUid} ) a ) ;
 	</select>
-</mapper> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper 
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="com.spring.domain.PremiereDAO">
-
-	<!-- 게시글 총 개수 -->
-	<select id="count" resultType="int">
-		SELECT count(*) FROM premiere
-	</select>
-	
-	<!-- 게시글 조회 list -->
-	<select id="select" resultType="com.spring.domain.PremiereDTO">
-		SELECT 
-			pr_uid "uid", 
-			pr_title title, 
-			pr_photo photo, 
-			pr_content content
-		FROM 
-			premiere 
-		ORDER BY 
-			pr_uid DESC
-		LIMIT
-			#{from}, #{pageRows}
-	</select>
-	
-	<!-- 게시글 작성 writeOk -->
-	<insert id="insert" flushCache="true" 
-		parameterType="com.spring.domain.PremiereDTO"
-		keyProperty="uid" useGeneratedKeys="true" keyColumn="pr_uid">	
-	INSERT INTO premiere
-		(pr_title, pr_photo, pr_content, pr_photo_origin)
-	VALUES
-		(#{title}, #{photo}, #{content}, #{photo_origin})
-	</insert>
-	
-	<!-- 해당 글 조회 view -->
-	<select id="selectByUid" resultType="com.spring.domain.PremiereDTO">
-		SELECT 
-			pr_uid uid, pr_title title, pr_photo photo, pr_content content 
-		FROM premiere 
-		WHERE pr_uid=#{uid}
-	</select>
-	
-	<!-- 글 수정 -->
-	<update id="update" flushCache="true"
-		parameterType="com.spring.domain.PremiereDTO">
-		UPDATE premiere
-		SET pr_title = #{title}, pr_photo = #{photo}, pr_content = #{content}
-		WHERE pr_uid = #{uid}
-	</update>
-	
-	<!-- 글 삭제하기 전에 해당 글의 첨부파일 가져오기 -->
-	<select id="getFileName" flushCache="true" parameterType="java.util.ArrayList" resultType="String">
-		SELECT 
-			pr_photo 
-		FROM 
-			premiere
-		WHERE 
-			pr_uid IN (
-				<foreach collection="array" item="item" separator=",">
-					${item}
-				</foreach>
-			)
-	</select>
-	
-	<!-- 글 삭제 -->
-	<delete id="deleteByUid" flushCache="true" parameterType="java.util.ArrayList">
-		DELETE
-		FROM 
-			premiere
-		WHERE 
-			pr_uid IN (
-				<foreach collection="array" item="item" separator=",">
-					${item}
-				</foreach>
-			)
-	</delete>
 	
 	<!-- 메인페이지용 -->
 	<!-- 최근 3개  -->
@@ -280,6 +203,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT
 			0, 3
 	</select>
+	
+	<!-- 당첨자 insert -->
+	<insert id="applyList" flushCache="true">
+		insert into 
+			premierewinboard (pwb_title, pwb_content) 
+		values(#{title}, #{content})
+	</insert>
+	
+	<!-- applyList 의 해당 시사회 타이틀 ( pr_title ) 불러오기 -->
+	<select id="applyTitle" resultType="String">
+		SELECT
+			pr_title
+		FROM
+			premiere
+		WHERE
+			pr_uid = #{prUid}
+	</select>
+	
+	<!-- 당첨자 list 불러오기 -->
+	<select id="winList" resultType="com.spring.domain.PremiereWinListDTO">
+		SELECT
+			pwb_uid "uid",
+			pwb_title title,
+			pwb_dateTime datetime
+		FROM
+			premierewinboard
+		ORDER BY
+			pwb_uid
+		LIMIT
+			#{from}, #{pageRows}
+	</select>
+	
+	<!-- 당첨자 목록 특정 uid 글 조회 -->
+	<select id="selectWinView" resultType="com.spring.domain.PremiereWinListDTO">
+		SELECT 
+			pwb_uid uid, pwb_title title, pwb_content content, pwb_datetime datetime 
+		FROM premierewinboard
+		WHERE pwb_uid=#{uid}
+	</select>
+	
 	
 </mapper> 
 

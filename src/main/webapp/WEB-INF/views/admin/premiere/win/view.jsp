@@ -5,15 +5,17 @@
 <%-- Functions --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="/WEB-INF/views/global/header.jsp" %>
+<%-- sec tag 사용하기 위해서 --%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>시사회 당첨자 발표 조회</title>
+<title>시사회 당첨자 발표</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
-<script type="text/javascript" src="${ pageContext.request.contextPath }/JS/admin/premiere/info/view.js"></script>
+<script type="text/javascript" src="${ pageContext.request.contextPath }/JS/admin/premiere/info/premiereWinListView.js"></script>
 <!-- CSS 적용 -->
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
 <!-- JQuery 적용 -->
@@ -23,12 +25,14 @@
 </head>
 <style>
 .menu {
-	width: 15%;
-	height: 120px;
-	background-color: #D5D5D5;
+	width:15%;
+	height:120px;
+	background-color: #EAEAEA;
 	float: left;
 	margin: auto;
 	text-align: center;
+	border-radius: 20px;
+	margin-left: 20px;
 }
 
 .head {
@@ -54,6 +58,7 @@ button:hover {
 
 #btn_list {
 	background-color: #B0B0B0;
+	margin-bottom: 100px;
 }
 
 #doDelete {
@@ -61,20 +66,37 @@ button:hover {
 	background-color: #f44336;
 }
 
+#result {
+	width: 70%;
+	margin: auto;
+	height: 100%;
+}
+
+#buttonList{
+	margin: auto;
+}
+
+#dateTime{
+	font-size: 15px;
+}
+
+
 </style>
 <body>
-
-<h2>시사회 관리</h2>
+<h2 class="head">시사회 당첨자 발표</h2>
 	<div class="menu">
 		<p><a href="../premiere/list">시사회 정보</a></p>
 		<p><a href="/premiereWin">시사회 당첨자 발표</a></p>
-		<p><a href="../admin/premiere/win">시사회 추첨하기</a>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">	<!-- 로그인된 사용자의 권한이 ADMIN인 경우에만 보이도록 -->
+			<p><a href="../admin/premiere/win">시사회 추첨하기</a></p>
+		</sec:authorize>
 	</div>
-<h2 class="head">시사회 당첨자 발표 조회</h2>
-
-
-<button id="btn_list" onclick="location.href='/premiere/list'">목록보기</button>
-<button id="doDelete">삭제하기</button>
+	<br>
+	<div id="result"></div>
+	
+	<div id="buttonList">
+		<button id="btn_list" onclick="location.href='/premiereWin'">뒤로가기</button>
+	</div>
 
 </body>
 </html>
