@@ -119,18 +119,19 @@ button:hover {
 }
 
 
+
 </style>
 </head>
 <body>
 
 	<h2 class="head1">시사회 내용</h2>
-	<div class="menu">
-		<p><a href="list">시사회 정보</a></p>
-		<p><a href="/premiereWin">시사회 당첨자 발표</a></p>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">	<!-- 로그인된 사용자의 권한이 ADMIN인 경우에만 보이도록 -->
-		<p><a href="../admin/premiere/win">시사회 추첨하기</a></p>
-		</sec:authorize>
-	</div>
+		<div class="menu">
+			<p><a href="list">시사회 정보</a></p>
+			<p><a href="/premiereWin">시사회 당첨자 발표</a></p>
+			<sec:authorize access="hasRole('ROLE_ADMIN')">	<!-- 로그인된 사용자의 권한이 ADMIN인 경우에만 보이도록 -->
+			<p><a href="/admin/premiere/win">시사회 추첨하기</a></p>
+			</sec:authorize>
+		</div>
 	
 	<br>
 	<form action="./deleteOk" id="frmDelete" name="frmDelete" method="post">
@@ -140,7 +141,7 @@ button:hover {
 	
 	<form id="apply" name="apply">
 		<input type="hidden" name="prUid" value="${param.uid }"/>
-		아이디: <input type="text" name="id">
+		닉네임: <input type="text" name="nickname">
 		이메일: <input type="text" name="email"> 
 		<button type="button" id="btn_apply">응모하기</button>
 	</form>

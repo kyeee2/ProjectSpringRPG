@@ -15,6 +15,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- fontawesome 적용 -->
 <script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
+<!-- CKEditor 적용 -->
+<script src="${ pageContext.request.contextPath }/ckeditor/ckeditor.js"></script>
 </head>
 <style>
 button {
@@ -96,7 +98,30 @@ input {
 
 <form action="./writeOk" id="frmWrite" name="frmWrite" method="post" enctype="multipart/form-data">
 	<input type="text" name="title" placeholder="제목을 입력하세요"/><br><br>
-	<textarea name="content" placeholder="내용을 입력하세요"></textarea><br><br>
+	<textarea name="content" id="ckeditor" placeholder="내용을 입력하세요"></textarea>
+	<!-- 내용 작성할 때 CKEditor 사용 -->
+		<script>
+			CKEDITOR.replace("ckeditor", {
+				allowedContent: true, // HTML 태그 자동 삭제 방지 설정
+				width: '640px',
+				height : '400px',
+				filebrowserUploadUrl: '${pageContext.request.contextPath}/file/ckUpload',
+				toolbar : [
+			        ['Font', 'FontSize'],
+			        ['BGColor', 'TextColor' ],
+			        ['Bold', 'Italic', 'Strike', 'Superscript', 'Subscript', 'Underline', 'RemoveFormat'],   
+			        ['BidiLtr', 'BidiRtl'],
+			        '/',
+			        ['Image', 'SpecialChar', 'Smiley'],
+			        ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+			        ['Blockquote', 'NumberedList', 'BulletedList'],
+			        ['Link', 'Unlink'],
+			        ['Source'],
+			        ['Undo', 'Redo']
+				]
+			});
+			</script>
+			<br><br>
 	<div id="photo">
 		<input type="file" name="file" id="file" accept="*" multiple /><br>
 	</div>

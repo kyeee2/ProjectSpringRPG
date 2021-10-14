@@ -17,6 +17,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- fontawesome 적용 -->
 <script src="https://kit.fontawesome.com/41ddd3d635.js"></script>
+<!-- CKEditor 적용 -->
+<script src="${ pageContext.request.contextPath }/ckeditor/ckeditor.js"></script>
 </head>
 <style>
 textarea{
@@ -72,11 +74,35 @@ button {
 }
 
 #frmUpdate {
-	width: 80%;
-	margin: auto;
+	width: 30%;
+	margin:auto;
 	justify-content: center;
 	text-align: center;
+	margin-left:400px;
 }
+
+#ckeditor {
+	width: 100%;
+	float: right;
+}
+
+#title{
+	width: 640px;
+}
+
+.title{
+	width: 640px;
+}
+
+#btn-cancel{
+	background-color: #FF6C6C;
+}
+
+#img {
+	width: 640px;
+}
+
+
 
 </style>
 <body>
@@ -84,15 +110,36 @@ button {
 <form action="./updateOk" id="frmUpdate" name="frmUpdate" method="post" enctype="multipart/form-data">
 <input type="hidden" name="uid" value="">
 <div id="file-delete"><%-- 현재 이미지를 삭제한다면 여기 담아서 보내기 --%></div>
-첨부파일 : <img id="img" src="" data-img="" /><br>
+<img id="img" src="" data-img="" />
 <button type="button" id="btn-update" class="btn">사진수정</button>
 <button type="button" id="btn-cancel" class="btn" style="display: none;" onclick="">수정취소</button>
 <div id="file-change" style="display: none;"><input type="file" id="file-new" name="file" value=""></div>
-<br>
-제목 :
-<input type="text" name="title" value=""/><br>
-내용 : <br>
-<textarea name="content"></textarea>
+
+<input type="text" name="title" value="" id="title"/><br><br>
+
+<textarea name="content" id="ckeditor"></textarea>
+	<!-- 내용 작성할 때 CKEditor 사용 -->
+	<script>
+		CKEDITOR.replace("ckeditor", {
+			allowedContent: true, // HTML 태그 자동 삭제 방지 설정
+			width: '640px',
+			height : '400px',
+			filebrowserUploadUrl: '${pageContext.request.contextPath}/file/ckUpload',
+			toolbar : [
+		        ['Font', 'FontSize'],
+		        ['BGColor', 'TextColor' ],
+		        ['Bold', 'Italic', 'Strike', 'Superscript', 'Subscript', 'Underline', 'RemoveFormat'],   
+		        ['BidiLtr', 'BidiRtl'],
+		        '/',
+		        ['Image', 'SpecialChar', 'Smiley'],
+		        ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+		        ['Blockquote', 'NumberedList', 'BulletedList'],
+		        ['Link', 'Unlink'],
+		        ['Source'],
+		        ['Undo', 'Redo']
+			]
+		});
+		</script>
 <br><br>
 <button id="btn-submit" type="submit">수정완료</button>
 </form>

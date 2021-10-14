@@ -42,7 +42,9 @@ public class AjaxPremiereService {
 		return dao.update(dto);
 	}
 	
+	@Transactional
 	public int deleteByUid(int [] uids) {
+		dao.deleteApplyByUid(uids);
 		return dao.deleteByUid(uids);
 	}
 
@@ -52,14 +54,14 @@ public class AjaxPremiereService {
 
 	// 응모정보 넣기 
 	@Transactional
-	public int apply(int prUid, String id, String email) {
-		int cusUid = dao.findUidById(id);
+	public int apply(int prUid, String nickname, String email) {
+		int cusUid = dao.findUidById(nickname);
 		return dao.apply(prUid, cusUid, email);
 	}
 
 	// 응모한 아이디인지 확인하기 
-	public int chkId(int prUid, String id) {
-		return dao.chkId(prUid, id);
+	public int chkId(int prUid, String nickname) {
+		return dao.chkId(prUid, nickname);
 	}
 	
 	// 응모된 계정 추첨 -> 당첨자 닉네임 리턴 

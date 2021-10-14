@@ -123,7 +123,7 @@ public class AjaxPremiereController {
 	
 	// 응모하기
 	@PostMapping("/apply")	// URI: /premiere/apply
-	public AjaxBoardResult apply(int prUid, String id, String email,	// 응모할 때 아이디와 이메일을 적는다.
+	public AjaxBoardResult apply(int prUid, String nickname, String email,	// 응모할 때 아이디와 이메일을 적는다.
 			Authentication authentication	// 로그인한 회원 정보
 			) {	
 		int count = 0;
@@ -135,14 +135,14 @@ public class AjaxPremiereController {
 			
 			// 로그인 정보에서 아이디 가져오기
             PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
-            String loginId = userDetails.getUsername();   // 아이디 뽑아내기
+            String loginId = userDetails.getUserNickname();   // 아이디 뽑아내기
 
-            if(id != null && id.equals(loginId)) {
+            if(nickname != null && nickname.equals(loginId)) {
             	
             	// 같은 아이디로 응모 했는지 체크
-            	if(ajaxpremiereService.chkId(prUid, id) == 0) {	// 원래는 0 아니면 1
+            	if(ajaxpremiereService.chkId(prUid, nickname) == 0) {	// 원래는 0 아니면 1
             		// 응모 안했다면 응모 진행
-	            	count = ajaxpremiereService.apply(prUid, id, email);
+	            	count = ajaxpremiereService.apply(prUid, nickname, email);
 	            	
 	            	if(count == 1) {
 	            		status = "OK";
