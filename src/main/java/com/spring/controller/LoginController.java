@@ -26,6 +26,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -45,6 +46,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.CustomerValidator;
+import com.spring.config.PrincipalDetails;
 import com.spring.domain.CustomerDTO;
 import com.spring.service.AjaxBoardService;
 import com.spring.service.AjaxPremiereService;
@@ -95,7 +97,7 @@ public class LoginController {
 
 	public void naverlogin() {	}
 	//아이디 로그인
-	@GetMapping("/login")
+	@RequestMapping("/login")
 	public String login(HttpSession session, HttpServletRequest request, HttpServletResponse response, Model model) throws UnsupportedEncodingException {	
 		// 네이버 로그인
 		String clientId = "MdDnprhEU_V4J7WsPkRu";//애플리케이션 클라이언트 아이디값";
@@ -447,13 +449,15 @@ public class LoginController {
 	 }
 	 @PostMapping("/findPWOk")// pw만 바꾸고 update
 	 public String findPW(String pw, String id, Model model) throws Exception {
-		 
-	        
+	       
+		 int result = 0;
+		 if(pw!= null) {
 	        String rawPassword = pw;
 			String encPassword = passwordEncoder.encode(rawPassword);
-			
 			pw= encPassword;
-	        model.addAttribute("result", loginService.setPw(pw, id));
+			result = loginService.setPw(pw, id);
+			}
+		 model.addAttribute("result", result);
 		 return "/basic/findPWOk";
 	 }
 		//에러 출력 도우미 메소드

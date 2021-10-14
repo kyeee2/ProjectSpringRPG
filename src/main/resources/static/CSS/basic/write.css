@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+section {
+	width:800px;
+	max-width: 1280px;
+	margin: auto;
+}
+
+table {
+	width: 900px;
+	height: 600px;
+}
+
+
+
+form#frm {
+	background-color: white;
+	border-radius: 9px;
+	padding: 20px 25px;
+}
+
+th {
+	text-align: left;
+}
+
+.button-wrap {
+	width: 645px;
+	display: flex;
+	justify-content: space-between;
+	margin-left: 90px;
+}
+
+td input.long-text {
+	width: 450px;
+	height: 20px;
+	
+}
+
+.button-wrap button {
+	width:100px;
+	height: 25px;
+	margin-bottom: 20px;
+}
+
+#btn-submit {
+	background-color:#85EBE9;
+	border-style: none; 
+} 
+
+#btn-list {
+	background-color:#C0EDE6;
+	border-style: none;
+}

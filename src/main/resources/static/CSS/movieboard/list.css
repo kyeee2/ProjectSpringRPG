@@ -8,17 +8,23 @@
 
 section{	/* 전체 section의 범위 조정*/
 	max-width:1280px;
-	width:900px;
+	width:1000px;
 	margin: auto;
+	background-color: white;
+	padding:20px;
+	margin-top: 20px;
+	border-radius: 10px;
 }
 table {	/* table 크기 조정*/
 	border-top: 0.5px solid gray;
 	border-collapse: collapse;
 	padding: 5px 20px;
 	text-align : center;
+	margin: auto;
 	border-radius: 10px;
 	width:1000px;
-	height:550px;
+	
+	
 }
 th {
 	border-bottom : 0.5px solid black;
@@ -27,16 +33,13 @@ th {
 }
 
 table,th,td {
+	font-family: system-ui;
 	padding: 10px 40px;
 }
 
 td {
-	font-size:17px;	
+	font-size:17px;
 	border-bottom: 0.5px solid black;
-}
-
-form#frm {
-	width: 1000px;
 }
 
 .title {
@@ -85,17 +88,17 @@ div.center  {
 	display:flex;
 	width :1000px;
 	height: 50px;
-	margin-top: 2px;
 	flex-wrap: wrap;
 	flex-direction: row;
 	justify-content: space-between;
 }
 
-a {
+section a {
 	width:100px;
 	height:10px;
+	padding: 10px;
 }
-ul {
+section ul {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -103,7 +106,7 @@ ul {
 	padding: 0px 150px;
 	
 }
-li {
+section li {
 	list-style: none;
 	padding:5px 10px;
 	font-size: 25px;
@@ -111,7 +114,7 @@ li {
 
 input#input-search {
 	height:30px;
-	width: 200px;
+	width: 310px;
 	text-align: center;
 }
 
@@ -133,7 +136,7 @@ button#new-regi {
 }
 
 button#btn-search {
-	width:150px;
+	width:60px;
 	height:35px;
 	background-color: #EDD8CA;
 	border: solid 1px #EDD8CA;

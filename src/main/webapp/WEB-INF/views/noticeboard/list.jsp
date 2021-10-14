@@ -12,14 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
-<style>
-table, th, td {
-	border: 1px solid black;
-	border-collapse: collapse;
-	padding: 5px 10px;
-	text-align : center;
-}
-</style>
+
 <!-- CSS 적용 -->
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.request.contextPath }/CSS/noticeboard/list.css" rel="stylesheet" type="text/css">
@@ -42,11 +35,12 @@ table, th, td {
 		<div class="page-wrap">
 		<div id="pageinfo"></div>
 		<div id="pageRows"></div>
+		<div class="clear"></div>
 		</div>
 		<form id="frm" name="frm">
 			<table id="list">
 				<thead>
-					<th></th>
+					<th>Check</th>
 					<th>NO</th>
 					<th>제목</th>
 					<th>작성자</th>
@@ -64,22 +58,20 @@ table, th, td {
 		<br>
 		
 		<%-- [페이징] --%>
-		<div class="center">
-			<ul class="pagination" id="pagination"></ul>
-		</div>
 		
 		<%-- 자유게시판 안에서 검색 기능 - 제목과 내용으로 검색 가능 --%>
 		<div id="search">
-			<input type="text" id="input-search" name="search" placeholder="검색하세요">
-			<button id="btn-search">검색</button>
-		</div>
-			
-		<br>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">	<!-- 로그인된 사용자의 권한이 ADMIN인 경우에만 보이도록 -->
-			<button onclick="deleteData()">삭제하기</button>
-			<button onclick="location.href = '/user/write?boardType=freeboard'">신규등록</button>
+			<button class="btn-search" onclick="deleteData()">삭제하기</button>
+			<button class="btn-search" onclick="location.href = '/user/write?boardType=noticeboard'">신규등록</button>
 		</sec:authorize>
-	</section>
+		<div class="center">
+			<ul class="pagination" id="pagination"></ul>
+		</div>
+			<input type="text" id="input-search" name="search" placeholder="제목OR내용 검색">
+			<button class="btn-search">검색</button>
+		</div>
 
+	</section>
 </body>
 </html>

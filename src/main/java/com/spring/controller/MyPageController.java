@@ -172,13 +172,16 @@ public class MyPageController {
 		PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
         CustomerDTO user= userDetails.getUser();
         int uid = user.getUid();
-        
+        int result = 0;
+        if(pw!=null) {
         String rawPassword = pw;
         System.out.println(rawPassword);
 		String encPassword = passwordEncoder.encode(rawPassword);
 		user.setPw(encPassword);
 		pw= user.getPw();
-        model.addAttribute("result", loginService.updatePw(pw, uid));
+        result = loginService.updatePw(pw, uid);
+        }
+        model.addAttribute("result", result);
 		return "/myPage/info/pwUpdateOk";
 	}
 	// 마이페이지 게시글/ 댓글 조회 페이지

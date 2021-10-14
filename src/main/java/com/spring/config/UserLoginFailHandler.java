@@ -2,6 +2,7 @@ package com.spring.config;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 public class UserLoginFailHandler implements AuthenticationFailureHandler {
 
@@ -48,11 +50,9 @@ public class UserLoginFailHandler implements AuthenticationFailureHandler {
 		}
 		
 		// 로그인 페이지로 다시 포워딩
-//		RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
-////		dispatcher.forward(request, response);
-//		redirectAtt.addAttribute("message");
+//		request.getRequestDispatcher("/login").forward(request, response);
 		response.sendRedirect("/login");
-		
+
 	}
 	
 }

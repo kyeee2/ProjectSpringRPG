@@ -22,7 +22,6 @@ public class PrincipalDetailsService implements UserDetailsService{
 		System.out.println("loadUserByUsername(" + id + ")");
 		
 		CustomerDTO user = loginService.findById(id);
-		System.out.println("Principalservice " + user.toString());
 		
 		// 해당 id 의 user 가 있다면
 		if(user != null) {

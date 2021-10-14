@@ -13,6 +13,7 @@
 <title>글작성</title>
 <!-- CSS 적용 -->
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/basic/write.css" rel="stylesheet" type="text/css">
 
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -56,7 +57,7 @@
 				<tr>
 					<th><label for="title">제목</label></th>
 					<td>
-						<input type="text" name="title"/><span id="title-message" class="warning" style="color:red;"></span>
+						<input class ="long-text" type="text" name="title"/><span id="title-message" class="warning" style="color:red;"></span>
 					</td>
 				</tr>
 				<tr>
@@ -90,11 +91,11 @@
 					</td>
 				</tr>
 			</table>
-			<br><br>
+			<div class="button-wrap">
+		<button id="btn-list" type="button" onclick="location.href = '../${ param.boardType }'">목록으로</button>
 			<button id="btn-submit" type="button">작성완료</button>	<%-- type을 submit 에서 button으로 바꿈 --%>
+			</div>
 		</form>
-		<br>
-		<button type="button" onclick="location.href = '../${ param.boardType }'">목록으로</button>
 	</section>
 </body>
 </html>

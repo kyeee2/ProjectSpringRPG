@@ -19,6 +19,9 @@
         <li><a href="/map">영화관 위치</a></li>
         <li><a href="/noticeboard">공지사항</a></li>
       	<li><a href="/premiere/list">시사회</a>
+      	<sec:authorize access="hasRole('ROLE_ADMIN')">
+      	<li><a href="../admin/user">회원 정보</a>
+      	</sec:authorize>
       </ul>
 
       <ul class="header-icons">
