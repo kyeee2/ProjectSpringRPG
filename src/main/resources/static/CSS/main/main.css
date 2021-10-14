@@ -85,10 +85,11 @@ li {
 	display:inline-flex;
 	flex-direction: column;
 	text-align: left;
-	border: 1px solid black;
+	border: 1px solid EBEBEB;
 	border-radius: 10px;
 	width: 1000px;
 	margin-left: 100px;
+	background-color: white;
 }
 
 .flex-wrap {
@@ -106,10 +107,13 @@ li {
 .no {
 	width:25px;
 	height:25px;
-	border:1px solid black;
+	border:1px solid BEBEBE;
 	border-radius: 7px;
 	text-align: center;
+	background-color: white;
 }
+
+
 
 #flex-container .text {
 	margin-left: 20px;
