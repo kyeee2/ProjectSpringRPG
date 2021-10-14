@@ -1,27 +1,19 @@
 @charset "UTF-8";
-@media screen and (max-width: 1024px) {
-	
-#head {
-	text-align: center;
-	font-size:20px;
-}
-
-.page-wrap a{
-	visibility: hidden;
-}
-
-}
 
 
-@media screen and (min-width: 1024px) {
+
 .clear { /* float 사용 후 반드시 사용해줄것*/
 	clear: both;
 }
 
 section{	/* 전체 section의 범위 조정*/
 	max-width:1280px;
-	width:900px;
+	width:1000px;
 	margin: auto;
+	background-color: white;
+	padding:20px;
+	margin-top: 20px;
+	border-radius: 10px;
 }
 table {	/* table 크기 조정*/
 	border-top: 0.5px solid gray;
@@ -31,7 +23,6 @@ table {	/* table 크기 조정*/
 	margin: auto;
 	border-radius: 10px;
 	width:1000px;
-	height:550px;
 	
 	
 }
@@ -103,11 +94,12 @@ div.center  {
 	justify-content: space-between;
 }
 
-a {
+section a {
 	width:100px;
 	height:10px;
+	padding: 10px;
 }
-ul {
+section ul {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -115,7 +107,7 @@ ul {
 	padding: 0px 150px;
 	
 }
-li {
+section li {
 	list-style: none;
 	padding:5px 10px;
 	font-size: 25px;
@@ -145,11 +137,10 @@ button#new-regi {
 }
 
 button#btn-search {
-	width:150px;
+	width:60px;
 	height:35px;
 	background-color: #EDD8CA;
 	border: solid 1px #EDD8CA;
 }
 
 
-}

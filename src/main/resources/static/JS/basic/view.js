@@ -42,9 +42,11 @@ $(document).ready(function() {
 		head="공지사항"
 		$("#headtitle").html(head);
 	}
-	
-	//댓글 읽어오기
+	if(boardType!="noticeboard") {
+		
+ 	//댓글 읽어오기
 	commentList(boardType, uid);
+	}
 	
 	//댓글등록 버튼 클릭 시
 	$('[name=commentInsertBtn]').click(function(event) {	//댓글등록 버튼 클릭 시
@@ -103,21 +105,24 @@ function viewData(boardType, uid) {
 function writeData(jsonObj) {
 	
 	result = "";	// 결과값 초기화
-
-	result += "<div id='head'><div class='item'>작성자:" + jsonObj.nickname + "</div>\n";
-	result += "<div class='item'>날짜:" + jsonObj.datetime + "</div>\n";
-	result += "<div class='item'>조회수:" + jsonObj.viewcnt + "</div>\n";
+	result += "<div id='title'>";
 	if(jsonObj.boardtype == "movieboard"){	
 		// 주제는 영화 리뷰에서만 보임
-		result += "<div class='item'>주제 : " + jsonObj.subject + "</div>\n";
+		result += "<span class='item'>[" + jsonObj.subject + "]</span>\n";
 	}
+	result += "<span class='item'> " + jsonObj.title +"</span></div>\n";
+	result += "<div class='flex-con'><div class='head-left-con'><div class='item'>작성자:" + jsonObj.nickname + "</div>\n";
+	result += "<div class='item'>날짜:" + jsonObj.datetime + "</div></div>\n";
+	result += "<div class='head-right-con'><div class='item'>조회수:" + jsonObj.viewcnt + "</div>\n";
 	if(jsonObj.boardtype != "noticeboard") {
 		// 좋아요수와 댓글수는 공지사항에서는 보이지 않는다
 		
 		result += "<div class='item' id='goodCnt'>추천수:" + jsonObj.goodcnt + "</div>";
-		result += "<div class='item'>댓글수: " + jsonObj.commentcnt +"</div></div>";
-	} 
-	result += "<br><div id='title'<div class='item'>제목 : " + jsonObj.title +"</div></div>\n";
+		result += "<div class='item'>댓글수:" + jsonObj.commentcnt +"</div>";
+		result += "</div></div>"
+	} else {
+		result += "</div></div>"
+	}
 	result += "<br><div id='content'><div class='item'>내용 : " + jsonObj.content;
 	if(boardType !="noticeboard") {		
 	result += "<button id='btn_good' onclick='doGood()'><i class='far fa-grin-alt'></i></button>";
@@ -242,12 +247,9 @@ function doGood() {
 		comment += "<br><br><br><br>"
 
 		
+		}
 		$("#comment").html(comment);	// 정보 업데이트
-
-		
-		
 	}//end wrtieComment
-	}
 	function clickUpdate(event) {
 		var $form =$(event.target).parent().parent();
 		console.log($form.html());

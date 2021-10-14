@@ -12,14 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <title>영화리뷰</title>
-<style>
-table, th, td {
-	border: 1px solid black;
-	border-collapse: collapse;
-	padding: 5px 10px;
-	text-align : center;
-}
-</style>
+
 <!-- CSS 적용 -->
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.request.contextPath }/CSS/movieboard/list.css" rel="stylesheet" type="text/css">
@@ -72,7 +65,7 @@ table, th, td {
 		<%-- [페이징] --%>
 		<div class="center">
 		<sec:authorize access="isAuthenticated()">	<!-- 로그인되어있는 경우에만 버튼 보이도록 -->
-			<button id="new-regi" onclick="location.href = '/user/write?boardType=freeboard'">신규등록</button>
+			<button id="new-regi" onclick="location.href = '/user/write?boardType=movieboard'">신규등록</button>
 		</sec:authorize>
 		<%-- 영화 리뷰 안에서 검색 기능 - 제목과 내용으로 검색 가능 --%>
 			<ul class="pagination" id="pagination"></ul>

@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-@media screen and (min-width: 1024px) {
+
 
 .clear { /* float 사용 후 반드시 사용해줄것*/
 	clear: both;
@@ -13,29 +13,37 @@ section{	/* 전체 section의 범위 조정*/
 }
 
 
-.item {
+
+div.item {
 	font-size: 14px;
-	display: grid;
+	margin-left: 20px;
+	margin-right: 20px;
+	
 }
 
 #title {
-	border: 1px solid black;
-	border-radius: 8px;
-	padding: 10px 0px;
+	padding: 0px 20px;
+	font-size: 20px;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	
 }
 
-#head {
-	display:grid;
-	border: 1px solid black;
-	border-radius:8px;
-	grid-template-rows: repeat(1, minmax(20px, auto));
-	grid-template-columns: repeat(6, minmax(20px, auto));
-	padding: 10px 0px;
-	 justify-content: space-evenly;
+.head-left-con {
+	display:flex;
+	flex-direction: row;
+	float: left;
 }
 
-#content {
-	border: 1px solid black;
+.head-right-con {
+	display:flex;
+	flex-direction: row;
+	float: right;
+}
+
+#result {
+	border: 1px solid #EBEBEB;
+	background-color: white;
 	border-radius: 8px;
 }
 
@@ -48,19 +56,21 @@ h2 #headtitle {
 #btn_list {
 	float: left;
 	padding: 8px 20px;
-	margin: 0px 10px;
+	border: 1px solid #EBEBEB;
 }
 
 #btn_good {
-	width:40px;
-	height:40px;
+	width:60px;
+	height:60px;
 	background-color: white;
 	border:none;
-	margin: auto;
+	margin-left: 30em;
+	
 }
 
 #btn_good:hover {
 	cursor: pointer;
+	
 }
 
 section i {
@@ -72,15 +82,19 @@ section i {
 #btn_update, #doDelete, #btn_write {
 	float: right;
 	padding: 8px 20px;
-	margin: 0px 10px;
+	margin-left: 10px;
+	border: 1px solid #EBEBEB;
+	bor
 }
 /* 이하 댓글*/
 
 #contents {
-	width:894px;
-  height:50px;
-  font-size:17px;
+	width: 894px;
+  height: 50px;
+  font-size: 17px;
   margin: auto;
+  border: 1px solid #EBEBEB;
+  border-radius: 8px;
 }
 
 .comContent {
@@ -100,21 +114,19 @@ section i {
 
 .exam {
 	float:right;
-}
 	
-#comment form {
-	border:0.5px solid black;
-	border-radius: 8px;
+}
+
+.exam button {
+	margin-left: 10px;
+	margin-top: 5px;
 }
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+#comment form {
+	border:0.5px solid #EBEBEB;
+	border-radius: 8px;
+	background-color: white;
 }
+
+	
