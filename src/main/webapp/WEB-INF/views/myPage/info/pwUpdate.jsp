@@ -20,6 +20,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- 만든 css 사용 -->
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/footer.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.request.contextPath }/CSS/myPage/info/pwUpdate.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.request.contextPath }/CSS/myPage/info/side_menu.css" rel="stylesheet" type="text/css">
 <!-- fontawesome 적용 -->
@@ -31,6 +32,8 @@
 
 </head>
 <body>
+	<%-- 푸터 삽입 --%>
+<jsp:include page="/WEB-INF/views/global/footer.jsp"/>
 <section>
 <jsp:include page="/WEB-INF/views/global/header.jsp"/>
 <jsp:include page="/WEB-INF/views/myPage/info/side_menu.jsp"/>

@@ -14,6 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- CSS 적용 -->
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/footer.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.request.contextPath }/CSS/basic/login.css" rel="stylesheet" type="text/css">
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -26,7 +27,8 @@
 
 </head>
 <body>
-	
+	<%-- 푸터 삽입 --%>
+<jsp:include page="/WEB-INF/views/global/footer.jsp"/>
 	<%-- 헤더 삽입 --%>
 	<jsp:include page="/WEB-INF/views/global/header.jsp"/>
 

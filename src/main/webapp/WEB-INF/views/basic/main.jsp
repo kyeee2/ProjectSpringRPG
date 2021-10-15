@@ -16,7 +16,7 @@
 <link href="${ pageContext.request.contextPath }/CSS/main/slick.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.request.contextPath }/CSS/main/slick-theme.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.request.contextPath }/CSS/main/premiere.css" rel="stylesheet" type="text/css">
-
+<link href="${ pageContext.request.contextPath }/CSS/footer.css" rel="stylesheet" type="text/css">
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- fontawesome 적용 -->
@@ -25,10 +25,13 @@
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/basic/main.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/movieInfo/slick.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
+
 </head>
 <body>
 	<%-- 헤더 삽입 --%>
 	<jsp:include page="/WEB-INF/views/global/header.jsp"/>	
+	<%-- 푸터 삽입 --%>
+<jsp:include page="/WEB-INF/views/global/footer.jsp"/>
 <script>
   		$(function(){
 			$('#slider-div').slick({

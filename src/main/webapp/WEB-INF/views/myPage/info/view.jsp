@@ -36,6 +36,7 @@
 
 </head>
 <body>
+	
 <jsp:include page="/WEB-INF/views/global/header.jsp"/>
 <section>
 <jsp:include page="/WEB-INF/views/myPage/info/side_menu.jsp"/>

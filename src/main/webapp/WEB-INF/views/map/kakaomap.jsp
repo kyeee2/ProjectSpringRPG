@@ -18,6 +18,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f7687bd18520a24ed28fa01e01997dfe&libraries=services"></script>
 </head>
 <body>
+
 <%-- 헤더 삽입 --%>
 	<jsp:include page="/WEB-INF/views/global/header.jsp"/>	
 <div><h3>영화관 지도By.KaKaO</h3></div>

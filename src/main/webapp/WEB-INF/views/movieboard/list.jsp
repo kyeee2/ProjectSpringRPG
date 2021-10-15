@@ -16,7 +16,7 @@
 <!-- CSS 적용 -->
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.request.contextPath }/CSS/movieboard/list.css" rel="stylesheet" type="text/css">
-
+<link href="${ pageContext.request.contextPath }/CSS/footer.css" rel="stylesheet" type="text/css">
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- fontawesome 적용 -->
@@ -28,7 +28,8 @@
 <body>
 	<%-- 헤더 삽입 --%>
 	<jsp:include page="/WEB-INF/views/global/header.jsp"/>	
-	
+	<%-- 푸터 삽입 --%>
+<jsp:include page="/WEB-INF/views/global/footer.jsp"/>
 	
 	<%-- 메인 컨텐츠 --%>
 	<section>

@@ -33,6 +33,7 @@
 </head>
 <body>
 	<section>
+	
 	<%-- 헤더 삽입 --%>
 	<jsp:include page="/WEB-INF/views/global/header.jsp"/>	
 	<jsp:include page="/WEB-INF/views/myPage/info/side_menu.jsp"/>

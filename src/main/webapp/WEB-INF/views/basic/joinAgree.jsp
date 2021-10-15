@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 <!-- JQuery 적용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 <link href="${ pageContext.request.contextPath }/CSS/basic/joinAgree.css" rel="stylesheet" type="text/css">
   <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
 <!-- fontawesome 적용 -->
@@ -16,8 +15,10 @@
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/global/header.js"></script>
 </head>
 <body>
+
 <!-- 헤더 적용 -->
 <jsp:include page="/WEB-INF/views/global/header.jsp"/>
+
 <section>
 <form action="join" method="get" id="form1">
 <br><br>

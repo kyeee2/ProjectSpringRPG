@@ -13,14 +13,13 @@
 .footer {
         height: auto;
          position:absolute;
-    bottom:0%;
+    bottom:0;
     width:100%; 
     }
     
    
 
     .footer-nav {
-        position: absolute;
         display: flex;
         flex-direction: row;
         justify-content: center;
