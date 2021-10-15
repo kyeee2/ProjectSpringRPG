@@ -29,6 +29,7 @@
 	
 	<%-- 헤더 삽입 --%>
 	<jsp:include page="/WEB-INF/views/global/header.jsp"/>
+
 	<section>
  	
 	<sec:authorize access="isAuthenticated()">

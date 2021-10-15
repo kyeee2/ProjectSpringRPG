@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/global/header.jsp" %>
 <%-- sec tag 사용하기 위해서 --%>
@@ -69,7 +69,7 @@ button:hover {
 	margin-right: 20px;
 	margin-top: 100px;
 	justify-content: center;
-	border-radius: 20px;
+	
 }
 
 div.page {
@@ -168,7 +168,6 @@ div.card-list {
 	</div>
 	
 	
-	<%-- header 헤더 --%>
 	<div class="d01">
 		<div class="left" id="pageinfo"></div>
 		<div class="right" id="pageRows"></div>

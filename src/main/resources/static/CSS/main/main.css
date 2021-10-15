@@ -4,7 +4,7 @@ section{	/* 전체 section의 범위 조정*/
 	max-width:1280px;
 	width:1280px;
 	margin: auto;
-	
+	height:100%;
 }
 
 /*박스오피스 개개별 칸 */
@@ -115,4 +115,5 @@ li {
 	margin-left: 20px;
 	
 }
+
 

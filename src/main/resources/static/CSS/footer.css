@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+.footer-logo {
+        background-image: url('../img/LOGO.PNG');
+        width: 250px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position-y: center;
+       	
+       	margin-right:0px;
+       	min-height:70px;
+    }
+.footer {
+        height: auto;
+         position:absolute;
+    bottom:0%;
+    width:100%; 
+    }
+    
+   
+
+    .footer-nav {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        width: auto;
+        height: 90px;
+        background-color: rgba(0, 0, 0, 0.9);
+        color:white;
+        
+    }
+
+.footer li {
+        list-style:none;
+        width: auto;
+        margin: 0 auto;
+    }

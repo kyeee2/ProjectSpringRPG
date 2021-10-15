@@ -9,13 +9,13 @@ DROP TABLE IF EXISTS fb_good;
 DROP TABLE IF EXISTS freeboard;
 DROP TABLE IF EXISTS mb_comment;
 DROP TABLE IF EXISTS mb_good;
-DROP TABLE IF EXISTS message;
 DROP TABLE IF EXISTS movieboard;
 DROP TABLE IF EXISTS noticeboard;
-DROP TABLE IF EXISTS profile;
 DROP TABLE IF EXISTS customer;
-DROP TABLE IF EXISTS premiereWinBoard;
 DROP TABLE IF EXISTS premiere;
+DROP TABLE IF EXISTS primiereWinBoard;
+
+
 
 
 /* Create Tables */
@@ -24,16 +24,12 @@ CREATE TABLE apply
 (
 	pr_uid int NOT NULL,
 	cus_uid int NOT NULL,
+	
 	cus_email varchar(100) NOT NULL,
 	pr_win boolean DEFAULT false
 );
 
-SELECT 
-			cus_uid
-		FROM
-			customer
-		WHERE
-			cus_nickName = '홍길동1';
+
 CREATE TABLE authority
 (
 	cus_auth varchar(45) NOT NULL,
@@ -51,9 +47,10 @@ CREATE TABLE customer
 	cus_nickname varchar(45) NOT NULL,
 	cus_name varchar(45) NOT NULL,
 	cus_birthday int NOT NULL,
-	cus_profile mediumblob,
+	cus_profile varchar(256),
 	-- 회원가입시 1로 디폴트, 탈퇴하면 0
 	cus_enable int DEFAULT '1' COMMENT '회원가입시 1로 디폴트, 탈퇴하면 0',
+	cus_profile_origin varchar(256),
 	PRIMARY KEY (cus_uid),
 	UNIQUE (cus_id),
 	UNIQUE (cus_nickname)
@@ -110,17 +107,6 @@ CREATE TABLE mb_good
 );
 
 
-CREATE TABLE message
-(
-	ms_uid int NOT NULL,
-	ms_title varchar(150) DEFAULT "(제목없음)",
-	ms_content text,
-	cus_sendUid int NOT NULL,
-	cus_RecUid int NOT NULL,
-	PRIMARY KEY (ms_uid)
-);
-
-
 CREATE TABLE movieboard
 (
 	mb_uid int NOT NULL AUTO_INCREMENT,
@@ -153,29 +139,20 @@ CREATE TABLE premiere
 (
 	pr_uid int NOT NULL AUTO_INCREMENT,
 	pr_title varchar(50) NOT NULL,
-	pr_photo text,
+	pr_photo varchar(256),
 	pr_content text,
+	pr_photo_origin varchar(256),
 	PRIMARY KEY (pr_uid)
 );
 
 
-CREATE TABLE premiereWinBoard
+CREATE TABLE primiereWinBoard
 (
 	pwb_uid int NOT NULL AUTO_INCREMENT,
-	pwb_title varchar(150),
+	pwb_title varchar(150) NOT NULL,
 	pwb_content text NOT NULL,
-	pwb_dateTime datetime DEFAULT now(),
+	pwb_datetime datetime DEFAULT now(),
 	PRIMARY KEY (pwb_uid)
-);
-
-
-CREATE TABLE profile
-(
-	pro_uid int NOT NULL AUTO_INCREMENT,
-	pro_source varchar(100) NOT NULL,
-	pro_file varchar(100) NOT NULL,
-	cus_uid int NOT NULL,
-	PRIMARY KEY (pro_uid)
 );
 
 
@@ -238,22 +215,6 @@ ALTER TABLE mb_good
 ;
 
 
-ALTER TABLE message
-	ADD FOREIGN KEY (cus_sendUid)
-	REFERENCES customer (cus_uid)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE message
-	ADD FOREIGN KEY (cus_RecUid)
-	REFERENCES customer (cus_uid)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
 ALTER TABLE movieboard
 	ADD FOREIGN KEY (cus_uid)
 	REFERENCES customer (cus_uid)
@@ -263,14 +224,6 @@ ALTER TABLE movieboard
 
 
 ALTER TABLE noticeboard
-	ADD FOREIGN KEY (cus_uid)
-	REFERENCES customer (cus_uid)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE profile
 	ADD FOREIGN KEY (cus_uid)
 	REFERENCES customer (cus_uid)
 	ON UPDATE RESTRICT
@@ -313,13 +266,6 @@ ALTER TABLE mb_good
 ALTER TABLE apply
 	ADD FOREIGN KEY (pr_uid)
 	REFERENCES premiere (pr_uid)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE primiereWinBoard
-	ADD FOREIGN KEY (pr_uid)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;

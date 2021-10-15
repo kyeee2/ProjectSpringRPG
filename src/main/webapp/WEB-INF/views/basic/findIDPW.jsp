@@ -14,6 +14,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <link href="${ pageContext.request.contextPath }/CSS/header.css" rel="stylesheet" type="text/css">
+<link href="${ pageContext.request.contextPath }/CSS/footer.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.request.contextPath }/CSS/basic/findIDPW.css" rel="stylesheet" type="text/css">
 <!-- 만든 JS -->
 <script type="text/javascript" src="${ pageContext.request.contextPath }/JS/basic/findIDPW.js"></script>
@@ -21,6 +22,8 @@
 <!-- JQuery 적용 -->
 </head>
 <body>
+<%-- 푸터 삽입 --%>
+<jsp:include page="/WEB-INF/views/global/footer.jsp"/>
 <!-- 헤더 적용 -->
 <jsp:include page="/WEB-INF/views/global/header.jsp"/>
 <div class="totalfind">
