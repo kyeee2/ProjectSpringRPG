@@ -91,10 +91,10 @@
 	</div>
 		<!-- 최근 인기 글 10개 -->
 		<div id="vogue-list">
-			<h3>인기글</h3>
 			<c:set var="cnt" value="${ fn:length(vogueList) }" />
 			<c:if test="${ cnt > 0 }">
 				<ul id="flex-container">
+			<h3>오늘의 베스트 인기글</h3>
 					
 						<c:forEach var="i" begin="0" end = "${ cnt - 1 }" varStatus="status">
 								<div class="flex-wrap">
