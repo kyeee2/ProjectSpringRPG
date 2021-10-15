@@ -55,10 +55,11 @@
 		<c:if test="${ param.boardType != 'noticeboard' }">
 		<sec:authorize access="isAuthenticated()">	<!-- 로그인되어있는 경우에만 버튼 보이도록 -->
 		<h3>댓글작성</h3>
-		<form id="commentFrm" name="commentFrm" method="get">
+		<form id="commentFrm" name="commentFrm" method="GET">
 		<input type="hidden" name="buid" value="${param.uid }"/>
 		<input type="hidden" name="boardType" value="${param.boardType }"/>
-		<input type="text" id = "contents" name="content" placeholder="내용을 입력하세요"/>
+		<input type="text" id = "contents" name="content" placeholder="댓글을 입력하세요"/>
+		<span id="content-message" class="warning" style="color:red;"></span>
 		<span class="exam">
 			<button type="button" name="commentInsertBtn">댓글등록</button>
 		</span>

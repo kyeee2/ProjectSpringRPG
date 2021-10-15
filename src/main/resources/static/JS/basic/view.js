@@ -49,30 +49,22 @@ $(document).ready(function() {
 	}
 	
 	//댓글등록 버튼 클릭 시
-	$('[name=commentInsertBtn]').click(function(event) {	//댓글등록 버튼 클릭 시
-		if(chkCosubmit() == true) {
+	$('[name=commentInsertBtn]').click(function() {	
+		frm = document.forms['commentFrm'];
+		var content = frm['contents'].value.trim();//댓글등록 버튼 클릭 시
+		if(content !="") {
 			var insertData = $('[name=commentFrm]').serialize(); //commentInsertForm 내용 가져오기
-			commentinsert(insertData);//TODO
+			commentinsert(insertData);
 		} else {
-			event.preventDefault();
+			$("#content-message").text("댓글내용은 한 글자 이상 작성하셔야 합니다.");
+			CKEDITOR.instances.ckeditor.focus();
+			return false;
 		}
 		
 	});
 	
-});
 
-	function chkCosubmit() {
-		frm = document.forms['commentFrm'];
-		
-		var content = frm['content'].value.trim();
-		
-		if(content="") {
-			alert("댓글내용은 반드시 한 글자 이상 작성해야 합니다")
-			frm['content'].focus();
-			return false;
-		}
-		return true;
-	}
+});
 
 // 게시글 내용 읽어오기
 function viewData(boardType, uid) {
@@ -190,9 +182,7 @@ function doGood() {
 			success : function(data){
 				if(data.count == 1) {
 					alert("댓글 작성 완료");
-
 					//댓글 읽어오기
-
 					commentList(boardType, uid);
 					$('[name=content]').val('');
 				}
@@ -248,6 +238,7 @@ function doGood() {
 
 		
 		}
+		$("#content-message").html("");
 		$("#comment").html(comment);	// 정보 업데이트
 	}//end wrtieComment
 	function clickUpdate(event) {
