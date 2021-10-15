@@ -27,8 +27,8 @@ public interface PremiereDAO {
 	// 특정 uid 글 삭제하기
 	public abstract int deleteByUid(int [] uids);
 
-	// 특정 회원 ID로 회원 UID 찾기 
-	public abstract int findUidById(String id);
+	// 특정 회원 nickname으로 회원 UID 찾기 
+	public abstract int findUidById(String nickname);
 	
 	// 시사회 제목으로 해당 글 UID 찾기
 	public abstract int findUidByTitle(String title);
@@ -37,7 +37,7 @@ public interface PremiereDAO {
 	public abstract int apply(int prUid, int cusUid, String email);
 
 	// 응모한 아이디인지 체크 
-	public abstract int chkId(int prUid, String id);
+	public abstract int chkId(int prUid, String nickname);
 	
 	// 응모된 계정중에 당첨자 닉네임 추첨
 	public abstract List<PremiereWinDTO> selectWin(int prUid, int count);
@@ -64,7 +64,10 @@ public interface PremiereDAO {
 	public abstract List<PremiereWinListDTO> winList(int from, int pageRows);
 
 	// 당첨자 특정 글 조회
-	public abstract List<PremiereWinListDTO> selectWinView(int uid); 
+	public abstract List<PremiereWinListDTO> selectWinView(int uid);
+
+	// 특정 시사회의 uid로 응모 정보 삭제
+	public abstract int deleteApplyByUid(int[] uids); 
 }
 
 

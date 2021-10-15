@@ -115,7 +115,12 @@ public class PremiereDAOImpl implements PremiereDAO {
 		return mapper.selectWinView(uid);
 	}
 
-}
+	@Override
+	public int deleteApplyByUid(int[] uids) {
+		return mapper.deleteApplyByUid(uids);
+	}
+
+}	
 
 
 

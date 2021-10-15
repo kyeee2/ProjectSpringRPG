@@ -35,7 +35,6 @@ section{	/* 전체 section의 범위 조정*/
 }
 
 
-
 /*post slider*/
 .post-slider{
   width:1280px;
@@ -47,6 +46,7 @@ section{	/* 전체 section의 범위 조정*/
 
 .post-slider h3 {
 	text-align: center;
+
 }
 
 .post-slider .prev{
@@ -72,9 +72,13 @@ section{	/* 전체 section의 범위 조정*/
 
 /*인기글 */
 
-#vogue-list h3, li {
+
+
+#vogue-list h3 {
 	margin-top: 0px;
-	text-align: center;
+	background-color: #EBEBEB;
+	padding:20px 20px;
+	border-radius: 8px;
 }
 
 li {
@@ -85,10 +89,12 @@ li {
 	display:inline-flex;
 	flex-direction: column;
 	text-align: left;
-	border: 1px solid black;
+	border: 1px solid EBEBEB;
 	border-radius: 10px;
 	width: 1000px;
 	margin-left: 100px;
+	background-color: white;
+	padding:0px 0px;
 }
 
 .flex-wrap {
@@ -102,14 +108,17 @@ li {
 }
 .flex-wrap .text {
 	color: black;
+	
 }
 .no {
 	width:25px;
 	height:25px;
-	border:1px solid black;
+	border:1px solid white;
 	border-radius: 7px;
 	text-align: center;
 }
+
+
 
 #flex-container .text {
 	margin-left: 20px;

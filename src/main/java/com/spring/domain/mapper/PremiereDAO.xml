@@ -51,6 +51,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE pr_uid = #{uid}
 	</update>
 	
+	<!-- 파일을 수정하지 않을 글 수정 -->
+   <update id="updateNoFile" flushCache="true"
+      parameterType="com.spring.domain.PremiereDTO">
+      UPDATE premiere
+      SET pr_title = #{title}, pr_content = #{content}
+      WHERE pr_uid = #{uid}
+   </update>
+	
 	<!-- 글 삭제하기 전에 해당 글의 첨부파일 가져오기 -->
 	<select id="getFileName" flushCache="true" parameterType="java.util.ArrayList" resultType="String">
 		SELECT 
@@ -64,6 +72,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				</foreach>
 			)
 	</select>
+	
+	<!-- 특정 시사회 uid로 응모 정보삭제 -->
+	<delete id="deleteApplyByUid" flushCache="true" parameterType="java.util.ArrayList">
+		delete from apply where pr_uid IN (<foreach collection="array" item="item" separator=",">${item}</foreach>)
+	</delete>
 	
 	<!-- 글 삭제 -->
 	<delete id="deleteByUid" flushCache="true" parameterType="java.util.ArrayList">
@@ -81,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM
 			customer
 		WHERE
-			cus_id = #{id}
+			cus_nickname = #{nickname}
 	</select>
 	
 	<!-- 응모 정보 DB에 넣기 -->
@@ -103,7 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						from 
 							customer
 						where 
-							cus_id = #{id}
+							cus_nickname = #{nickname}
 					) 
 			and 
 				pr_uid = #{prUid} 

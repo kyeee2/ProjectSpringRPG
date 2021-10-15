@@ -60,6 +60,10 @@ public class PrincipalDetails implements UserDetails{
 		return user.getId();
 	}
 	
+	public String getUserNickname() {
+		return user.getNickname();
+	}
+	
 	public void setPassword(String pw) {
 		user.setPw(pw);
 	}

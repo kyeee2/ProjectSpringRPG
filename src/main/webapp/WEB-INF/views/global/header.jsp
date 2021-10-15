@@ -34,8 +34,6 @@
       			<a href="/login" id="header-login">로그인</a>
       		</sec:authorize>
       	</li>
-        <li><a href="#"><i class="fas fa-bell"></i></a></li>
-        <li><a href="#"><i class="fas fa-search"></i></a></li>
         <li><button class="btn-hamburger"><span class="fas fa-bars"></span></button></li>
       </ul>
     </div>
